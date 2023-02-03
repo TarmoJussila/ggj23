@@ -106,3 +106,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _worldTexture: {fileID: 2800000, guid: dba0c0f8fc685334e99dd2afb10d52a8, type: 3}
+  _material: {fileID: 2100000, guid: e95836fccc149e6419aefc959b4ed352, type: 2}
+  Cam: {fileID: 0}

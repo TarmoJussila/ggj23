@@ -9,76 +9,65 @@ namespace Klonk.Rendering
 {
     public class WorldRenderer : MonoBehaviour
     {
+        public static WorldRenderer Instance = null;
+        
         [SerializeField] private Texture2D _worldTexture;
 
-        private Material _material;
+        [SerializeField] private Material _material;
         private Texture2D _texture;
         private int _tilesPerUnit = 32;
-        private Camera _camera;
+        public Camera Cam;
+
+        private int width;
+        private int height;
 
         void Awake()
         {
-            _camera = GetComponent<Camera>();
-            _material = new Material(Shader.Find("Klonk/World"));
-            _texture = new Texture2D(Screen.width, Screen.height);
+            Instance = this;
+            
+            width = 128;
+            height = 72;
 
-            _material.SetTexture("Texture", _worldTexture);
+            Cam = GetComponent<Camera>();
+            _texture = new Texture2D(width, height, TextureFormat.ARGB32, false);
+            _material.EnableKeyword("_WorldTex");
         }
 
         private void FixedUpdate()
         {
             var data = TileEntityHandler.Instance.TileEntities;
 
-            Color[] colors = new Color[Screen.width * Screen.height];
             var coords = Vector2Int.zero;
-            int radiusX = Screen.width / 20;
-            int radiusY = Screen.width / 20;
 
-            for (int x = -radiusX; x < radiusX; x++)
+            Vector3 position = transform.position;
+
+            for (int x = 0; x < width; x++)
             {
-                for (int y = -radiusY; y < radiusY; y++)
+                for (int y = 0; y < height; y++)
                 {
-                    coords.x = x;
-                    coords.y = y;
-
-                    //Vector3 entityPoint = screenToWorld * _tilesPerUnit;
-
-                    /*Vector2 entityPoint = cameraPos;
-                    entityPoint.x -= halfWidth;
-                    entityPoint.y -= halfHeight;
-
-                    entityX = entityPoint.x / _tilesPerUnit;*/
-
-                    /*Vector3 screenToWorld = Vector3.zero; // _camera.ScreenToWorldPoint(new Vector3(x, y, 0));
-                    Vector2 entityPoint = Vector2.zero;
-                    entityPoint.x = screenToWorld.x * _tilesPerUnit;
-                    entityPoint.y = screenToWorld.y * _tilesPerUnit;
-
-                    float entityTX = entityPoint.x % 1;
-                    float entityTY = entityPoint.y % 1;*/
+                    coords.x = Mathf.FloorToInt(position.x) + x;
+                    coords.y = Mathf.FloorToInt(position.y) + y;
 
                     var entity = TileEntityHandler.Instance.TryGetTileEntityAtPosition(coords);
                     if (entity == null)
                     {
-                        _texture.SetPixel(x,y, new Color(0f, 0f, 0.0f, 1.0f));
+                        _texture.SetPixel(x, y, new Color(0.5f, 0.5f, 0.5f, 1.0f));
                         continue;
                     }
 
-                    //var def = entity.EntityDefinition;
-                    //float UvX = Mathf.Lerp(def.UvMin.x, def.UvMax.x, entityTX);
-                    //float UvY = Mathf.Lerp(def.UvMin.y, def.UvMax.y, entityTY);
+                    var def = entity.EntityDefinition;
 
-                    float UvX = 0.0f; //Mathf.Lerp(def.UvMin.x, def.UvMax.x, entityTX);
-                    float UvY = 0.0f; //Mathf.Lerp(def.UvMin.y, def.UvMax.y, entityTY);
-                    //Vector2 UV = new Vector2(UvX, UvY);
+                    float UvX = 0.0f;
+                    float UvY = 0.0f;
+                    
 
-                    _texture.SetPixel(x,y, new Color(0f, 0f, 0.0f, 1.0f));
+                    _texture.SetPixel(x, y, entity.IsLiquid ? Color.yellow : Color.black);
                 }
             }
 
-            _texture.SetPixels(colors);
+            _texture.Apply();
 
-            _material.SetTexture("WorldData", _texture);
+            _material.SetTexture("_WorldTex", _texture);
         }
 
         void OnRenderImage(RenderTexture source, RenderTexture destination)

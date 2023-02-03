@@ -38,6 +38,7 @@ Shader "Hidden/NewImageEffectShader"
             }
 
             sampler2D _MainTex;
+            float4 _MainTex_ST;
 
             fixed4 frag (v2f i) : SV_Target
             {

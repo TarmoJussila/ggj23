@@ -11,6 +11,7 @@ namespace Klonk
         public int TextureIndex;
         public UnityEngine.Vector2 UvMin;
         public UnityEngine.Vector2 UvMax;
+        public Color color;
     }
     
 }

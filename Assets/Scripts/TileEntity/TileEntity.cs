@@ -11,14 +11,11 @@ namespace Klonk.TileEntity
 
         public EntityDef EntityDefinition { get; private set; }
         
-        public TileEntity()
+        public TileEntity(Vector2Int position, bool isLiquid, bool isSolid, float gravity)
         {
             var defs = Resources.LoadAll<EntityDef>("");
             EntityDefinition = defs[Random.Range(0, defs.Length)];
-        }
-
-        public TileEntity(Vector2Int position, bool isLiquid, bool isSolid, float gravity)
-        {
+            
             Position = position;
             IsLiquid = isLiquid;
             IsSolid = isSolid;

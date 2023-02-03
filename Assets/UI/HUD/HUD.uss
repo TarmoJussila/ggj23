@@ -1,0 +1,19 @@
+#mainMenuButton {
+    align-self: flex-end;
+}
+
+#exitConfirmDialog {
+    align-self: center;
+}
+
+#dialogText {
+    
+}
+
+.dialogButton {
+    
+}
+
+.hiddenDialog {
+    display: none;
+}

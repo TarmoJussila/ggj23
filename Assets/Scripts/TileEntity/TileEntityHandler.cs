@@ -36,7 +36,21 @@ namespace Klonk.TileEntity
 
         private void GenerateTileEntities(TileEntityGenerationData generationData)
         {
-            for (int i = 0; i < generationData.GenerationAmount; i++)
+            for (int i = 0; i < generationData.SolidPatchGenerationAmount; i++)
+            {
+                Vector2Int position = new Vector2Int(Random.Range(0, generationData.GenerationWidth), Random.Range(0, generationData.GenerationHeight));
+                for (int j = 0; j < generationData.SolidGenerationAmount; j++)
+                {
+                    do
+                    {
+                        position = new Vector2Int(Random.Range(Mathf.Clamp(position.x - 1, default, _generationData.GenerationWidth), Mathf.Clamp(position.x + 2, default, _generationData.GenerationWidth)), Random.Range(Mathf.Clamp(position.y - 1, default, _generationData.GenerationHeight), Mathf.Clamp(position.y + 2, default, _generationData.GenerationHeight)));
+                    } while (TryGetTileEntityAtPosition(position) != null);
+
+                    var tileEntity = new TileEntity(position, false, true, 0f);
+                    _tileEntities.Add(position, tileEntity);
+                }
+            }
+            for (int i = 0; i < generationData.LiquidGenerationAmount; i++)
             {
                 Vector2Int position;
                 do
@@ -80,7 +94,7 @@ namespace Klonk.TileEntity
             {
                 foreach (var tileEntity in _tileEntities)
                 {
-                    Gizmos.color = Color.yellow;
+                    Gizmos.color = tileEntity.Value.IsSolid ? Color.black : Color.yellow;
                     Gizmos.DrawCube((Vector2)tileEntity.Key, Vector2.one);
                 }
             }

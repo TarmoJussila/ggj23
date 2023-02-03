@@ -26,22 +26,22 @@ namespace Klonk.TileEntity
             TileEntity tileEntity;
             if (IsLiquid)
             {
-                tileEntity = TileEntityHandler.Instance.TryGetTileEntityAtPosition(new Vector2Int(Mathf.Max(Position.x, default), Mathf.Max(Position.y - 1, default)));
+                tileEntity = TileEntityHandler.Instance.TryGetTileEntityAtPosition(new Vector2Int(Mathf.Clamp(Position.x, default, TileEntityHandler.Instance.GenerationData.GenerationWidth), Mathf.Max(Position.y - 1, default)));
                 if (tileEntity == null)
                 {
-                    Position = new Vector2Int(Mathf.Max(Position.x, default), Mathf.Max(Position.y - 1, default));
+                    Position = new Vector2Int(Mathf.Clamp(Position.x, default, TileEntityHandler.Instance.GenerationData.GenerationWidth), Mathf.Max(Position.y - 1, default));
                     return Position;
                 }
-                tileEntity = TileEntityHandler.Instance.TryGetTileEntityAtPosition(new Vector2Int(Mathf.Max(Position.x - 1, default), Mathf.Max(Position.y, default)));
+                tileEntity = TileEntityHandler.Instance.TryGetTileEntityAtPosition(new Vector2Int(Mathf.Clamp(Position.x - 1, default, TileEntityHandler.Instance.GenerationData.GenerationWidth), Mathf.Max(Position.y, default)));
                 if (tileEntity == null)
                 {
-                    Position = new Vector2Int(Mathf.Max(Position.x - 1, default), Mathf.Max(Position.y, default));
+                    Position = new Vector2Int(Mathf.Clamp(Position.x - 1, default, TileEntityHandler.Instance.GenerationData.GenerationWidth), Mathf.Max(Position.y, default));
                     return Position;
                 }
-                tileEntity = TileEntityHandler.Instance.TryGetTileEntityAtPosition(new Vector2Int(Mathf.Max(Position.x + 1, default), Mathf.Max(Position.y, default)));
+                tileEntity = TileEntityHandler.Instance.TryGetTileEntityAtPosition(new Vector2Int(Mathf.Clamp(Position.x + 1, default, TileEntityHandler.Instance.GenerationData.GenerationWidth), Mathf.Max(Position.y, default)));
                 if (tileEntity == null)
                 {
-                    Position = new Vector2Int(Mathf.Max(Position.x + 1, default), Mathf.Max(Position.y, default));
+                    Position = new Vector2Int(Mathf.Clamp(Position.x + 1, default, TileEntityHandler.Instance.GenerationData.GenerationWidth), Mathf.Max(Position.y, default));
                     return Position;
                 }
             }

@@ -21,6 +21,7 @@ namespace Klonk.TileEntity
         private static TileEntityHandler _instance;
 
         public Dictionary<Vector2Int, TileEntity> TileEntities => _tileEntities;
+        public TileEntityGenerationData GenerationData => _generationData;
         
         private Dictionary<Vector2Int, TileEntity> _tileEntities;
 
@@ -59,8 +60,8 @@ namespace Klonk.TileEntity
         {
             if (_tileEntities != null)
             {
-                var asd = _tileEntities.ToDictionary(k => k.Key, v => v.Value);
-                foreach (var tileEntity in asd)
+                var tileEntitiesCopy = _tileEntities.ToDictionary(k => k.Key, v => v.Value);
+                foreach (var tileEntity in tileEntitiesCopy)
                 {
                     var oldPosition = tileEntity.Key;
                     var position = tileEntity.Value.UpdateEntity();

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace UI.TestMenu
+namespace Klonk.UI.TestMenu
 {
     public class TestMenu : MonoBehaviour
     {

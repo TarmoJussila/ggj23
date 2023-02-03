@@ -1,6 +1,6 @@
 using UnityEngine.UIElements;
 
-namespace UI.TestMenu
+namespace Klonk.UI.TestMenu
 {
     public class TestMenuController
     {

@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-namespace UI.HUD
+namespace Klonk.UI.HUD
 {
     public class HUD : MonoBehaviour
     {
@@ -16,17 +16,17 @@ namespace UI.HUD
             _dialogPanel = root.Q<VisualElement>("exitConfirmDialog");
             HideDialog();
 
-            root.Q<Button>("mainMenuButton").RegisterCallback<ClickEvent>(evt =>
+            root.Q<Button>("mainMenuButton").RegisterCallback<ClickEvent>(_ =>
             {
                 ShowDialog();
             });
             
-            root.Q<Button>("YesButton").RegisterCallback<ClickEvent>(evt =>
+            root.Q<Button>("YesButton").RegisterCallback<ClickEvent>(_ =>
             {
                 SceneManager.LoadScene("MainMenu");
             });
             
-            root.Q<Button>("NoButton").RegisterCallback<ClickEvent>(evt =>
+            root.Q<Button>("NoButton").RegisterCallback<ClickEvent>(_ =>
             {
                 HideDialog();
             });

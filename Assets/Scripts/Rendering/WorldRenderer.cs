@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,17 +7,34 @@ namespace Klonk.Rendering
 {
     public class WorldRenderer : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
+        private Material _material;
+        private Texture2D _texture;
+
+        void Awake()
         {
-        
+            _material = new Material(Shader.Find("Klonk/World"));
+            _texture = new Texture2D(Screen.width, Screen.height);
         }
 
-        // Update is called once per frame
-        void Update()
+        private void FixedUpdate()
         {
-        
+            //TEMPDATA
+            NewBehaviourScript[,] entities = new NewBehaviourScript[,] { };
+
+            for (int x = 0; x < Screen.width; x++)
+            {
+                for (int y = 0; y < Screen.height; y++)
+                {
+                    var entity = entities[x, y];
+                    var def = entity.GetDef();
+                    _texture.SetPixel(x,y, new Color());
+                }
+            }
+        }
+
+        void OnRenderImage(RenderTexture source, RenderTexture destination)
+        {
+            Graphics.Blit(source, destination, _material);
         }
     }
-    
 }

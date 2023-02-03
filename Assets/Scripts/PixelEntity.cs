@@ -19,7 +19,7 @@ public class NewBehaviourScript : MonoBehaviour
         
     }
 
-    private EntityDef GetDef()
+    public Klonk.EntityDef GetDef()
     {
         throw new NotImplementedException();
     }

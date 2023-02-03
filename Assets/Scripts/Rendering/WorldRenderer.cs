@@ -9,6 +9,7 @@ namespace Klonk.Rendering
     {
         private Material _material;
         private Texture2D _texture;
+        private int pixelsPerTile = 32;
 
         void Awake()
         {
@@ -20,6 +21,8 @@ namespace Klonk.Rendering
         {
             //TEMPDATA
             NewBehaviourScript[,] entities = new NewBehaviourScript[,] { };
+
+            Vector2 cameraPos = new Vector2(500, 500);
 
             for (int x = 0; x < Screen.width; x++)
             {

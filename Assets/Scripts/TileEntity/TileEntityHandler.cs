@@ -74,7 +74,7 @@ namespace Klonk.TileEntity
             }
         }
 
-        private void OnDrawGizmos()
+        /*private void OnDrawGizmos()
         {
             if (_tileEntities != null && _drawGizmos)
             {
@@ -84,6 +84,6 @@ namespace Klonk.TileEntity
                     Gizmos.DrawCube((Vector2)tileEntity.Key, Vector2.one);
                 }
             }
-        }
+        }*/
     }
 }

@@ -1,11 +1,11 @@
-Shader "Hidden/World"
+Shader "Klonk/World"
 {
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
         _World ("WorldData", 2D) = "white" {}
         _PixelsPerEntity ("Pixels per entity", int) = 6
-        _CameraPos ("Camera center world position", Vector) = (0.0, 0.0) 
+        _CameraPos ("Camera center world position", Vector) = (0.0, 0.0,0,0) 
     }
     SubShader
     {
@@ -33,8 +33,8 @@ Shader "Hidden/World"
 
             fixed4 frag (v2f_img i) : SV_Target
             {                                
-                fixed4 offset = tex2D(_MainTex, i.uv);
-                fixed4 col = tex2D(_MainTex, offset.uv);
+                fixed4 offset = tex2D(_World, i.uv);
+                fixed4 col = tex2D(_MainTex, offset.rg);
                 return col;
             }
             ENDCG

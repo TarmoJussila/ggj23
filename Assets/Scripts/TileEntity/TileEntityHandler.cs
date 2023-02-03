@@ -43,7 +43,7 @@ namespace Klonk.TileEntity
                 {
                     do
                     {
-                        position = new Vector2Int(Random.Range(position.x - 1, position.x + 2), Random.Range(position.y - 1, position.y + 2));
+                        position = new Vector2Int(Random.Range(Mathf.Clamp(position.x - 1, default, _generationData.GenerationWidth), Mathf.Clamp(position.x + 2, default, _generationData.GenerationWidth)), Random.Range(Mathf.Clamp(position.y - 1, default, _generationData.GenerationHeight), Mathf.Clamp(position.y + 2, default, _generationData.GenerationHeight)));
                     } while (TryGetTileEntityAtPosition(position) != null);
 
                     var tileEntity = new TileEntity(position, false, true, 0f);

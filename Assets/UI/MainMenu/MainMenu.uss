@@ -1,19 +1,18 @@
 #title {
-    font-size: 30px;
+    font-size: 50px;
     align-self: center;
+    margin-top: 5%;
+    -unity-font-style: bold;
 }
 
 #buttons {
-    background-color: aqua;
-    width: 75%;
+    margin-top: 10%;
+    width: 40%;
     align-self: center;
-    padding: 5%;
+    flex-direction: column;
 }
 
 .button {
-    background-color: coral;
-    width: 50%;
-    height: 5%;
-    padding: 10%;
-    align-self: center;
+    width: 100%;
+    margin-bottom: 10%;
 }

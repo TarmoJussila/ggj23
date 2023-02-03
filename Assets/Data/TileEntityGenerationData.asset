@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 928a0930701aa4f5792b24cc296a771b, type: 3}
   m_Name: TileEntityGenerationData
   m_EditorClassIdentifier: 
-  _generationAmount: 1000
+  _generationAmount: 10000
   _generationWidth: 1000
   _generationHeight: 1000

@@ -6,7 +6,6 @@ namespace UI.MainMenu
 {
     public class MainMenu : MonoBehaviour
     {
-
         private Button _playButton;
         private Button _exitButton;
         

@@ -2,23 +2,28 @@ using UnityEngine;
 
 namespace Klonk.TileEntity
 {
+    public enum SolidType { None, Rock, Sand }
+    public enum LiquidType { None, Water, Acid }
+    
     public class TileEntity
     {
         public Vector2Int Position { get; private set; }
-        public bool IsLiquid { get; private set; }
-        public bool IsSolid { get; private set; }
+        public SolidType SolidType { get; private set; }
+        public LiquidType LiquidType { get; private set; }
+        public bool IsSolid { get { return SolidType != SolidType.None; } }
+        public bool IsLiquid { get { return LiquidType != LiquidType.None; } }
         public float Gravity { get; private set; }
 
         public EntityDef EntityDefinition { get; private set; }
         
-        public TileEntity(Vector2Int position, bool isLiquid, bool isSolid, float gravity)
+        public TileEntity(Vector2Int position, LiquidType liquidType, SolidType solidType, float gravity = 0f)
         {
             var defs = Resources.LoadAll<EntityDef>("");
             EntityDefinition = defs[Random.Range(0, defs.Length)];
             
             Position = position;
-            IsLiquid = isLiquid;
-            IsSolid = isSolid;
+            SolidType = solidType;
+            LiquidType = liquidType;
             Gravity = gravity;
         }
 

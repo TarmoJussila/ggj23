@@ -45,4 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _generationData: {fileID: 11400000, guid: 238c407cf00e14aaaa0339f53df04043, type: 2}
+  _entityData: {fileID: 11400000, guid: 7892e492bbd4a413984e60185ac0be4d, type: 2}
   _drawGizmos: 1

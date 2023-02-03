@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/TestMenu/TestMenuStyles.uss?fileID=7433441132597879392&amp;guid=ac46776bd890f443ebb29c02a951248c&amp;type=3#TestMenuStyles" />
+    <ui:VisualElement name="tabs" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+        <ui:Label tabindex="-1" text="Controls" display-tooltip-when-elided="true" name="ControlsTab" class="tab currentlySelectedTab" />
+        <ui:Label tabindex="-1" text="Graphics" display-tooltip-when-elided="true" name="GraphicsTab" class="tab" />
+        <ui:Label tabindex="-1" text="Sound" display-tooltip-when-elided="true" name="SoundTab" class="tab" />
+    </ui:VisualElement>
+    <ui:VisualElement name="tabContent" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+        <ui:Label tabindex="-1" text="Control settings here" display-tooltip-when-elided="true" name="ControlsContent" />
+        <ui:Label tabindex="-1" text="Graphic settings here" display-tooltip-when-elided="true" name="GraphicsContent" class="unselectedContent" />
+        <ui:Label tabindex="-1" text="Sound settings here" display-tooltip-when-elided="true" name="SoundContent" class="unselectedContent" />
+    </ui:VisualElement>
+</ui:UXML>

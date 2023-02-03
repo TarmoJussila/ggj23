@@ -1,1 +1,19 @@
-VisualElement {}
+#title {
+    font-size: 30px;
+    align-self: center;
+}
+
+#buttons {
+    background-color: aqua;
+    width: 75%;
+    align-self: center;
+    padding: 5%;
+}
+
+.button {
+    background-color: coral;
+    width: 50%;
+    height: 5%;
+    padding: 10%;
+    align-self: center;
+}

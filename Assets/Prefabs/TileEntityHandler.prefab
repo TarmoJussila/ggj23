@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _generationData: {fileID: 11400000, guid: 238c407cf00e14aaaa0339f53df04043, type: 2}
+  _drawGizmos: 1

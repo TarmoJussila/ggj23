@@ -36,16 +36,19 @@ namespace Klonk.TileEntity
 
         private void GenerateTileEntities(TileEntityGenerationData generationData)
         {
-            for (int i = 0; i < generationData.SolidGenerationAmount; i++)
+            for (int i = 0; i < generationData.SolidPatchGenerationAmount; i++)
             {
-                Vector2Int position;
-                do
+                Vector2Int position = new Vector2Int(Random.Range(0, generationData.GenerationWidth), Random.Range(0, generationData.GenerationHeight));
+                for (int j = 0; j < generationData.SolidGenerationAmount; j++)
                 {
-                    position = new Vector2Int(Random.Range(0, generationData.GenerationWidth), Random.Range(0, generationData.GenerationHeight));
-                } while (TryGetTileEntityAtPosition(position) != null);
+                    do
+                    {
+                        position = new Vector2Int(Random.Range(position.x - 1, position.x + 2), Random.Range(position.y - 1, position.y + 2));
+                    } while (TryGetTileEntityAtPosition(position) != null);
 
-                var tileEntity = new TileEntity(position, false, true, 0f);
-                _tileEntities.Add(position, tileEntity);
+                    var tileEntity = new TileEntity(position, false, true, 0f);
+                    _tileEntities.Add(position, tileEntity);
+                }
             }
             for (int i = 0; i < generationData.LiquidGenerationAmount; i++)
             {

@@ -265,4 +265,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weapons:
   - TileDataIndex: 2
+    RequireKeyDown: 0
   - TileDataIndex: 3
+    RequireKeyDown: 0
+  - TileDataIndex: 6
+    RequireKeyDown: 1
+  - TileDataIndex: 7
+    RequireKeyDown: 1
+  - TileDataIndex: 8
+    RequireKeyDown: 1

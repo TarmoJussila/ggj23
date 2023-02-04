@@ -10,6 +10,7 @@ namespace Klonk.TileEntity.Data
         [Header("Tile Data")]
         public SolidType SolidType;
         public LiquidType LiquidType;
+        public ExplosionType ExplosionType;
         public Color[] ColorPalette;
         public float Gravity;
         public int Health = 1;
@@ -39,12 +40,21 @@ namespace Klonk.TileEntity.Data
             return tileDatas.Find(x => x.LiquidType == type && x.LiquidType != LiquidType.None && x.IsSpawnSource == isSpawnSource);
         }
 
-        public TileData GetTileDataForType(SolidType solidType, LiquidType liquidType, bool isSpawnSource = false)
+        public TileData GetTileDataForType(ExplosionType type)
+        {
+            return tileDatas.Find(x => x.ExplosionType == type && x.ExplosionType != ExplosionType.None);
+        }
+
+        public TileData GetTileDataForType(SolidType solidType, LiquidType liquidType, ExplosionType explosionType, bool isSpawnSource = false)
         {
             var tileData = GetTileDataForType(solidType);
             if (tileData == null)
             {
                 tileData = GetTileDataForType(liquidType, isSpawnSource);
+            }
+            if (tileData == null)
+            {
+                tileData = GetTileDataForType(explosionType);
             }
             return tileData;
         }

@@ -15,6 +15,7 @@ MonoBehaviour:
   tileDatas:
   - SolidType: 1
     LiquidType: 0
+    ExplosionType: 0
     ColorPalette:
     - {r: 0.34901962, g: 0.3372549, b: 0.32156864, a: 1}
     - {r: 0.5176471, g: 0.49411768, b: 0.5294118, a: 1}
@@ -30,6 +31,7 @@ MonoBehaviour:
     IsEndlessLifespan: 0
   - SolidType: 2
     LiquidType: 0
+    ExplosionType: 0
     ColorPalette:
     - {r: 0.77254903, g: 0.63666797, b: 0.54509807, a: 1}
     - {r: 0.7075472, g: 0.45654953, b: 0.28368637, a: 1}
@@ -44,6 +46,7 @@ MonoBehaviour:
     IsEndlessLifespan: 0
   - SolidType: 0
     LiquidType: 1
+    ExplosionType: 0
     ColorPalette:
     - {r: 0.37254903, g: 0.80392164, b: 0.8941177, a: 1}
     - {r: 0.38823533, g: 0.60784316, b: 1, a: 1}
@@ -58,6 +61,7 @@ MonoBehaviour:
     IsEndlessLifespan: 0
   - SolidType: 0
     LiquidType: 2
+    ExplosionType: 0
     ColorPalette:
     - {r: 0.42396975, g: 1, b: 0, a: 1}
     - {r: 0.10084306, g: 0.7830189, b: 0, a: 1}
@@ -72,6 +76,7 @@ MonoBehaviour:
     IsEndlessLifespan: 0
   - SolidType: 0
     LiquidType: 1
+    ExplosionType: 0
     ColorPalette:
     - {r: 0.37254903, g: 0.80392164, b: 0.8941177, a: 1}
     - {r: 0.38823533, g: 0.60784316, b: 1, a: 1}
@@ -86,6 +91,7 @@ MonoBehaviour:
     IsEndlessLifespan: 0
   - SolidType: 0
     LiquidType: 2
+    ExplosionType: 0
     ColorPalette:
     - {r: 0.42396975, g: 1, b: 0, a: 1}
     - {r: 0.10084306, g: 0.7830189, b: 0, a: 1}
@@ -96,5 +102,47 @@ MonoBehaviour:
     IsSpawnSource: 1
     SpawnLiquidType: 2
     SpawnSpeed: 5
+    SpawnLifespan: 0
+    IsEndlessLifespan: 0
+  - SolidType: 0
+    LiquidType: 0
+    ExplosionType: 1
+    ColorPalette:
+    - {r: 1, g: 0.053242877, b: 0, a: 1}
+    Gravity: -2
+    Health: 10
+    IsAcidResistant: 0
+    Potency: 1
+    IsSpawnSource: 0
+    SpawnLiquidType: 0
+    SpawnSpeed: 0
+    SpawnLifespan: 0
+    IsEndlessLifespan: 0
+  - SolidType: 0
+    LiquidType: 0
+    ExplosionType: 2
+    ColorPalette:
+    - {r: 0.891067, g: 1, b: 0, a: 1}
+    Gravity: -2
+    Health: 10
+    IsAcidResistant: 0
+    Potency: 1
+    IsSpawnSource: 0
+    SpawnLiquidType: 0
+    SpawnSpeed: 0
+    SpawnLifespan: 0
+    IsEndlessLifespan: 0
+  - SolidType: 0
+    LiquidType: 0
+    ExplosionType: 3
+    ColorPalette:
+    - {r: 0, g: 0.0791831, b: 1, a: 1}
+    Gravity: -2
+    Health: 10
+    IsAcidResistant: 0
+    Potency: 1
+    IsSpawnSource: 0
+    SpawnLiquidType: 0
+    SpawnSpeed: 0
     SpawnLifespan: 0
     IsEndlessLifespan: 0

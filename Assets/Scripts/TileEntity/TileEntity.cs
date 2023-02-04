@@ -5,14 +5,17 @@ namespace Klonk.TileEntity
 {
     public enum SolidType { None, Rock, Sand }
     public enum LiquidType { None, Water, Acid }
+    public enum ExplosionType { None, Destroy, Liquify, Freeze }
     
     public class TileEntity
     {
         public Vector2Int Position { get; private set; }
         public SolidType SolidType { get; private set; }
         public LiquidType LiquidType { get; private set; }
+        public ExplosionType ExplosionType { get; private set; }
         public bool IsSolid { get { return SolidType != SolidType.None; } }
         public bool IsLiquid { get { return LiquidType != LiquidType.None; } }
+        public bool IsExplosion { get { return ExplosionType != ExplosionType.None; } }
         public float Gravity { get; private set; }
         public Vector2 Velocity { get; private set; }
         public int Health { get; private set; }
@@ -26,12 +29,13 @@ namespace Klonk.TileEntity
         private Color _tileColor;
         private int _lastSpawnSourceCount;
         
-        public TileEntity(Vector2Int position, LiquidType liquidType, SolidType solidType, bool isSpawnSource = false)
+        public TileEntity(Vector2Int position, LiquidType liquidType, SolidType solidType, ExplosionType explosionType, bool isSpawnSource = false)
         {
-            TileData = TileEntityHandler.Instance.EntityData.GetTileDataForType(solidType, liquidType, isSpawnSource);
+            TileData = TileEntityHandler.Instance.EntityData.GetTileDataForType(solidType, liquidType, explosionType, isSpawnSource);
             Position = position;
             SolidType = solidType;
             LiquidType = liquidType;
+            ExplosionType = explosionType;
             Gravity = TileData.Gravity;
             Health = TileData.Health;
             Potency = TileData.Potency;
@@ -40,7 +44,7 @@ namespace Klonk.TileEntity
 
         public Vector2Int UpdateEntity(int updateFrame)
         {
-            if (IsLiquid || TileData.IsSpawnSource)
+            if (IsLiquid || TileData.IsSpawnSource || IsExplosion)
             {
                 if (TileData.IsSpawnSource)
                 {
@@ -88,6 +92,16 @@ namespace Klonk.TileEntity
                     }
                 }
             }
+
+            if (ExplosionType != ExplosionType.None)
+            {
+                ReduceHealth();
+                if (Health <= 0)
+                {
+                    TileUtility.ExplosionInArea(Position, 10, ExplosionType);
+                }
+            }
+
             LastUpdateFrame = updateFrame;
             return Position;
         }
@@ -106,6 +120,12 @@ namespace Klonk.TileEntity
         {
             LiquidType = type;
             SolidType = SolidType.None;
+        }
+
+        public void SetSolid(SolidType type)
+        {
+            SolidType = type;
+            LiquidType = LiquidType.None;
         }
     }
 }

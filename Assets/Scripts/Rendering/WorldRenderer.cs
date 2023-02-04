@@ -66,5 +66,11 @@ namespace Klonk.Rendering
         {
             Graphics.Blit(source, destination, _material);
         }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(new Vector2(transform.position.x + _width/2, transform.position.y + _height/2), new Vector2(_width, _height));
+        }
     }
 }

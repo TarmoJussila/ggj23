@@ -45,13 +45,43 @@ namespace Klonk.TileEntity
 
         private void GenerateTileEntities(TileEntityGenerationData generationData)
         {
-            for (int i = 0; i < generationData.SolidPatchGenerationAmount; i++)
+            for (int i = 0; i < generationData.SandPatchGenerationAmount; i++)
             {
                 Vector2Int position = new Vector2Int(
                     Random.Range(0, generationData.GenerationWidth),
                     Random.Range(0, generationData.GenerationHeight)
                 );
-                for (int j = 0; j < generationData.SolidGenerationAmount; j++)
+                for (int j = 0; j < generationData.SandGenerationAmount; j++)
+                {
+                    do
+                    {
+                        position = new Vector2Int
+                        (
+                            Random.Range
+                            (
+                                Mathf.Clamp(position.x - 1, default, _generationData.GenerationWidth),
+                                Mathf.Clamp(position.x + 2, default, _generationData.GenerationWidth)
+                            ),
+                            Random.Range
+                            (
+                                Mathf.Clamp(position.y - 1, default, _generationData.GenerationHeight),
+                                Mathf.Clamp(position.y + 2, default, _generationData.GenerationHeight)
+                            )
+                        );
+                    } while (TryGetTileEntityAtPosition(position, out _));
+
+                    var tileEntity = new TileEntity(position, LiquidType.None, SolidType.Sand);
+                    _tileEntities[position.x, position.y] = tileEntity;
+                }
+            }
+
+            for (int i = 0; i < generationData.RockPatchGenerationAmount; i++)
+            {
+                Vector2Int position = new Vector2Int(
+                    Random.Range(0, generationData.GenerationWidth),
+                    Random.Range(0, generationData.GenerationHeight)
+                );
+                for (int j = 0; j < generationData.RockGenerationAmount; j++)
                 {
                     do
                     {

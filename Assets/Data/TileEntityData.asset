@@ -21,6 +21,7 @@ MonoBehaviour:
     - {r: 0.41176474, g: 0.4156863, b: 0.4156863, a: 1}
     Gravity: 0
     Health: 50
+    Potency: 1
     TextureIndex: 0
     UvMin: {x: 0, y: 0}
     UvMax: {x: 0, y: 0}
@@ -31,6 +32,7 @@ MonoBehaviour:
     - {r: 0.7075472, g: 0.45654953, b: 0.28368637, a: 1}
     Gravity: 0
     Health: 5
+    Potency: 1
     TextureIndex: 0
     UvMin: {x: 0, y: 0}
     UvMax: {x: 0, y: 0}
@@ -41,6 +43,7 @@ MonoBehaviour:
     - {r: 0.38823533, g: 0.60784316, b: 1, a: 1}
     Gravity: -1
     Health: 1
+    Potency: 1
     TextureIndex: 0
     UvMin: {x: 0, y: 0}
     UvMax: {x: 0, y: 0}
@@ -51,6 +54,7 @@ MonoBehaviour:
     - {r: 0.10084306, g: 0.7830189, b: 0, a: 1}
     Gravity: -2
     Health: 100
+    Potency: 50
     TextureIndex: 0
     UvMin: {x: 0, y: 0}
     UvMax: {x: 0, y: 0}

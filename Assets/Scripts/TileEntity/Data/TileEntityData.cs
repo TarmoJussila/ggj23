@@ -11,7 +11,8 @@ namespace Klonk.TileEntity.Data
         public LiquidType LiquidType;
         public Color[] ColorPalette;
         public float Gravity;
-        public int Health;
+        public int Health = 1;
+        public int Potency = 1;
 
         public int TextureIndex;
         public Vector2 UvMin;

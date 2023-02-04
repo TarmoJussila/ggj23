@@ -16,6 +16,7 @@ namespace Klonk.TileEntity
         public float Gravity { get; private set; }
         public Vector2 Velocity { get; private set; }
         public int Health { get; private set; }
+        public int Potency { get; private set; }
         public Color TileColor { get { return _tileColor; } }
 
         public TileData TileData { get; private set; }
@@ -32,6 +33,7 @@ namespace Klonk.TileEntity
             LiquidType = liquidType;
             Gravity = TileData.Gravity;
             Health = TileData.Health;
+            Potency = TileData.Potency;
             _tileColor = TileData.ColorPalette[Random.Range(0, TileData.ColorPalette.Length)];
         }
 
@@ -39,29 +41,28 @@ namespace Klonk.TileEntity
         {
             if (IsLiquid)
             {
-                if (!TileEntityHandler.Instance.TryGetTileEntityAtPosition(new Vector2Int(Mathf.Clamp(Position.x, default, TileEntityHandler.Instance.GenerationData.GenerationWidth), Mathf.Max(Position.y - 1, default)), out TileEntity tile))
+                if (!TileEntityHandler.Instance.TryGetTileEntityAtPosition(new Vector2Int(Mathf.Clamp(Position.x, default, TileEntityHandler.Instance.GenerationData.GenerationWidth), Mathf.Max(Position.y - 1, default)), out TileEntity otherTile1))
                 {
                     Position = new Vector2Int(Mathf.Clamp(Position.x, default, TileEntityHandler.Instance.GenerationData.GenerationWidth), Mathf.Max(Position.y - 1, default));
                     return Position;
                 }
-                else
-                {
-                    if (LiquidType == LiquidType.Acid && tile.LiquidType != LiquidType.Acid)
-                    {
-                        tile.ReduceHealth();
-                    }
-                }
-                int direction = Random.Range(0, 2) == 0 ? -1 : 1;
-                if (!TileEntityHandler.Instance.TryGetTileEntityAtPosition(new Vector2Int(Mathf.Clamp(Position.x + direction, default, TileEntityHandler.Instance.GenerationData.GenerationWidth), Mathf.Max(Position.y, default)), out _))
+                int direction = GetRandomDirection();
+                if (!TileEntityHandler.Instance.TryGetTileEntityAtPosition(new Vector2Int(Mathf.Clamp(Position.x + direction, default, TileEntityHandler.Instance.GenerationData.GenerationWidth), Mathf.Max(Position.y, default)), out TileEntity otherTile2))
                 {
                     Position = new Vector2Int(Mathf.Clamp(Position.x + direction, default, TileEntityHandler.Instance.GenerationData.GenerationWidth), Mathf.Max(Position.y, default));
                     return Position;
                 }
-                else
+
+                TileEntity otherTile = otherTile1 ?? otherTile2;
+                if (otherTile != null)
                 {
-                    if (LiquidType == LiquidType.Acid && tile.LiquidType != LiquidType.Acid)
+                    if (LiquidType == LiquidType.Acid && otherTile.LiquidType != LiquidType.Acid)
                     {
-                        tile.ReduceHealth();
+                        if (Potency > 0)
+                        {
+                            otherTile.ReduceHealth();
+                            Potency--;
+                        }
                     }
                 }
             }
@@ -76,6 +77,11 @@ namespace Klonk.TileEntity
         public int ReduceHealth()
         {
             return Health--;
+        }
+
+        private int GetRandomDirection()
+        {
+            return Random.Range(0, 2) == 0 ? -1 : 1;
         }
     }
 }

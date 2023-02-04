@@ -170,7 +170,7 @@ namespace Klonk.TileEntity
                         }
                         else
                         {
-                            if (tileEntity.Health <= 0)
+                            if (tileEntity.Health <= 0 || tileEntity.Potency <= 0)
                             {
                                 _tileEntities[x, y] = null;
                                 continue;

@@ -39,6 +39,15 @@ namespace Klonk
             {
                 UseWeapon();
             }
+
+            if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                ScrollWeapon(-1);
+            }
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                ScrollWeapon(1);
+            }
         }
 
         public void ScrollWeapon(int direction)
@@ -69,7 +78,7 @@ namespace Klonk
             {
                 return;
             }
-            
+
             if (TileEntityHandler.Instance.TryGetTileEntityAtPosition(safeX, safeY, out _))
             {
                 return;

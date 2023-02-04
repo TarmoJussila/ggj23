@@ -15,7 +15,7 @@ namespace Klonk.Rendering
 
         [SerializeField] private float _moveSpeed = 10; 
         [SerializeField] private Material _material;
-        [SerializeField] public int TextureResDivider { get; private set; } = 6;
+        [SerializeField] public int TextureResDivider { get; private set; } = 4;
         [SerializeField] private Color _skyColor;
         [SerializeField] private Color _outOfBoundsColor;
         [SerializeField] private Color _caveColor;

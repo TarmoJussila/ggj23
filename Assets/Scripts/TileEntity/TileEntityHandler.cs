@@ -124,27 +124,19 @@ namespace Klonk.TileEntity
                 _tileEntities[position.x, position.y] = tileEntity;
             }
 
-            for (int i = 0; i < generationData.WaterGenerationAmount; i++)
+            for (int i = 0; i < generationData.AcidSpawnSourceAmount; i++)
             {
                 Vector2Int position;
+                bool foundEmptyTile;
+                bool foundTileAbove;
                 do
                 {
                     position = new Vector2Int(Random.Range(0, generationData.GenerationWidth), Random.Range(0, generationData.GenerationHeight));
-                } while (TryGetTileEntityAtPosition(position, out _));
+                    foundEmptyTile = !TryGetTileEntityAtPosition(position, out _);
+                    foundTileAbove = TryGetTileEntityAtPosition(position + new Vector2Int(0, 1), out _);
+                } while (!(foundEmptyTile && foundTileAbove));
 
-                var tileEntity = new TileEntity(position, LiquidType.Water, SolidType.None);
-                _tileEntities[position.x, position.y] = tileEntity;
-            }
-
-            for (int i = 0; i < generationData.AcidGenerationAmount; i++)
-            {
-                Vector2Int position;
-                do
-                {
-                    position = new Vector2Int(Random.Range(0, generationData.GenerationWidth), Random.Range(0, generationData.GenerationHeight));
-                } while (TryGetTileEntityAtPosition(position, out _));
-
-                var tileEntity = new TileEntity(position, LiquidType.Acid, SolidType.None);
+                var tileEntity = new TileEntity(position, LiquidType.Acid, SolidType.None, true);
                 _tileEntities[position.x, position.y] = tileEntity;
             }
         }

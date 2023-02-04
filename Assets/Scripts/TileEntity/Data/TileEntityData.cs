@@ -11,6 +11,10 @@ namespace Klonk.TileEntity.Data
         public LiquidType LiquidType;
         public Color Color;
         public float Gravity;
+
+        public int TextureIndex;
+        public Vector2 UvMin;
+        public Vector2 UvMax;
     }
 
     [CreateAssetMenu(fileName = nameof(TileEntityData), menuName = nameof(TileEntityData))]

@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Klonk.Rendering;
 using Klonk.TileEntity.Data;
 using UnityEngine;
@@ -26,9 +23,9 @@ namespace Klonk.TileEntity
 
         public TileEntity[,] TileEntities => _tileEntities;
         public TileEntityGenerationData GenerationData => _generationData;
+        public TileEntityData EntityData => _entityData;
 
         private TileEntity[,] _tileEntities;
-        private TileEntity[,] _previousTileEntities;
 
         [SerializeField] private TileEntityGenerationData _generationData;
         [SerializeField] private TileEntityData _entityData;
@@ -58,12 +55,15 @@ namespace Klonk.TileEntity
                 {
                     do
                     {
-                        position = new Vector2Int(
-                            Random.Range(
+                        position = new Vector2Int
+                        (
+                            Random.Range
+                            (
                                 Mathf.Clamp(position.x - 1, default, _generationData.GenerationWidth),
                                 Mathf.Clamp(position.x + 2, default, _generationData.GenerationWidth)
                             ),
-                            Random.Range(
+                            Random.Range
+                            (
                                 Mathf.Clamp(position.y - 1, default, _generationData.GenerationHeight),
                                 Mathf.Clamp(position.y + 2, default, _generationData.GenerationHeight)
                             )
@@ -109,7 +109,6 @@ namespace Klonk.TileEntity
             
             if (_tileEntities != null)
             {
-                _previousTileEntities = (TileEntity[,])_tileEntities.Clone();
                 Vector3 camPos = WorldRenderer.Instance.Cam.transform.position;
                 Vector3Int camPosInt = new(Mathf.RoundToInt(camPos.x), Mathf.RoundToInt(camPos.y));
 
@@ -122,14 +121,12 @@ namespace Klonk.TileEntity
                     {
                         if (!TryGetTileEntityAtPosition(x, y, out TileEntity tileEntity)
                             || tileEntity.IsSolid
-                            || tileEntity.lastUpdate == _updateIteration)
+                            || tileEntity.LastUpdateFrame == _updateIteration)
                         {
                             continue;
                         }
 
-                        tileEntity.lastUpdate = _updateIteration;
-
-                        var position = tileEntity.UpdateEntity();
+                        var position = tileEntity.UpdateEntity(_updateIteration);
 
                         if (position.x != x || position.y != y)
                         {

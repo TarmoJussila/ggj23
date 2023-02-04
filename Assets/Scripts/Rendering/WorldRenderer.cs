@@ -16,10 +16,13 @@ namespace Klonk.Rendering
         public int Height { get; private set; }
         
         [SerializeField] private Material _material;
+        [SerializeField] private Texture2D _mainTexture;
         
         private Texture2D _texture;
         private int _tilesPerUnit = 32;
 
+        private Rect _screenRect;
+        
         void Awake()
         {
             Instance = this;
@@ -29,8 +32,12 @@ namespace Klonk.Rendering
 
             Cam = GetComponent<Camera>();
             _texture = new Texture2D(Width, Height, TextureFormat.ARGB32, false);
+            _texture.wrapMode = TextureWrapMode.Clamp;
+            
             _material.EnableKeyword("_WorldTex");
-            _material.EnableKeyword("_MainTex");
+            //_material.EnableKeyword("_MainTex");
+
+            _screenRect = new Rect(Vector2.zero, new Vector2(Screen.width, Screen.height));
         }
 
         private void FixedUpdate()
@@ -56,7 +63,7 @@ namespace Klonk.Rendering
                     }
 
                     uvOffset.x = tile.IsLiquid ? 0.5f : 0.0f;
-                    uvOffset.y = 0.5f; //tile.IsLiquid ? 0.0f : 0.0f;
+                    uvOffset.y = 0.4f; //tile.IsLiquid ? 0.0f : 0.0f;
                     
                     _texture.SetPixel(x, y, new Color(uvOffset.x, uvOffset.y, 0.0f, 1.0f));
                 }
@@ -65,11 +72,17 @@ namespace Klonk.Rendering
             _texture.Apply();
 
             _material.SetTexture("_WorldTex", _texture);
+           // _material.SetTexture("_MainTex", _mainTexture);
         }
 
         void OnRenderImage(RenderTexture source, RenderTexture destination)
         {
             Graphics.Blit(source, destination, _material);
         }
+
+        /*private void Update()
+        {
+            Graphics.DrawTexture(_screenRect, _texture, _material, 2);
+        }*/
     }
 }

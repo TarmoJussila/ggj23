@@ -2,10 +2,10 @@ Shader "Klonk/World"
 {
     Properties
     {
-        _MainTex ("Texture", 2D) = "white" {}
+        _GroundSheet ("Ground Sheet", 2D) = "white" {}
         _WorldTex ("WorldData", 2D) = "white" {}
-       // _PixelsPerEntity ("Pixels per entity", int) = 6
-        //_CameraPos ("Camera center world position", Vector) = (0.0, 0.0,0,0)
+        _PixelsPerEntity ("Pixels per entity", int) = 6
+        _CameraPos ("Camera center world position", Vector) = (0.0, 0.0,0,0)
     }
     SubShader
     {
@@ -25,6 +25,7 @@ Shader "Klonk/World"
                 float4 vertex : POSITION;
                 float2 uv : TEXCOORD0;
             };
+
             //static int _PixelsPerEntity;
             //float2 _CameraPos;
 
@@ -40,25 +41,27 @@ Shader "Klonk/World"
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = v.uv;
                 return o;
-            }            
+            }
 
-            sampler2D _MainTex;
-            float4 _MainTex_ST;
-            sampler2D _WorldTex;
+            Texture2D _GroundSheet;
+            SamplerState sampler_GroundSheet_Point_Clamp;
+            float4 _GroundSheet_ST;
+
+            Texture2D _WorldTex;
+            SamplerState sampler_WorldTex_Point_Clamp;
             float4 _WorldTex_ST;
 
             fixed4 frag(v2f i) : SV_Target
             {
-                fixed4 col = tex2D(_WorldTex, i.uv);
-                //return fixed4(i.uv, 0, 1);
+                fixed4 offset = _WorldTex.Sample(
+                    sampler_WorldTex_Point_Clamp, i.uv);
+                //fixed4 offset = tex2D(_WorldTex, i.uv);
+
+                //return fixed4(offset.rg, 0, 1);
+                fixed4 col = _GroundSheet.Sample(
+                    sampler_GroundSheet_Point_Clamp, offset.rg);
+                //fixed4 col = tex2D(_GroundSheet, offset.rg);
                 return col;
-                
-                fixed4 offset = tex2D(_WorldTex, i.uv);
-                //return fixed4(offset.rgb, 1);
-                //fixed4 col = tex2D(_MainTex, offset.rg);
-                return fixed4(i.uv, 0, 1);
-                return col; //fixed4(col.r, 1, col.b, 1);
-                return fixed4(offset.rg, 0, 1);
             }
             ENDCG
         }

@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: TileEntityGenerationData
   m_EditorClassIdentifier: 
   _solidPatchGenerationAmount: 30
-  _solidGenerationAmount: 1000
-  _liquidGenerationAmount: 5000
+  _solidGenerationAmount: 1500
+  _waterGenerationAmount: 1500
+  _acidGenerationAmount: 1000
   _generationWidth: 1000
   _generationHeight: 1000

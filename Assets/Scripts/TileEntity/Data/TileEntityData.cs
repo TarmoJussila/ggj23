@@ -11,6 +11,7 @@ namespace Klonk.TileEntity.Data
         public LiquidType LiquidType;
         public Color Color;
         public float Gravity;
+        public int Health;
 
         public int TextureIndex;
         public Vector2 UvMin;
@@ -24,12 +25,12 @@ namespace Klonk.TileEntity.Data
 
         public TileData GetTileDataForType(SolidType type)
         {
-            return tileDatas.Find(x => x.SolidType == type);
+            return tileDatas.Find(x => x.SolidType == type && x.SolidType != SolidType.None);
         }
 
         public TileData GetTileDataForType(LiquidType type)
         {
-            return tileDatas.Find(x => x.LiquidType == type);
+            return tileDatas.Find(x => x.LiquidType == type && x.LiquidType != LiquidType.None);
         }
 
         public TileData GetTileDataForType(SolidType solidType, LiquidType liquidType)

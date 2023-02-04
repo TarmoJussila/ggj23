@@ -15,34 +15,50 @@ namespace Klonk.TileEntity
         public bool IsLiquid { get { return LiquidType != LiquidType.None; } }
         public float Gravity { get; private set; }
         public Vector2 Velocity { get; private set; }
+        public int Health { get; private set; }
 
         public TileData TileData { get; private set; }
 
         public int LastUpdateFrame { get; private set; } = -1;
         
-        public TileEntity(Vector2Int position, LiquidType liquidType, SolidType solidType, float gravity = 0f)
+        public TileEntity(Vector2Int position, LiquidType liquidType, SolidType solidType)
         {
             TileData = TileEntityHandler.Instance.EntityData.GetTileDataForType(solidType, liquidType);
             Position = position;
             SolidType = solidType;
             LiquidType = liquidType;
-            Gravity = gravity;
+            Gravity = TileData.Gravity;
+            Health = TileData.Health;
         }
 
         public Vector2Int UpdateEntity(int updateFrame)
         {
             if (IsLiquid)
             {
-                if (!TileEntityHandler.Instance.TryGetTileEntityAtPosition(new Vector2Int(Mathf.Clamp(Position.x, default, TileEntityHandler.Instance.GenerationData.GenerationWidth), Mathf.Max(Position.y - 1, default)), out _))
+                if (!TileEntityHandler.Instance.TryGetTileEntityAtPosition(new Vector2Int(Mathf.Clamp(Position.x, default, TileEntityHandler.Instance.GenerationData.GenerationWidth), Mathf.Max(Position.y - 1, default)), out TileEntity tile))
                 {
                     Position = new Vector2Int(Mathf.Clamp(Position.x, default, TileEntityHandler.Instance.GenerationData.GenerationWidth), Mathf.Max(Position.y - 1, default));
                     return Position;
+                }
+                else
+                {
+                    if (LiquidType == LiquidType.Acid && tile.LiquidType != LiquidType.Acid)
+                    {
+                        tile.ReduceHealth();
+                    }
                 }
                 int direction = Random.Range(0, 2) == 0 ? -1 : 1;
                 if (!TileEntityHandler.Instance.TryGetTileEntityAtPosition(new Vector2Int(Mathf.Clamp(Position.x + direction, default, TileEntityHandler.Instance.GenerationData.GenerationWidth), Mathf.Max(Position.y, default)), out _))
                 {
                     Position = new Vector2Int(Mathf.Clamp(Position.x + direction, default, TileEntityHandler.Instance.GenerationData.GenerationWidth), Mathf.Max(Position.y, default));
                     return Position;
+                }
+                else
+                {
+                    if (LiquidType == LiquidType.Acid && tile.LiquidType != LiquidType.Acid)
+                    {
+                        tile.ReduceHealth();
+                    }
                 }
             }
             if (IsSolid)
@@ -51,6 +67,11 @@ namespace Klonk.TileEntity
             }
             LastUpdateFrame = updateFrame;
             return Position;
+        }
+
+        public int ReduceHealth()
+        {
+            return Health--;
         }
     }
 }

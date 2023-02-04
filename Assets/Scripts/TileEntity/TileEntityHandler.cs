@@ -75,7 +75,7 @@ namespace Klonk.TileEntity
                 }
             }
 
-            for (int i = 0; i < generationData.LiquidGenerationAmount; i++)
+            for (int i = 0; i < generationData.WaterGenerationAmount; i++)
             {
                 Vector2Int position;
                 do
@@ -84,6 +84,18 @@ namespace Klonk.TileEntity
                 } while (TryGetTileEntityAtPosition(position, out _));
 
                 var tileEntity = new TileEntity(position, LiquidType.Water, SolidType.None);
+                _tileEntities[position.x, position.y] = tileEntity;
+            }
+
+            for (int i = 0; i < generationData.AcidGenerationAmount; i++)
+            {
+                Vector2Int position;
+                do
+                {
+                    position = new Vector2Int(Random.Range(0, generationData.GenerationWidth), Random.Range(0, generationData.GenerationHeight));
+                } while (TryGetTileEntityAtPosition(position, out _));
+
+                var tileEntity = new TileEntity(position, LiquidType.Acid, SolidType.None);
                 _tileEntities[position.x, position.y] = tileEntity;
             }
         }
@@ -123,6 +135,12 @@ namespace Klonk.TileEntity
                             || tileEntity.IsSolid
                             || tileEntity.LastUpdateFrame == _updateIteration)
                         {
+                            continue;
+                        }
+
+                        if (tileEntity.Health <= 0)
+                        {
+                            _tileEntities[x, y] = null;
                             continue;
                         }
 

@@ -15,17 +15,33 @@ MonoBehaviour:
   tileDatas:
   - SolidType: 1
     LiquidType: 0
-    Color: {r: 0.11320752, g: 0.11320752, b: 0.11320752, a: 1}
+    Color: {r: 0, g: 0, b: 0, a: 1}
     Gravity: 0
+    Health: 10
+    TextureIndex: 0
+    UvMin: {x: 0, y: 0}
+    UvMax: {x: 0, y: 0}
   - SolidType: 2
     LiquidType: 0
     Color: {r: 0.8962264, g: 0.525203, b: 0, a: 1}
     Gravity: 0
+    Health: 3
+    TextureIndex: 0
+    UvMin: {x: 0, y: 0}
+    UvMax: {x: 0, y: 0}
   - SolidType: 0
     LiquidType: 1
     Color: {r: 0, g: 0.4953575, b: 1, a: 0.5019608}
     Gravity: -1
+    Health: 1
+    TextureIndex: 0
+    UvMin: {x: 0, y: 0}
+    UvMax: {x: 0, y: 0}
   - SolidType: 0
     LiquidType: 2
     Color: {r: 0, g: 1, b: 0.054832935, a: 0.8627451}
     Gravity: -2
+    Health: 100
+    TextureIndex: 0
+    UvMin: {x: 0, y: 0}
+    UvMax: {x: 0, y: 0}

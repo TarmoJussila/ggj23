@@ -82,7 +82,7 @@ namespace Klonk.Platforming
                     Vector2Int position = bottomLeftTileCoordinates + new Vector2Int(x + 1, y);
                     position.y = Mathf.Max(default, position.y);
                     Debug.DrawRay(TileUtility.TileToWorldCoordinates(position), Vector3.down * 10);
-                    if (TileEntityHandler.Instance.TryGetTileEntityAtPosition(position, out _))
+                    if (TileEntityHandler.Instance.TryGetTileEntityAtPosition(position, out var tile) && !tile.IsLiquid)
                     {
                         Vector3 velocity = new Vector2(_velocity.x, y * TileUtility.TILE_SIZE);
                         if (velocity.sqrMagnitude < _velocity.sqrMagnitude)
@@ -102,7 +102,7 @@ namespace Klonk.Platforming
                     Vector2Int position = topLeftTileCoordinates + new Vector2Int(x + 1, y + 1);
                     position.y = Mathf.Max(default, position.y);
                     Debug.DrawRay(TileUtility.TileToWorldCoordinates(position), Vector3.up * 10);
-                    if (TileEntityHandler.Instance.TryGetTileEntityAtPosition(position, out _))
+                    if (TileEntityHandler.Instance.TryGetTileEntityAtPosition(position, out var tile) && !tile.IsLiquid)
                     {
                         _velocity = new Vector2(_velocity.x, Mathf.Min(_velocity.y, y * TileUtility.TILE_SIZE));
                         break;
@@ -117,7 +117,7 @@ namespace Klonk.Platforming
                 {
                     Vector2Int position = bottomLeftTileCoordinates + new Vector2Int(x, y);
                     Debug.DrawRay(TileUtility.TileToWorldCoordinates(position), Vector3.left * 10);
-                    if (TileEntityHandler.Instance.TryGetTileEntityAtPosition(position, out _))
+                    if (TileEntityHandler.Instance.TryGetTileEntityAtPosition(position, out var tile) && !tile.IsLiquid)
                     {
                         if (y < yTileSize / 3)
                         {
@@ -139,7 +139,7 @@ namespace Klonk.Platforming
                 {
                     Vector2Int position = bottomRightTileCoordinates + new Vector2Int(x, y);
                     Debug.DrawRay(TileUtility.TileToWorldCoordinates(position), Vector3.right * 10);
-                    if (TileEntityHandler.Instance.TryGetTileEntityAtPosition(position, out _))
+                    if (TileEntityHandler.Instance.TryGetTileEntityAtPosition(position, out var tile) && !tile.IsLiquid)
                     {
                         if (y < yTileSize / 3)
                         {

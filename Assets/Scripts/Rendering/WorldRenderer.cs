@@ -22,7 +22,9 @@ namespace Klonk.Rendering
 
         private int _lastScreenWidth, _lastScreenHeight;
         private int _width, _height;
-
+        private readonly int _minDivider = 4;
+        private readonly int _maxDivider = 12;
+        
         private void Awake()
         {
             Instance = this;
@@ -102,7 +104,7 @@ namespace Klonk.Rendering
 
         private void ChangeZoom(int direction)
         {
-            TextureResDivider += direction;
+            TextureResDivider = Math.Clamp(TextureResDivider + direction, _minDivider, _maxDivider);
             CheckAspect(true);
         }
 

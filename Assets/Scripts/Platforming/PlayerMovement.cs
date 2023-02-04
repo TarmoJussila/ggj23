@@ -8,7 +8,7 @@ namespace Klonk.Platforming
     {
         public static PlayerMovement Instance;
         private const int AlternativeSpriteCount = 2;
-        private const float WalkSpriteInterval = 5f;
+        private const float WalkSpriteInterval = 0.1f;
         
         [Header("Settings")]
         [SerializeField] private float _moveSpeed = 1f; 
@@ -51,6 +51,14 @@ namespace Klonk.Platforming
             {
                 return;
             }
+
+            _walkTimer += Time.deltaTime;
+            if (_walkTimer < WalkSpriteInterval)
+            {
+                return;
+            }
+
+            _walkTimer = 0;
             
             if (CheckAlternativeSprite(_lookForward))
             {

@@ -65,7 +65,7 @@ namespace Klonk.Platforming
             Vector3 topLeft = worldPosition + Vector3.up * bounds.extents.y + Vector3.left * bounds.extents.x;
             Vector2Int bottomLeftTileCoordinates = TileUtility.WorldToTileCoordinates(bottomLeft);
             Vector2Int bottomRightTileCoordinates = TileUtility.WorldToTileCoordinates(bottomRight);
-            Vector2Int topRightTileCoordinates = TileUtility.WorldToTileCoordinates(topLeft);
+            Vector2Int topLeftTileCoordinates = TileUtility.WorldToTileCoordinates(topLeft);
             
             // Limit down velocity
             for (int x = 0; x < xTileSize; x++)
@@ -77,9 +77,12 @@ namespace Klonk.Platforming
                     Debug.DrawRay(TileUtility.TileToWorldCoordinates(position), Vector3.down * 10);
                     if (TileEntityHandler.Instance.TryGetTileEntityAtPosition(position, out _))
                     {
-                        _velocity = new Vector2(_velocity.x, y * TileUtility.TILE_SIZE);
-                        IsGrounded = Mathf.Approximately(_velocity.y, default);
-                        break;
+                        Vector3 velocity = new Vector2(_velocity.x, y * TileUtility.TILE_SIZE);
+                        if (velocity.sqrMagnitude < _velocity.sqrMagnitude)
+                        {
+                            _velocity = velocity;
+                            IsGrounded = y < 3;
+                        }
                     }
                 }
             }
@@ -89,7 +92,7 @@ namespace Klonk.Platforming
             {
                 for (int y = 0; y < yTileVelocity; y++)
                 {
-                    Vector2Int position = topRightTileCoordinates + new Vector2Int(x + 1, y + 1);
+                    Vector2Int position = topLeftTileCoordinates + new Vector2Int(x + 1, y + 1);
                     position.y = Mathf.Max(default, position.y);
                     Debug.DrawRay(TileUtility.TileToWorldCoordinates(position), Vector3.up * 10);
                     if (TileEntityHandler.Instance.TryGetTileEntityAtPosition(position, out _))

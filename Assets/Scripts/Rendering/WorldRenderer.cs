@@ -50,7 +50,7 @@ namespace Klonk.Rendering
             transform.position = Vector3.Lerp(transform.position, targetPosition, _moveSpeed);
 
             _normalCamera.transform.position = new Vector3(transform.position.x + Width / 2f, transform.position.y + Height / 2f, _normalCamera.transform.position.z);
-            _normalCamera.orthographicSize = Mathf.Max(Width / 2f, Height / 2f);
+            _normalCamera.orthographicSize = Height / 2f;
             //var coords = Vector2Int.zero;
 
             Vector3 position = transform.position;

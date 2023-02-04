@@ -36,12 +36,22 @@ namespace Klonk.TileEntity
         private int _worldWidth;
         private int _worldHeight;
 
+        private readonly int _initialUpdateSimulationCount = 1000;
+
         private void Awake()
         {
             _tileEntities = new TileEntity[_generationData.GenerationWidth, _generationData.GenerationHeight];
             _worldWidth = _tileEntities.GetLength(0);
             _worldHeight = _tileEntities.GetLength(1);
             GenerateTileEntities(_generationData);
+        }
+
+        private void Start()
+        {
+            for (int i = 0; i < _initialUpdateSimulationCount; i++)
+            {
+                UpdateSimulation(true);
+            }
         }
 
         private void GenerateTileEntities(TileEntityGenerationData generationData)
@@ -174,16 +184,21 @@ namespace Klonk.TileEntity
 
         private void FixedUpdate()
         {
+            UpdateSimulation();
+        }
+
+        private void UpdateSimulation(bool updateAll = false)
+        {
             _updateIteration++;
             
             if (_tileEntities != null)
             {
-                Vector3 camPos = WorldRenderer.Instance.Camera.transform.position;
-                Vector3Int camPosInt = new(Mathf.RoundToInt(camPos.x), Mathf.RoundToInt(camPos.y));
+                Vector2 camPos = !updateAll ? WorldRenderer.Instance.Camera.transform.position : Vector2.zero;
+                Vector2Int camPosInt = new(Mathf.RoundToInt(camPos.x), Mathf.RoundToInt(camPos.y));
 
-                int width = WorldRenderer.Instance.Width + 4; //maek thing go out screen
-                int height = WorldRenderer.Instance.Height + 4;
-                
+                int width = !updateAll ? WorldRenderer.Instance.Width + 4 : _generationData.GenerationWidth;
+                int height = !updateAll ? WorldRenderer.Instance.Height + 4 : _generationData.GenerationHeight;
+
                 for (int x = camPosInt.x; x < camPosInt.x + width; x++)
                 {
                     for (int y = camPosInt.y; y < camPosInt.y + height; y++)

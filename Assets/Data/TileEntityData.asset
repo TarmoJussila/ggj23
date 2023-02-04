@@ -20,17 +20,17 @@ MonoBehaviour:
     - {r: 0.5176471, g: 0.49411768, b: 0.5294118, a: 1}
     - {r: 0.41176474, g: 0.4156863, b: 0.4156863, a: 1}
     Gravity: 0
-    Health: 10
+    Health: 50
     TextureIndex: 0
     UvMin: {x: 0, y: 0}
     UvMax: {x: 0, y: 0}
   - SolidType: 2
     LiquidType: 0
     ColorPalette:
-    - {r: 0.7735849, g: 0.73417586, b: 0.54369885, a: 1}
-    - {r: 0.8490566, g: 0.83923554, b: 0.6928622, a: 1}
+    - {r: 0.77254903, g: 0.63666797, b: 0.54509807, a: 1}
+    - {r: 0.7075472, g: 0.45654953, b: 0.28368637, a: 1}
     Gravity: 0
-    Health: 3
+    Health: 5
     TextureIndex: 0
     UvMin: {x: 0, y: 0}
     UvMax: {x: 0, y: 0}

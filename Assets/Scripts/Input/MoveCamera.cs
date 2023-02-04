@@ -52,6 +52,20 @@ namespace Klonk.Input
 
         private void Update()
         {
+            Mouse mouse = Mouse.current;
+            if (mouse != null)
+            {
+                float scrollY = mouse.scroll.ReadValue().y;
+                if (scrollY > 0)
+                {
+                    _worldRenderer.ZoomIn();
+                }
+                else if (scrollY < 0)
+                {
+                    _worldRenderer.ZoomOut();
+                }
+            }
+
             Keyboard keyboard = Keyboard.current;
             if (keyboard == null)
             {

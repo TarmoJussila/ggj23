@@ -52,5 +52,10 @@ namespace Klonk.TileEntity.Data
             }
             return tileData;
         }
+
+        public TileData GetTileDataByIndex(int index)
+        {
+            return tileDatas[index];
+        }
     }
 }

@@ -11,14 +11,14 @@ namespace Klonk.Platforming
         
         public Vector2 Velocity => _velocity;
         public bool IsGrounded { get; private set; }
+        public BoxCollider2D BoxCollider { get; private set; }
 
         private Vector2 _velocity;
-        private BoxCollider2D _boxCollider;
         private const float GRAVITY = 0.25f;
 
         private void Awake()
         {
-            _boxCollider = GetComponent<BoxCollider2D>();
+            BoxCollider = GetComponent<BoxCollider2D>();
         }
 
         private void FixedUpdate()
@@ -33,7 +33,7 @@ namespace Klonk.Platforming
         {
             _velocity.y -= GRAVITY;
             IsGrounded = false;
-            Bounds bounds = _boxCollider.bounds;
+            Bounds bounds = BoxCollider.bounds;
             Vector3 worldPosition = transform.position;
             Vector3 worldPositionAfterVelocity = worldPosition + new Vector3(_velocity.x, _velocity.y, default);
             int yTileVelocity = (int)(_velocity.y * TileUtility.TILES_PER_UNIT);

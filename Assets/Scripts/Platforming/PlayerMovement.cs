@@ -7,6 +7,8 @@ namespace Klonk.Platforming
     public class PlayerMovement : MonoBehaviour
     {
         public static PlayerMovement Instance;
+        private const int AlternativeSpriteCount = 2;
+        private const float WalkSpriteInterval = 5f;
         
         [Header("Settings")]
         [SerializeField] private float _moveSpeed = 1f; 
@@ -16,14 +18,16 @@ namespace Klonk.Platforming
         [SerializeField] private float _jumpVelocity;
 
         [Header("Sprites")]
-        [SerializeField] private Sprite _lookForward;
-        [SerializeField] private Sprite _lookUp;
-        [SerializeField] private Sprite _lookDown;
+        [SerializeField] private Sprite[] _lookForward;
+        [SerializeField] private Sprite[] _lookUp;
+        [SerializeField] private Sprite[] _lookDown;
 
         private int _jumpTicks;
         private bool _isJumping;
         private float _horizontalInput;
         private float _verticalInput;
+        private int _spriteIndex;
+        private float _walkTimer;
 
         public FakeRigidbody Rigidbody { get; private set; }
 
@@ -37,11 +41,30 @@ namespace Klonk.Platforming
             _rigidbody = GetComponent<FakeRigidbody>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
         }
-
-        private float _horizontalMovement;
+        
         private FakeRigidbody _rigidbody;
         private SpriteRenderer _spriteRenderer;
 
+        private void Update()
+        {
+            if (Mathf.Approximately(0, _horizontalInput))
+            {
+                return;
+            }
+            
+            if (CheckAlternativeSprite(_lookForward))
+            {
+                return;
+            }
+
+            if (CheckAlternativeSprite(_lookDown))
+            {
+                return;
+            }
+
+            CheckAlternativeSprite(_lookUp);
+        }
+        
         private void FixedUpdate()
         {
             _isJumping = _jumpTicks-- > 0;
@@ -55,16 +78,16 @@ namespace Klonk.Platforming
         public void OnVerticalInput(InputAction.CallbackContext context)
         {
             _verticalInput = context.ReadValue<float>();
-            Sprite nextSprite = _lookForward;
+            Sprite nextSprite = _lookForward[0];
             
             if (_verticalInput < 0)
             {
-                nextSprite = _lookDown;
+                nextSprite = _lookDown[0];
             }
 
             if (_verticalInput > 0)
             {
-                nextSprite = _lookUp;
+                nextSprite = _lookUp[0];
             }
 
             if (_spriteRenderer.sprite != nextSprite)
@@ -75,19 +98,36 @@ namespace Klonk.Platforming
 
         public void OnHorizontalInput(InputAction.CallbackContext context)
         {
+            float previous = _horizontalInput;
             _horizontalInput = context.ReadValue<float>();
-            float previous = _horizontalMovement;
-            _horizontalMovement = context.ReadValue<float>();
 
-            if (Mathf.Approximately(0, _horizontalMovement))
+            if (Mathf.Approximately(0, _horizontalInput))
             {
                 return;
             }
 
-            if (!Mathf.Approximately(previous, _horizontalMovement))
+            if (!Mathf.Approximately(previous, _horizontalInput))
             {
-                _spriteRenderer.flipX = _horizontalMovement < 0;
+                _spriteRenderer.flipX = _horizontalInput < 0;
             }
+        }
+
+        private bool CheckAlternativeSprite(Sprite[] sprites)
+        {
+            Sprite current = _spriteRenderer.sprite;
+            foreach (Sprite sprite in sprites)
+            {
+                if (current.name == sprite.name)
+                {
+                    _spriteIndex++;
+                    _spriteIndex = _spriteIndex >= AlternativeSpriteCount ? 0 : _spriteIndex;
+                    _spriteRenderer.sprite = sprites[_spriteIndex];
+                    
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public void OnJumpInput(InputAction.CallbackContext context)

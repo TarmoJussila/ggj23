@@ -183,9 +183,16 @@ MonoBehaviour:
   _jumpTickCount: 2
   _jumpStartVelocity: 4
   _jumpEndVelocity: 2
-  _lookForward: {fileID: 21300000, guid: 5ec787de91c2f47ed852547ea7bdc7c8, type: 3}
-  _lookUp: {fileID: 21300000, guid: 29698448a7ff04ae8a0094525aabd862, type: 3}
-  _lookDown: {fileID: 21300000, guid: e3fda4ea522ae47d98b724423936b7a9, type: 3}
+  _jumpVelocity: 0
+  _lookForward:
+  - {fileID: 21300000, guid: 5ec787de91c2f47ed852547ea7bdc7c8, type: 3}
+  - {fileID: 21300000, guid: 8c9c26d61a07345aaa68780d7ceef5c7, type: 3}
+  _lookUp:
+  - {fileID: 21300000, guid: 29698448a7ff04ae8a0094525aabd862, type: 3}
+  - {fileID: 21300000, guid: 5cb0ea27b081a41b7b574e4935afd4c8, type: 3}
+  _lookDown:
+  - {fileID: 21300000, guid: e3fda4ea522ae47d98b724423936b7a9, type: 3}
+  - {fileID: 21300000, guid: b12e1c11df40c4fa593c0eba3c6b8ffc, type: 3}
 --- !u!114 &7651431852371391228
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -33,6 +33,9 @@ namespace Klonk.Platforming
         public void OnHorizontalInput(InputAction.CallbackContext context)
         {
             _horizontalMovement = context.ReadValue<float>();
+            Vector3 scale = transform.localScale;
+            scale.x = scale.x * _horizontalMovement < 0 ? -scale.x : scale.x;
+            transform.localScale = scale;
         }
 
         public void OnJumpInput(InputAction.CallbackContext context)

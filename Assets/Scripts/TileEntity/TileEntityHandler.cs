@@ -1,7 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Klonk.Rendering;
 using Klonk.TileEntity.Data;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Klonk.TileEntity
 {
@@ -15,75 +18,124 @@ namespace Klonk.TileEntity
                 {
                     _instance = FindObjectOfType<TileEntityHandler>();
                 }
+
                 return _instance;
             }
         }
         private static TileEntityHandler _instance;
 
-        public Dictionary<Vector2Int, TileEntity> TileEntities => _tileEntities;
+        public TileEntity[,] TileEntities => _tileEntities;
         public TileEntityGenerationData GenerationData => _generationData;
-        
-        private Dictionary<Vector2Int, TileEntity> _tileEntities;
+
+        private TileEntity[,] _tileEntities;
+        private TileEntity[,] _previousTileEntities;
 
         [SerializeField] private TileEntityGenerationData _generationData;
         [SerializeField] private TileEntityData _entityData;
         [SerializeField] private bool _drawGizmos = false;
 
+        private int _updateIteration = 0;
+        private int _worldWidth;
+        private int _worldHeight;
+
         private void Awake()
         {
-            _tileEntities = new Dictionary<Vector2Int, TileEntity>();
+            _tileEntities = new TileEntity[_generationData.GenerationWidth, _generationData.GenerationHeight];
             GenerateTileEntities(_generationData);
+            _worldWidth = _tileEntities.GetLength(0);
+            _worldHeight = _tileEntities.GetLength(1);
         }
 
         private void GenerateTileEntities(TileEntityGenerationData generationData)
         {
             for (int i = 0; i < generationData.SolidPatchGenerationAmount; i++)
             {
-                Vector2Int position = new Vector2Int(Random.Range(0, generationData.GenerationWidth), Random.Range(0, generationData.GenerationHeight));
+                Vector2Int position = new Vector2Int(
+                    Random.Range(0, generationData.GenerationWidth),
+                    Random.Range(0, generationData.GenerationHeight)
+                );
                 for (int j = 0; j < generationData.SolidGenerationAmount; j++)
                 {
                     do
                     {
-                        position = new Vector2Int(Random.Range(Mathf.Clamp(position.x - 1, default, _generationData.GenerationWidth), Mathf.Clamp(position.x + 2, default, _generationData.GenerationWidth)), Random.Range(Mathf.Clamp(position.y - 1, default, _generationData.GenerationHeight), Mathf.Clamp(position.y + 2, default, _generationData.GenerationHeight)));
-                    } while (TryGetTileEntityAtPosition(position) != null);
+                        position = new Vector2Int(
+                            Random.Range(
+                                Mathf.Clamp(position.x - 1, default, _generationData.GenerationWidth),
+                                Mathf.Clamp(position.x + 2, default, _generationData.GenerationWidth)
+                            ),
+                            Random.Range(
+                                Mathf.Clamp(position.y - 1, default, _generationData.GenerationHeight),
+                                Mathf.Clamp(position.y + 2, default, _generationData.GenerationHeight)
+                            )
+                        );
+                    } while (TryGetTileEntityAtPosition(position, out _));
 
                     var tileEntity = new TileEntity(position, LiquidType.None, SolidType.Rock);
-                    _tileEntities.Add(position, tileEntity);
+                    _tileEntities[position.x, position.y] = tileEntity;
                 }
             }
+
             for (int i = 0; i < generationData.LiquidGenerationAmount; i++)
             {
                 Vector2Int position;
                 do
                 {
                     position = new Vector2Int(Random.Range(0, generationData.GenerationWidth), Random.Range(0, generationData.GenerationHeight));
-                } while (TryGetTileEntityAtPosition(position) != null);
+                } while (TryGetTileEntityAtPosition(position, out _));
 
                 var tileEntity = new TileEntity(position, LiquidType.Water, SolidType.None);
-                _tileEntities.Add(position, tileEntity);
+                _tileEntities[position.x, position.y] = tileEntity;
             }
         }
 
-        public TileEntity TryGetTileEntityAtPosition(Vector2Int position)
+        public bool TryGetTileEntityAtPosition(Vector2Int position, out TileEntity tile) =>
+            TryGetTileEntityAtPosition(position.x, position.y, out tile);
+
+        public bool TryGetTileEntityAtPosition(int x, int y, out TileEntity tile)
         {
-            TileEntity tileEntity = null;
-            _tileEntities?.TryGetValue(position, out tileEntity);
-            return tileEntity;
+            if (x < 0 || x >= _worldWidth || y < 0 || y >= _worldHeight)
+            {
+                tile = null;
+                return false;
+            }
+
+            tile = _tileEntities[x, y];
+            return tile != null;
         }
 
         private void FixedUpdate()
         {
+            _updateIteration++;
+            
             if (_tileEntities != null)
             {
-                var tileEntitiesCopy = _tileEntities.ToDictionary(k => k.Key, v => v.Value);
-                foreach (var tileEntity in tileEntitiesCopy)
+                _previousTileEntities = (TileEntity[,])_tileEntities.Clone();
+                Vector3 camPos = WorldRenderer.Instance.Cam.transform.position;
+                Vector3Int camPosInt = new(Mathf.RoundToInt(camPos.x), Mathf.RoundToInt(camPos.y));
+
+                int width = WorldRenderer.Instance.Width;
+                int height = WorldRenderer.Instance.Height;
+                
+                for (int x = camPosInt.x; x < camPosInt.x + width; x++)
                 {
-                    var oldPosition = tileEntity.Key;
-                    var position = tileEntity.Value.UpdateEntity();
-                    if (oldPosition != position)
+                    for (int y = camPosInt.y; y < camPosInt.y + height; y++)
                     {
-                        _tileEntities.Remove(oldPosition);
-                        _tileEntities.Add(position, tileEntity.Value);
+                        if (!TryGetTileEntityAtPosition(x, y, out TileEntity tileEntity)
+                            || tileEntity.IsSolid
+                            || tileEntity.lastUpdate == _updateIteration)
+                        {
+                            continue;
+                        }
+
+                        tileEntity.lastUpdate = _updateIteration;
+
+                        var position = tileEntity.UpdateEntity();
+
+                        if (position.x != x || position.y != y)
+                        {
+                            _tileEntities[x, y] = null;
+                            _tileEntities[position.x, position.y] = tileEntity;
+                        }
                     }
                 }
             }
@@ -93,11 +145,17 @@ namespace Klonk.TileEntity
         {
             if (_tileEntities != null && _drawGizmos)
             {
-                foreach (var tileEntity in _tileEntities)
+                for (int x = 0; x < _worldWidth; x++)
                 {
-                    var tileData = _entityData.GetTileDataForType(tileEntity.Value.SolidType, tileEntity.Value.LiquidType);
-                    Gizmos.color = tileData.Color;
-                    Gizmos.DrawCube((Vector2)tileEntity.Key, Vector2.one);
+                    for (int y = 0; y < _worldHeight; y++)
+                    {
+                        if (TryGetTileEntityAtPosition(x, y, out TileEntity tileEntity))
+                        {
+                            var tileData = _entityData.GetTileDataForType(tileEntity.SolidType, tileEntity.LiquidType);
+                            Gizmos.color = tileData.Color;
+                            Gizmos.DrawCube(new Vector2(x, y), Vector2.one);
+                        }
+                    }
                 }
             }
         }

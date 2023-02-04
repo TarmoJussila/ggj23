@@ -15,6 +15,8 @@ namespace Klonk.TileEntity
         public float Gravity { get; private set; }
 
         public EntityDef EntityDefinition { get; private set; }
+
+        public int lastUpdate = -1;
         
         public TileEntity(Vector2Int position, LiquidType liquidType, SolidType solidType, float gravity = 0f)
         {
@@ -32,15 +34,13 @@ namespace Klonk.TileEntity
             TileEntity tileEntity;
             if (IsLiquid)
             {
-                tileEntity = TileEntityHandler.Instance.TryGetTileEntityAtPosition(new Vector2Int(Mathf.Clamp(Position.x, default, TileEntityHandler.Instance.GenerationData.GenerationWidth), Mathf.Max(Position.y - 1, default)));
-                if (tileEntity == null)
+                if (!TileEntityHandler.Instance.TryGetTileEntityAtPosition(new Vector2Int(Mathf.Clamp(Position.x, default, TileEntityHandler.Instance.GenerationData.GenerationWidth), Mathf.Max(Position.y - 1, default)), out _))
                 {
                     Position = new Vector2Int(Mathf.Clamp(Position.x, default, TileEntityHandler.Instance.GenerationData.GenerationWidth), Mathf.Max(Position.y - 1, default));
                     return Position;
                 }
                 int direction = Random.Range(0, 2) == 0 ? -1 : 1;
-                tileEntity = TileEntityHandler.Instance.TryGetTileEntityAtPosition(new Vector2Int(Mathf.Clamp(Position.x + direction, default, TileEntityHandler.Instance.GenerationData.GenerationWidth), Mathf.Max(Position.y, default)));
-                if (tileEntity == null)
+                if (!TileEntityHandler.Instance.TryGetTileEntityAtPosition(new Vector2Int(Mathf.Clamp(Position.x + direction, default, TileEntityHandler.Instance.GenerationData.GenerationWidth), Mathf.Max(Position.y, default)), out _))
                 {
                     Position = new Vector2Int(Mathf.Clamp(Position.x + direction, default, TileEntityHandler.Instance.GenerationData.GenerationWidth), Mathf.Max(Position.y, default));
                     return Position;

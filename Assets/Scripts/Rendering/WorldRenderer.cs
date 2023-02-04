@@ -1,33 +1,28 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Klonk.TileEntity;
-using Unity.VisualScripting;
 
 namespace Klonk.Rendering
 {
     public class WorldRenderer : MonoBehaviour
     {
-        public static WorldRenderer Instance;
+        public static WorldRenderer Instance { get; private set; }
         
-        public Camera Cam;
-        public int Width { get; private set; }
-        public int Height { get; private set; }
+        public Camera Camera { get; private set; }
+        public int Width => _width;
+        public int Height => _height;
         
         [SerializeField] private Material _material;
+        [SerializeField] private int _width = 128;
+        [SerializeField] private int _height = 72;
         
         private Texture2D _texture;
         private int _tilesPerUnit = 32;
 
-        void Awake()
+        private void Awake()
         {
             Instance = this;
-            
-            Width = 128;
-            Height = 72;
 
-            Cam = GetComponent<Camera>();
+            Camera = GetComponent<Camera>();
             _texture = new Texture2D(Width, Height, TextureFormat.ARGB32, false);
             _material.EnableKeyword("_WorldTex");
             _material.EnableKeyword("_MainTex");
@@ -67,7 +62,7 @@ namespace Klonk.Rendering
             _material.SetTexture("_WorldTex", _texture);
         }
 
-        void OnRenderImage(RenderTexture source, RenderTexture destination)
+        private void OnRenderImage(RenderTexture source, RenderTexture destination)
         {
             Graphics.Blit(source, destination, _material);
         }

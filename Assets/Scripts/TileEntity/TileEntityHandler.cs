@@ -109,7 +109,7 @@ namespace Klonk.TileEntity
             
             if (_tileEntities != null)
             {
-                Vector3 camPos = WorldRenderer.Instance.Cam.transform.position;
+                Vector3 camPos = WorldRenderer.Instance.Camera.transform.position;
                 Vector3Int camPosInt = new(Mathf.RoundToInt(camPos.x), Mathf.RoundToInt(camPos.y));
 
                 int width = WorldRenderer.Instance.Width;

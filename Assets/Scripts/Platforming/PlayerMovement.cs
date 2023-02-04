@@ -15,10 +15,12 @@ namespace Klonk.Platforming
         private bool _isJumping;
         private float _horizontalMovement;
         private FakeRigidbody _rigidbody;
+        private SpriteRenderer _spriteRenderer;
 
         private void Awake()
         {
             _rigidbody = GetComponent<FakeRigidbody>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
         private void FixedUpdate()
@@ -32,7 +34,17 @@ namespace Klonk.Platforming
 
         public void OnHorizontalInput(InputAction.CallbackContext context)
         {
+            float previous = _horizontalMovement;
             _horizontalMovement = context.ReadValue<float>();
+
+            if (Mathf.Approximately(0, _horizontalMovement))
+            {
+                return;
+            }
+            if (!Mathf.Approximately(previous, _horizontalMovement))
+            {
+                _spriteRenderer.flipX = _horizontalMovement < 0;
+            }
         }
 
         public void OnJumpInput(InputAction.CallbackContext context)

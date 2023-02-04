@@ -35,9 +35,18 @@ namespace Klonk
 
         private void Update()
         {
-            if (UnityEngine.Input.GetKeyDown(KeyCode.LeftControl))
+            if (UnityEngine.Input.GetKey(KeyCode.LeftControl))
             {
                 UseWeapon();
+            }
+
+            if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                ScrollWeapon(-1);
+            }
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                ScrollWeapon(1);
             }
         }
 
@@ -58,13 +67,17 @@ namespace Klonk
 
         private void UseWeapon()
         {
-            Vector3 direction = new(PlayerMovement.Instance.HorizontalInput, PlayerMovement.Instance.VerticalInput, 0);
-            direction = direction.normalized;
+            int direction = PlayerMovement.Instance.GetHorizontalDirection();
 
             Vector3 size = PlayerMovement.Instance.Rigidbody.BoxCollider.size;
             Vector3 charPos = PlayerMovement.Instance.transform.position;
-            int safeX = Mathf.FloorToInt(charPos.x + (direction.x * ((size.x + 2) / 2)));
-            int safeY = Mathf.FloorToInt(charPos.y + (direction.y * ((size.y + 2) / 2)));
+            int safeX = Mathf.FloorToInt(charPos.x + (direction * ((size.x + 4) / 2)));
+            int safeY = Mathf.FloorToInt(charPos.y) - 2; //Mathf.FloorToInt(charPos.y + (direction.y * ((size.y + 2) / 2)));
+
+            if (!TileEntityHandler.Instance.IsInBounds(safeX, safeY))
+            {
+                return;
+            }
 
             if (TileEntityHandler.Instance.TryGetTileEntityAtPosition(safeX, safeY, out _))
             {
@@ -75,12 +88,7 @@ namespace Klonk
 
             TileData tileToSpawn = TileEntityHandler.Instance.EntityData.GetTileDataByIndex(_currentWeapon.TileDataIndex);
 
-            var tileEntity = new Klonk.TileEntity.TileEntity(
-                pos,
-                tileToSpawn.LiquidType,
-                tileToSpawn.SolidType,
-                tileToSpawn.IsSpawnSource
-            );
+            var tileEntity = new Klonk.TileEntity.TileEntity(pos, tileToSpawn.LiquidType, tileToSpawn.SolidType, tileToSpawn.IsSpawnSource);
 
             TileEntityHandler.Instance.TryAddTileToPosition(tileEntity, pos);
         }

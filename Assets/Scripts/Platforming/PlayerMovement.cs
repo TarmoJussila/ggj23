@@ -11,7 +11,8 @@ namespace Klonk.Platforming
         [Header("Settings")]
         [SerializeField] private float _moveSpeed = 1f; 
         [SerializeField] private int _jumpTickCount;
-        [SerializeField] private float _jumpVelocity; 
+        [SerializeField] private float _jumpStartVelocity; 
+        [SerializeField] private float _jumpEndVelocity; 
 
         private int _jumpTicks;
         private bool _isJumping;
@@ -39,7 +40,8 @@ namespace Klonk.Platforming
         {
             _isJumping = _jumpTicks-- > 0;
             Vector2 velocity = Rigidbody.Velocity;
-            velocity.y = _isJumping ? _jumpVelocity : velocity.y;
+            float jumpVelocity = Mathf.Lerp(_jumpStartVelocity, _jumpEndVelocity, _jumpTicks / (float)_jumpTickCount);
+            velocity.y = _isJumping ? jumpVelocity : velocity.y;
             velocity.x = _horizontalInput * _moveSpeed / 10f;
             Rigidbody.SetVelocity(velocity);
         }
@@ -83,6 +85,11 @@ namespace Klonk.Platforming
                 _isJumping = false;
                 _jumpTicks = default;
             }
+        }
+
+        public int GetHorizontalDirection()
+        {
+            return _spriteRenderer.flipX ? -1 : 1;
         }
     }
 }

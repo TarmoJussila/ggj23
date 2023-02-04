@@ -10,6 +10,7 @@ namespace Klonk.TileEntity.Data
         public int RockPatchGenerationAmount => _rockPatchGenerationAmount;
         public int RockGenerationAmount => _rockGenerationAmount;
         public int WaterGenerationAmount => _waterGenerationAmount;
+        public int WaterSpawnSourceAmount => _waterSpawnSourceAmount;
         public int AcidGenerationAmount => _acidGenerationAmount;
         public int GenerationWidth => _generationWidth;
         public int GenerationHeight => _generationHeight;
@@ -19,6 +20,7 @@ namespace Klonk.TileEntity.Data
         [SerializeField] private int _rockPatchGenerationAmount = 10;
         [SerializeField] private int _rockGenerationAmount = 1000;
         [SerializeField] private int _waterGenerationAmount = 1000;
+        [SerializeField] private int _waterSpawnSourceAmount = 30;
         [SerializeField] private int _acidGenerationAmount = 500;
         [SerializeField] private int _generationWidth = 1000;
         [SerializeField] private int _generationHeight = 1000;

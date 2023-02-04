@@ -25,9 +25,9 @@ namespace Klonk.TileEntity
 
         private Color _tileColor;
         
-        public TileEntity(Vector2Int position, LiquidType liquidType, SolidType solidType)
+        public TileEntity(Vector2Int position, LiquidType liquidType, SolidType solidType, bool isSpawnSource = false)
         {
-            TileData = TileEntityHandler.Instance.EntityData.GetTileDataForType(solidType, liquidType);
+            TileData = TileEntityHandler.Instance.EntityData.GetTileDataForType(solidType, liquidType, isSpawnSource);
             Position = position;
             SolidType = solidType;
             LiquidType = liquidType;
@@ -39,18 +39,26 @@ namespace Klonk.TileEntity
 
         public Vector2Int UpdateEntity(int updateFrame)
         {
-            if (IsLiquid)
+            if (IsLiquid || TileData.IsSpawnSource)
             {
-                if (!TileEntityHandler.Instance.TryGetTileEntityAtPosition(new Vector2Int(Mathf.Clamp(Position.x, default, TileEntityHandler.Instance.GenerationData.GenerationWidth), Mathf.Max(Position.y - 1, default)), out TileEntity otherTile1))
+                if (!TileEntityHandler.Instance.TryGetTileEntityAtPosition(new Vector2Int(Mathf.Clamp(Position.x, default, TileEntityHandler.Instance.GenerationData.GenerationWidth - 1), Mathf.Max(Position.y - 1, default)), out TileEntity otherTile1))
                 {
-                    Position = new Vector2Int(Mathf.Clamp(Position.x, default, TileEntityHandler.Instance.GenerationData.GenerationWidth), Mathf.Max(Position.y - 1, default));
-                    return Position;
+                    var position = new Vector2Int(Mathf.Clamp(Position.x, default, TileEntityHandler.Instance.GenerationData.GenerationWidth - 1), Mathf.Max(Position.y - 1, default));
+                    if (!TileData.IsSpawnSource)
+                    {
+                        Position = position;
+                    }
+                    return position;
                 }
                 int direction = GetRandomDirection();
-                if (!TileEntityHandler.Instance.TryGetTileEntityAtPosition(new Vector2Int(Mathf.Clamp(Position.x + direction, default, TileEntityHandler.Instance.GenerationData.GenerationWidth), Mathf.Max(Position.y, default)), out TileEntity otherTile2))
+                if (!TileEntityHandler.Instance.TryGetTileEntityAtPosition(new Vector2Int(Mathf.Clamp(Position.x + direction, default, TileEntityHandler.Instance.GenerationData.GenerationWidth - 1), Mathf.Max(Position.y, default)), out TileEntity otherTile2))
                 {
-                    Position = new Vector2Int(Mathf.Clamp(Position.x + direction, default, TileEntityHandler.Instance.GenerationData.GenerationWidth), Mathf.Max(Position.y, default));
-                    return Position;
+                    var position = new Vector2Int(Mathf.Clamp(Position.x + direction, default, TileEntityHandler.Instance.GenerationData.GenerationWidth - 1), Mathf.Max(Position.y, default));
+                    if (!TileData.IsSpawnSource)
+                    {
+                        Position = position;
+                    }
+                    return position;
                 }
 
                 TileEntity otherTile = otherTile1 ?? otherTile2;

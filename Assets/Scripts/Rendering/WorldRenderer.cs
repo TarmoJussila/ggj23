@@ -13,12 +13,14 @@ namespace Klonk.Rendering
         public int Width => _width;
         public int Height => _height;
 
+        [SerializeField] private float _moveSpeed = 10; 
         [SerializeField] private Material _material;
         [SerializeField] public int TextureResDivider { get; private set; } = 10;
         [SerializeField] private Color _skyColor;
         [SerializeField] private Color _outOfBoundsColor;
         [SerializeField] private Color _caveColor;
         [SerializeField] private Camera _normalCamera;
+        [SerializeField] private Transform player;
 
         private Texture2D _texture;
         private int _tilesPerUnit = 32;
@@ -45,10 +47,12 @@ namespace Klonk.Rendering
         {
             //var coords = Vector2Int.zero;
 
+            Vector3 targetPosition = player.position + Vector3.down * Height / 2 + Vector3.left * Width / 2;
+            transform.position = Vector3.Lerp(transform.position, targetPosition, Time.fixedDeltaTime * _moveSpeed);
             Vector3 position = transform.position;
             Vector2 uvOffset = Vector2.zero;
 
-            _normalCamera.transform.position = position + new Vector3(position.x + Width / 2f, position.y + Height / 2f, _normalCamera.transform.position.z);
+            _normalCamera.transform.position = new Vector3(position.x + Width / 2f, position.y + Height / 2f, _normalCamera.transform.position.z);
             _normalCamera.orthographicSize = Mathf.Max(Width / 2f, Height / 2f);
 
             for (int textureX = 0; textureX < Width; textureX++)

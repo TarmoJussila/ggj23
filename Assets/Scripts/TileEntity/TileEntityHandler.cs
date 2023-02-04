@@ -131,6 +131,18 @@ namespace Klonk.TileEntity
                 var tileEntity = new TileEntity(position, LiquidType.Acid, SolidType.None);
                 _tileEntities[position.x, position.y] = tileEntity;
             }
+
+            for (int i = 0; i < generationData.WaterSpawnSourceAmount; i++)
+            {
+                Vector2Int position;
+                do
+                {
+                    position = new Vector2Int(Random.Range(0, generationData.GenerationWidth), Random.Range(0, generationData.GenerationHeight));
+                } while (TryGetTileEntityAtPosition(position, out _) && !TryGetTileEntityAtPosition(position - new Vector2Int(0, 1), out TileEntity existingTileEntity) && existingTileEntity.IsSolid);
+
+                var tileEntity = new TileEntity(position, LiquidType.Water, SolidType.None, true);
+                _tileEntities[position.x, position.y] = tileEntity;
+            }
         }
 
         public bool TryGetTileEntityAtPosition(Vector2Int position, out TileEntity tile) =>
@@ -189,10 +201,21 @@ namespace Klonk.TileEntity
 
                         var position = tileEntity.UpdateEntity(_updateIteration);
 
-                        if (position.x != x || position.y != y)
+                        if (tileEntity.TileData.IsSpawnSource)
                         {
-                            _tileEntities[x, y] = null;
-                            _tileEntities[position.x, position.y] = tileEntity;
+                            if (!TryGetTileEntityAtPosition(position.x, position.y, out TileEntity _))
+                            {
+                                var newTileEntity = new TileEntity(position, tileEntity.TileData.SpawnLiquidType, SolidType.None);
+                                _tileEntities[position.x, position.y] = newTileEntity;
+                            }
+                        }
+                        else
+                        {
+                            if (position.x != x || position.y != y)
+                            {
+                                _tileEntities[x, y] = null;
+                                _tileEntities[position.x, position.y] = tileEntity;
+                            }
                         }
                     }
                 }

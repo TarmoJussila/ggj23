@@ -121,8 +121,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 052f0ea60396a4341a4905af5dfd911e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 0.1
-  LeftKey: 15
-  UpKey: 37
-  RightKey: 18
-  DownKey: 33
+  _speed: 50
+  _controls:
+  - Left: 15
+    Up: 37
+    Right: 18
+    Down: 33
+  - Left: 61
+    Up: 63
+    Right: 62
+    Down: 64

@@ -132,16 +132,21 @@ namespace Klonk.TileEntity
                     for (int y = camPosInt.y; y < camPosInt.y + height; y++)
                     {
                         if (!TryGetTileEntityAtPosition(x, y, out TileEntity tileEntity)
-                            || tileEntity.IsSolid
                             || tileEntity.LastUpdateFrame == _updateIteration)
                         {
                             continue;
                         }
-
-                        if (tileEntity.Health <= 0)
+                        else
                         {
-                            _tileEntities[x, y] = null;
-                            continue;
+                            if (tileEntity.Health <= 0)
+                            {
+                                _tileEntities[x, y] = null;
+                                continue;
+                            }
+                            if (tileEntity.IsSolid)
+                            {
+                                continue;
+                            }
                         }
 
                         var position = tileEntity.UpdateEntity(_updateIteration);

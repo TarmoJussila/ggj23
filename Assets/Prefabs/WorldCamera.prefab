@@ -109,6 +109,7 @@ MonoBehaviour:
   _material: {fileID: 2100000, guid: e95836fccc149e6419aefc959b4ed352, type: 2}
   _width: 128
   _height: 72
+  _skyColor: {r: 0.5740922, g: 0.724545, b: 0.9150943, a: 1}
 --- !u!114 &3031071751229109724
 MonoBehaviour:
   m_ObjectHideFlags: 0

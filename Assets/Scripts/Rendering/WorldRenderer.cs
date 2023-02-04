@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using Klonk.TileEntity;
+using UnityEngine.Rendering;
 
 namespace Klonk.Rendering
 {
@@ -12,27 +14,26 @@ namespace Klonk.Rendering
         public int Height => _height;
 
         [SerializeField] private Material _material;
-        [SerializeField] private int _width = 128;
-        [SerializeField] private int _height = 72;
+        [SerializeField] private int _textureResDivider = 10;
         [SerializeField] private Color _skyColor;
 
         private Texture2D _texture;
         private int _tilesPerUnit = 32;
+
+        private int _lastScreenWidth, _lastScreenHeight;
+        private int _width, _height;
 
         private void Awake()
         {
             Instance = this;
 
             Camera = GetComponent<Camera>();
-            _texture = new Texture2D(Width, Height, TextureFormat.ARGB32, false);
-            _texture.wrapMode = TextureWrapMode.Clamp;
 
             _material.EnableKeyword("_WorldTex");
             _material.EnableKeyword("_CameraPos");
             _material.EnableKeyword("_WorldResolution");
 
-            _material.SetVector("_WorldResolution", new Vector2(_width, _height));
-            //_material.EnableKeyword("_MainTex");
+            ResetTexture();
         }
 
         private void FixedUpdate()
@@ -67,6 +68,50 @@ namespace Klonk.Rendering
 
             _material.SetTexture("_WorldTex", _texture);
             _material.SetVector("_CameraPos", position);
+        }
+
+        private void Update()
+        {
+            CheckAspect();
+        }
+
+        private void CheckAspect(bool force = false)
+        {
+            if (_lastScreenWidth != Screen.width || _lastScreenHeight != Screen.height || force)
+            {
+                _lastScreenWidth = Screen.width;
+                _lastScreenHeight = Screen.height;
+                _width = Screen.width / _textureResDivider;
+                _height = Screen.height / _textureResDivider;
+
+                ResetTexture();
+            }
+        }
+
+        [ContextMenu("Zoom In")]
+        public void ZoomIn()
+        {
+            ChangeZoom(3);
+        }
+
+        [ContextMenu("Zoom Out")]
+        public void ZoomOut()
+        {
+            ChangeZoom(-3);
+        }
+
+        private void ChangeZoom(int direction)
+        {
+            _textureResDivider += direction;
+            CheckAspect(true);
+        }
+
+        private void ResetTexture()
+        {
+            _texture = new Texture2D(_width, _height, TextureFormat.ARGB32, false);
+            _texture.wrapMode = TextureWrapMode.Clamp;
+
+            _material.SetVector("_WorldResolution", new Vector2(_width, _height));
         }
 
         private void OnRenderImage(RenderTexture source, RenderTexture destination)

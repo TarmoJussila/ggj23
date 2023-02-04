@@ -15,7 +15,7 @@ namespace Klonk.Rendering
 
         [SerializeField] private float _moveSpeed = 10; 
         [SerializeField] private Material _material;
-        [SerializeField] public int TextureResDivider { get; private set; } = 10;
+        [SerializeField] public int TextureResDivider { get; private set; } = 6;
         [SerializeField] private Color _skyColor;
         [SerializeField] private Color _outOfBoundsColor;
         [SerializeField] private Color _caveColor;
@@ -113,13 +113,13 @@ namespace Klonk.Rendering
         [ContextMenu("Zoom In")]
         public void ZoomIn()
         {
-            ChangeZoom(3);
+            ChangeZoom(1);
         }
 
         [ContextMenu("Zoom Out")]
         public void ZoomOut()
         {
-            ChangeZoom(-3);
+            ChangeZoom(-1);
         }
 
         private void ChangeZoom(int direction)

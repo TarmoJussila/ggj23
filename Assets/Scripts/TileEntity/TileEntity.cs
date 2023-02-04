@@ -1,3 +1,4 @@
+using Klonk.TileEntity.Data;
 using UnityEngine;
 
 namespace Klonk.TileEntity
@@ -13,25 +14,23 @@ namespace Klonk.TileEntity
         public bool IsSolid { get { return SolidType != SolidType.None; } }
         public bool IsLiquid { get { return LiquidType != LiquidType.None; } }
         public float Gravity { get; private set; }
+        public Vector2 Velocity { get; private set; }
 
-        public EntityDef EntityDefinition { get; private set; }
+        public TileData TileData { get; private set; }
 
-        public int lastUpdate = -1;
+        public int LastUpdateFrame { get; private set; } = -1;
         
         public TileEntity(Vector2Int position, LiquidType liquidType, SolidType solidType, float gravity = 0f)
         {
-            var defs = Resources.LoadAll<EntityDef>("");
-            EntityDefinition = defs[Random.Range(0, defs.Length)];
-            
+            TileData = TileEntityHandler.Instance.EntityData.GetTileDataForType(solidType, liquidType);
             Position = position;
             SolidType = solidType;
             LiquidType = liquidType;
             Gravity = gravity;
         }
 
-        public Vector2Int UpdateEntity()
+        public Vector2Int UpdateEntity(int updateFrame)
         {
-            TileEntity tileEntity;
             if (IsLiquid)
             {
                 if (!TileEntityHandler.Instance.TryGetTileEntityAtPosition(new Vector2Int(Mathf.Clamp(Position.x, default, TileEntityHandler.Instance.GenerationData.GenerationWidth), Mathf.Max(Position.y - 1, default)), out _))
@@ -50,6 +49,7 @@ namespace Klonk.TileEntity
             {
 
             }
+            LastUpdateFrame = updateFrame;
             return Position;
         }
     }

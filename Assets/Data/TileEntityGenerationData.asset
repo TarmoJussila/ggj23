@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: TileEntityGenerationData
   m_EditorClassIdentifier: 
   _sandPatchGenerationAmount: 300
-  _sandGenerationAmount: 1000
-  _rockPatchGenerationAmount: 400
-  _rockGenerationAmount: 100
-  _waterGenerationAmount: 2000
-  _acidGenerationAmount: 1000
-  _generationWidth: 1000
-  _generationHeight: 500
+  _sandGenerationAmount: 2500
+  _rockPatchGenerationAmount: 500
+  _rockGenerationAmount: 200
+  _waterSpawnSourceAmount: 100
+  _acidSpawnSourceAmount: 30
+  _generationWidth: 2000
+  _generationHeight: 1000

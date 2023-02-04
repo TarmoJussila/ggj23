@@ -13,6 +13,12 @@ namespace Klonk.Platforming
         [SerializeField] private int _jumpTickCount;
         [SerializeField] private float _jumpStartVelocity; 
         [SerializeField] private float _jumpEndVelocity; 
+        [SerializeField] private float _jumpVelocity;
+
+        [Header("Sprites")]
+        [SerializeField] private Sprite _lookForward;
+        [SerializeField] private Sprite _lookUp;
+        [SerializeField] private Sprite _lookDown;
 
         private int _jumpTicks;
         private bool _isJumping;
@@ -49,6 +55,22 @@ namespace Klonk.Platforming
         public void OnVerticalInput(InputAction.CallbackContext context)
         {
             _verticalInput = context.ReadValue<float>();
+            Sprite nextSprite = _lookForward;
+            
+            if (_verticalInput < 0)
+            {
+                nextSprite = _lookDown;
+            }
+
+            if (_verticalInput > 0)
+            {
+                nextSprite = _lookUp;
+            }
+
+            if (_spriteRenderer.sprite != nextSprite)
+            {
+                _spriteRenderer.sprite = nextSprite;
+            }
         }
 
         public void OnHorizontalInput(InputAction.CallbackContext context)

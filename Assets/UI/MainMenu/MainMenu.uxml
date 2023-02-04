@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/MainMenu/MainMenu.uss?fileID=7433441132597879392&amp;guid=15460217faa7444afac66780a7fcf783&amp;type=3#MainMenu" />
-    <ui:Label tabindex="-1" text="KLONK" display-tooltip-when-elided="true" name="title" />
+    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); background-image: url(&apos;project://database/Assets/Sprites/KlonkLogo.png?fileID=2800000&amp;guid=0989f7213976f46df876ef3f3726fc3b&amp;type=3#KlonkLogo&apos;); justify-content: center; align-self: auto; align-items: auto; -unity-background-scale-mode: scale-and-crop; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 5%; padding-right: 5%; padding-top: 5%; padding-bottom: 5%;" />
     <ui:VisualElement name="buttons">
         <ui:Button text="Play" display-tooltip-when-elided="true" name="PlayButton" class="button" />
         <ui:Button text="Exit" display-tooltip-when-elided="true" name="ExitButton" class="button" />

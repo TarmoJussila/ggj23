@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7651431852371391219}
   - component: {fileID: 7651431852371391228}
   - component: {fileID: 7651431852371391223}
+  - component: {fileID: 5286235024773030852}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -34,7 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7651431852371391217
 SpriteRenderer:
@@ -145,6 +146,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 61964a8e-80bc-4311-99a5-c46066e663e9
     m_ActionName: Action Map/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d8638918-9255-45b0-a69d-10b361ad74b2
+    m_ActionName: Action Map/Vertical[/Keyboard/downArrow,/Keyboard/upArrow]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Action Map
@@ -214,7 +219,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.16}
+    oldSize: {x: 16, y: 16}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -223,3 +228,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 14, y: 17}
   m_EdgeRadius: 0
+--- !u!114 &5286235024773030852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7651431852371391229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 096882e130b525249a59988409ba233c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weapons:
+  - TileDataIndex: 2
+  - TileDataIndex: 3

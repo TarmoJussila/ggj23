@@ -54,7 +54,6 @@ namespace Klonk.Rendering
             //var coords = Vector2Int.zero;
 
             Vector3 position = transform.position;
-            Vector2 uvOffset = Vector2.zero;
 
             for (int textureX = 0; textureX < Width; textureX++)
             {

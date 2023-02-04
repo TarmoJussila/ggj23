@@ -168,8 +168,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 20
-  _jumpTickCount: 5
-  _jumpStartVelocity: 5
+  _jumpTickCount: 2
+  _jumpStartVelocity: 4
   _jumpEndVelocity: 2
 --- !u!114 &7651431852371391228
 MonoBehaviour:

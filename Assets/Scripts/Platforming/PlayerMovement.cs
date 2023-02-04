@@ -86,5 +86,10 @@ namespace Klonk.Platforming
                 _jumpTicks = default;
             }
         }
+
+        public int GetHorizontalDirection()
+        {
+            return _spriteRenderer.flipX ? -1 : 1;
+        }
     }
 }

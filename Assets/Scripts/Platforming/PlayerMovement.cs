@@ -27,7 +27,13 @@ namespace Klonk.Platforming
         {
             Instance = this;
             Rigidbody = GetComponent<FakeRigidbody>();
+            _rigidbody = GetComponent<FakeRigidbody>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
         }
+
+        private float _horizontalMovement;
+        private FakeRigidbody _rigidbody;
+        private SpriteRenderer _spriteRenderer;
 
         private void FixedUpdate()
         {
@@ -38,14 +44,26 @@ namespace Klonk.Platforming
             Rigidbody.SetVelocity(velocity);
         }
 
-        public void OnHorizontalInput(InputAction.CallbackContext context)
-        {
-            _horizontalInput = context.ReadValue<float>();
-        }
-
         public void OnVerticalInput(InputAction.CallbackContext context)
         {
             _verticalInput = context.ReadValue<float>();
+        }
+
+        public void OnHorizontalInput(InputAction.CallbackContext context)
+        {
+            _horizontalInput = context.ReadValue<float>();
+            float previous = _horizontalMovement;
+            _horizontalMovement = context.ReadValue<float>();
+
+            if (Mathf.Approximately(0, _horizontalMovement))
+            {
+                return;
+            }
+
+            if (!Mathf.Approximately(previous, _horizontalMovement))
+            {
+                _spriteRenderer.flipX = _horizontalMovement < 0;
+            }
         }
 
         public void OnJumpInput(InputAction.CallbackContext context)

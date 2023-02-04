@@ -16,6 +16,7 @@ namespace Klonk.Rendering
         [SerializeField] private Material _material;
         [SerializeField] private int _textureResDivider = 10;
         [SerializeField] private Color _skyColor;
+        [SerializeField] private Camera _normalCamera;
 
         private Texture2D _texture;
         private int _tilesPerUnit = 32;
@@ -42,6 +43,9 @@ namespace Klonk.Rendering
 
             Vector3 position = transform.position;
             Vector2 uvOffset = Vector2.zero;
+
+            _normalCamera.transform.position = position + new Vector3(position.x + Width / 2f, position.y + Height / 2f, _normalCamera.transform.position.z);
+            _normalCamera.orthographicSize = Mathf.Max(Width / 2f, Height / 2f);
 
             for (int x = 0; x < Width; x++)
             {

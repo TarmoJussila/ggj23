@@ -1,0 +1,16 @@
+using UnityEngine;
+
+namespace Klonk.TileEntity
+{
+    public static class TileUtility
+    {
+        public const int TILES_PER_UNIT = 1;
+        public const float TILE_SIZE = 1f / TILES_PER_UNIT;
+
+        public static Vector2Int WorldToTileCoordinates(Vector3 worldCoordinates)
+        {
+            Vector3 coordinates = worldCoordinates * TILES_PER_UNIT;
+            return new Vector2Int((int)coordinates.x, (int)coordinates.y);
+        }
+    }
+}

@@ -16,10 +16,13 @@ namespace Klonk.TileEntity
         public float Gravity { get; private set; }
         public Vector2 Velocity { get; private set; }
         public int Health { get; private set; }
+        public Color TileColor { get { return _tileColor; } }
 
         public TileData TileData { get; private set; }
 
         public int LastUpdateFrame { get; private set; } = -1;
+
+        private Color _tileColor;
         
         public TileEntity(Vector2Int position, LiquidType liquidType, SolidType solidType)
         {
@@ -29,6 +32,7 @@ namespace Klonk.TileEntity
             LiquidType = liquidType;
             Gravity = TileData.Gravity;
             Health = TileData.Health;
+            _tileColor = TileData.ColorPalette[Random.Range(0, TileData.ColorPalette.Length)];
         }
 
         public Vector2Int UpdateEntity(int updateFrame)

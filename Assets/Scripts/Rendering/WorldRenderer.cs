@@ -14,6 +14,7 @@ namespace Klonk.Rendering
         [SerializeField] private Material _material;
         [SerializeField] private int _width = 128;
         [SerializeField] private int _height = 72;
+        [SerializeField] private Color _skyColor;
 
         private Texture2D _texture;
         private int _tilesPerUnit = 32;
@@ -27,13 +28,15 @@ namespace Klonk.Rendering
             _texture.wrapMode = TextureWrapMode.Clamp;
 
             _material.EnableKeyword("_WorldTex");
+            _material.EnableKeyword("_CameraPos");
+            _material.EnableKeyword("_WorldResolution");
+
+            _material.SetVector("_WorldResolution", new Vector2(_width, _height));
             //_material.EnableKeyword("_MainTex");
         }
 
         private void FixedUpdate()
         {
-            var data = TileEntityHandler.Instance.TileEntities;
-
             var coords = Vector2Int.zero;
 
             Vector3 position = transform.position;
@@ -48,21 +51,22 @@ namespace Klonk.Rendering
 
                     if (!TileEntityHandler.Instance.TryGetTileEntityAtPosition(coords.x, coords.y, out TileEntity.TileEntity tile))
                     {
-                        _texture.SetPixel(x, y, new Color(1, 1, 1, 1.0f));
+                        _texture.SetPixel(x, y, _skyColor);
                         continue;
                     }
 
-                    uvOffset.x = tile.IsLiquid ? 0.5f : 0.0f;
-                    uvOffset.y = 0.4f; //tile.IsLiquid ? 0.0f : 0.0f;
+                    //uvOffset.x = tile.IsLiquid ? 0.25f : 0.0f;
+                    //uvOffset.y = 0.75f; //tile.IsLiquid ? 0.0f : 0.0f;
 
-                    _texture.SetPixel(x, y, new Color(uvOffset.x, uvOffset.y, 0.0f, 1.0f));
+                    _texture.SetPixel(x, y, tile.TileColor);
+                    //_texture.SetPixel(x, y, new Color(uvOffset.x, uvOffset.y, 0.0f, 1.0f));
                 }
             }
 
             _texture.Apply();
 
             _material.SetTexture("_WorldTex", _texture);
-            // _material.SetTexture("_MainTex", _mainTexture);
+            _material.SetVector("_CameraPos", position);
         }
 
         private void OnRenderImage(RenderTexture source, RenderTexture destination)

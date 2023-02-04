@@ -13,8 +13,10 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords:
+  - _CameraPos
   - _MainTex
   - _World
+  - _WorldResolution
   - _WorldTex
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -101,7 +103,8 @@ Material:
     - _UseUIAlphaClip: 0
     - _ZWrite: 1
     m_Colors:
-    - _CameraPos: {r: 0, g: 0, b: 0, a: 0}
+    - _CameraPos: {r: 152.86543, g: 257.3042, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _WorldResolution: {r: 128, g: 72, b: 0, a: 0}
   m_BuildTextureStacks: []

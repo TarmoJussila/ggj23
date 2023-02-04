@@ -14,15 +14,18 @@ namespace Klonk.Rendering
         public int Height => _height;
 
         [SerializeField] private Material _material;
-        [SerializeField] private int _textureResDivider = 10;
+        [SerializeField] public int TextureResDivider { get; private set; } = 10;
         [SerializeField] private Color _skyColor;
+        [SerializeField] private Camera _normalCamera;
 
         private Texture2D _texture;
         private int _tilesPerUnit = 32;
 
         private int _lastScreenWidth, _lastScreenHeight;
         private int _width, _height;
-
+        private readonly int _minDivider = 4;
+        private readonly int _maxDivider = 12;
+        
         private void Awake()
         {
             Instance = this;
@@ -42,6 +45,9 @@ namespace Klonk.Rendering
 
             Vector3 position = transform.position;
             Vector2 uvOffset = Vector2.zero;
+
+            _normalCamera.transform.position = position + new Vector3(position.x + Width / 2f, position.y + Height / 2f, _normalCamera.transform.position.z);
+            _normalCamera.orthographicSize = Mathf.Max(Width / 2f, Height / 2f);
 
             for (int x = 0; x < Width; x++)
             {
@@ -81,8 +87,8 @@ namespace Klonk.Rendering
             {
                 _lastScreenWidth = Screen.width;
                 _lastScreenHeight = Screen.height;
-                _width = Screen.width / _textureResDivider;
-                _height = Screen.height / _textureResDivider;
+                _width = Screen.width / TextureResDivider;
+                _height = Screen.height / TextureResDivider;
 
                 ResetTexture();
             }
@@ -102,7 +108,7 @@ namespace Klonk.Rendering
 
         private void ChangeZoom(int direction)
         {
-            _textureResDivider += direction;
+            TextureResDivider = Math.Clamp(TextureResDivider + direction, _minDivider, _maxDivider);
             CheckAspect(true);
         }
 

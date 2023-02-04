@@ -7,6 +7,7 @@ namespace Klonk.TileEntity.Data
     [Serializable]
     public class TileData
     {
+        [Header("Tile Data")]
         public SolidType SolidType;
         public LiquidType LiquidType;
         public Color[] ColorPalette;
@@ -14,6 +15,14 @@ namespace Klonk.TileEntity.Data
         public int Health = 1;
         public int Potency = 1;
 
+        [Header("Spawn Source Data")]
+        public bool IsSpawnSource;
+        public LiquidType SpawnLiquidType;
+        public int SpawnSpeed;
+        public int SpawnLifespan;
+        public bool IsEndlessLifespan;
+
+        [Header("Texture Data")]
         public int TextureIndex;
         public Vector2 UvMin;
         public Vector2 UvMax;
@@ -29,17 +38,17 @@ namespace Klonk.TileEntity.Data
             return tileDatas.Find(x => x.SolidType == type && x.SolidType != SolidType.None);
         }
 
-        public TileData GetTileDataForType(LiquidType type)
+        public TileData GetTileDataForType(LiquidType type, bool isSpawnSource = false)
         {
-            return tileDatas.Find(x => x.LiquidType == type && x.LiquidType != LiquidType.None);
+            return tileDatas.Find(x => x.LiquidType == type && x.LiquidType != LiquidType.None && x.IsSpawnSource == isSpawnSource);
         }
 
-        public TileData GetTileDataForType(SolidType solidType, LiquidType liquidType)
+        public TileData GetTileDataForType(SolidType solidType, LiquidType liquidType, bool isSpawnSource = false)
         {
             var tileData = GetTileDataForType(solidType);
             if (tileData == null)
             {
-                tileData = GetTileDataForType(liquidType);
+                tileData = GetTileDataForType(liquidType, isSpawnSource);
             }
             return tileData;
         }

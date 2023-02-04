@@ -16,6 +16,8 @@ namespace Klonk.Rendering
         [SerializeField] private Material _material;
         [SerializeField] public int TextureResDivider { get; private set; } = 10;
         [SerializeField] private Color _skyColor;
+        [SerializeField] private Color _outOfBoundsColor;
+        [SerializeField] private Color _caveColor;
         [SerializeField] private Camera _normalCamera;
 
         private Texture2D _texture;
@@ -41,7 +43,7 @@ namespace Klonk.Rendering
 
         private void FixedUpdate()
         {
-            var coords = Vector2Int.zero;
+            //var coords = Vector2Int.zero;
 
             Vector3 position = transform.position;
             Vector2 uvOffset = Vector2.zero;
@@ -49,24 +51,29 @@ namespace Klonk.Rendering
             _normalCamera.transform.position = position + new Vector3(position.x + Width / 2f, position.y + Height / 2f, _normalCamera.transform.position.z);
             _normalCamera.orthographicSize = Mathf.Max(Width / 2f, Height / 2f);
 
-            for (int x = 0; x < Width; x++)
+            for (int textureX = 0; textureX < Width; textureX++)
             {
-                for (int y = 0; y < Height; y++)
+                for (int textureY = 0; textureY < Height; textureY++)
                 {
-                    coords.x = Mathf.FloorToInt(position.x) + x;
-                    coords.y = Mathf.FloorToInt(position.y) + y;
+                    Color c = Color.magenta;
 
-                    if (!TileEntityHandler.Instance.TryGetTileEntityAtPosition(coords.x, coords.y, out TileEntity.TileEntity tile))
+                    int coordsX = Mathf.FloorToInt(position.x) + textureX;
+                    int coordsY = Mathf.FloorToInt(position.y) + textureY;
+
+                    if (!TileEntityHandler.Instance.IsInBounds(coordsX, coordsY))
                     {
-                        _texture.SetPixel(x, y, _skyColor);
-                        continue;
+                        c = coordsY >= TileEntityHandler.Instance.TileEntities.GetLength(1) ? _skyColor : _outOfBoundsColor;
+                    }
+                    else if (!TileEntityHandler.Instance.TryGetTileEntityAtPosition(coordsX, coordsY, out TileEntity.TileEntity tile))
+                    {
+                        c = _caveColor;
+                    }
+                    else
+                    {
+                        c = tile.TileColor;
                     }
 
-                    //uvOffset.x = tile.IsLiquid ? 0.25f : 0.0f;
-                    //uvOffset.y = 0.75f; //tile.IsLiquid ? 0.0f : 0.0f;
-
-                    _texture.SetPixel(x, y, tile.TileColor);
-                    //_texture.SetPixel(x, y, new Color(uvOffset.x, uvOffset.y, 0.0f, 1.0f));
+                    _texture.SetPixel(textureX, textureY, c);
                 }
             }
 

@@ -148,6 +148,11 @@ namespace Klonk.TileEntity
             return tile != null;
         }
 
+        public bool IsInBounds(int x, int y)
+        {
+            return x >= 0 && x < _tileEntities.GetLength(0) && y >= 0 && y < _tileEntities.GetLength(1);
+        }
+
         private void FixedUpdate()
         {
             _updateIteration++;

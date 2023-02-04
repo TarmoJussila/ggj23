@@ -72,7 +72,7 @@ namespace Klonk.Platforming
             {
                 for (int y = 0; y > yTileVelocity - 1; y--)
                 {
-                    Vector2Int position = bottomLeftTileCoordinates + new Vector2Int(x + 1, y - 1);
+                    Vector2Int position = bottomLeftTileCoordinates + new Vector2Int(x + 1, y);
                     position.y = Mathf.Max(default, position.y);
                     Debug.DrawRay(TileUtility.TileToWorldCoordinates(position), Vector3.down * 10);
                     if (TileEntityHandler.Instance.TryGetTileEntityAtPosition(position, out _))
@@ -101,30 +101,44 @@ namespace Klonk.Platforming
             }
             
             // Limit left velocity
-            for (int y = 1; y < yTileSize; y++)
+            for (int y = yTileSize; y > 0; y--)
             {
                 for (int x = 0; x > xTileVelocity - 1; x--)
                 {
-                    Vector2Int position = bottomLeftTileCoordinates + new Vector2Int(x - 1, y);
+                    Vector2Int position = bottomLeftTileCoordinates + new Vector2Int(x, y);
                     Debug.DrawRay(TileUtility.TileToWorldCoordinates(position), Vector3.left * 10);
                     if (TileEntityHandler.Instance.TryGetTileEntityAtPosition(position, out _))
                     {
-                        _velocity = new Vector2(Mathf.Max(x * TileUtility.TILE_SIZE, _velocity.x), _velocity.y);
+                        if (y < yTileSize / 3)
+                        {
+                            transform.position = new Vector3(worldPosition.x, worldPosition.y + y * TileUtility.TILE_SIZE, worldPosition.z);
+                        }
+                        else
+                        {
+                            _velocity = new Vector2(Mathf.Max(x * TileUtility.TILE_SIZE, _velocity.x), _velocity.y);
+                        }
                         break;
                     }
                 }
             }
             
             // Limit right velocity
-            for (int y = 1; y < yTileSize; y++)
+            for (int y = yTileSize; y > 0; y--)
             {
                 for (int x = 0; x < xTileVelocity; x++)
                 {
-                    Vector2Int position = bottomRightTileCoordinates + new Vector2Int(x + 1, y);
+                    Vector2Int position = bottomRightTileCoordinates + new Vector2Int(x, y);
                     Debug.DrawRay(TileUtility.TileToWorldCoordinates(position), Vector3.right * 10);
                     if (TileEntityHandler.Instance.TryGetTileEntityAtPosition(position, out _))
                     {
-                        _velocity = new Vector2(Mathf.Min(x * TileUtility.TILE_SIZE, _velocity.x), _velocity.y);
+                        if (y < yTileSize / 3)
+                        {
+                            transform.position = new Vector3(worldPosition.x, worldPosition.y + y * TileUtility.TILE_SIZE, worldPosition.z);
+                        }
+                        else
+                        {
+                            _velocity = new Vector2(Mathf.Min(x * TileUtility.TILE_SIZE, _velocity.x), _velocity.y);
+                        }
                         break;
                     }
                 }

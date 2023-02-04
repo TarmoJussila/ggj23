@@ -11,30 +11,37 @@ namespace Klonk.Platforming
         
         public Vector2 Velocity => _velocity;
         public bool IsGrounded { get; private set; }
+        public BoxCollider2D BoxCollider { get; private set; }
 
         private Vector2 _velocity;
-        private BoxCollider2D _boxCollider;
+        private Vector3 _rigidbodyPosition;
         private const float GRAVITY = 0.25f;
 
         private void Awake()
         {
-            _boxCollider = GetComponent<BoxCollider2D>();
+            BoxCollider = GetComponent<BoxCollider2D>();
+            _rigidbodyPosition = transform.position;
+        }
+
+        private void Update()
+        {
+            transform.position = _rigidbodyPosition;
         }
 
         private void FixedUpdate()
         {
             ClampVelocity();
-            Vector3 position = transform.position;
+            Vector3 position = _rigidbodyPosition;
             position += new Vector3(_velocity.x, _velocity.y, default);
-            transform.position = position;
+            _rigidbodyPosition = position;
         }
 
         private void ClampVelocity()
         {
             _velocity.y -= GRAVITY;
             IsGrounded = false;
-            Bounds bounds = _boxCollider.bounds;
-            Vector3 worldPosition = transform.position;
+            Bounds bounds = BoxCollider.bounds;
+            Vector3 worldPosition = _rigidbodyPosition;
             Vector3 worldPositionAfterVelocity = worldPosition + new Vector3(_velocity.x, _velocity.y, default);
             int yTileVelocity = (int)(_velocity.y * TileUtility.TILES_PER_UNIT);
             int xTileVelocity = (int)(_velocity.x * TileUtility.TILES_PER_UNIT);
@@ -65,7 +72,7 @@ namespace Klonk.Platforming
             Vector3 topLeft = worldPosition + Vector3.up * bounds.extents.y + Vector3.left * bounds.extents.x;
             Vector2Int bottomLeftTileCoordinates = TileUtility.WorldToTileCoordinates(bottomLeft);
             Vector2Int bottomRightTileCoordinates = TileUtility.WorldToTileCoordinates(bottomRight);
-            Vector2Int topRightTileCoordinates = TileUtility.WorldToTileCoordinates(topLeft);
+            Vector2Int topLeftTileCoordinates = TileUtility.WorldToTileCoordinates(topLeft);
             
             // Limit down velocity
             for (int x = 0; x < xTileSize; x++)
@@ -77,9 +84,12 @@ namespace Klonk.Platforming
                     Debug.DrawRay(TileUtility.TileToWorldCoordinates(position), Vector3.down * 10);
                     if (TileEntityHandler.Instance.TryGetTileEntityAtPosition(position, out _))
                     {
-                        _velocity = new Vector2(_velocity.x, y * TileUtility.TILE_SIZE);
-                        IsGrounded = Mathf.Approximately(_velocity.y, default);
-                        break;
+                        Vector3 velocity = new Vector2(_velocity.x, y * TileUtility.TILE_SIZE);
+                        if (velocity.sqrMagnitude < _velocity.sqrMagnitude)
+                        {
+                            _velocity = velocity;
+                            IsGrounded = y < 3;
+                        }
                     }
                 }
             }
@@ -89,7 +99,7 @@ namespace Klonk.Platforming
             {
                 for (int y = 0; y < yTileVelocity; y++)
                 {
-                    Vector2Int position = topRightTileCoordinates + new Vector2Int(x + 1, y + 1);
+                    Vector2Int position = topLeftTileCoordinates + new Vector2Int(x + 1, y + 1);
                     position.y = Mathf.Max(default, position.y);
                     Debug.DrawRay(TileUtility.TileToWorldCoordinates(position), Vector3.up * 10);
                     if (TileEntityHandler.Instance.TryGetTileEntityAtPosition(position, out _))
@@ -111,7 +121,7 @@ namespace Klonk.Platforming
                     {
                         if (y < yTileSize / 3)
                         {
-                            transform.position = new Vector3(worldPosition.x, worldPosition.y + y * TileUtility.TILE_SIZE, worldPosition.z);
+                            _rigidbodyPosition = new Vector3(worldPosition.x, worldPosition.y + y * TileUtility.TILE_SIZE, worldPosition.z);
                         }
                         else
                         {
@@ -133,7 +143,7 @@ namespace Klonk.Platforming
                     {
                         if (y < yTileSize / 3)
                         {
-                            transform.position = new Vector3(worldPosition.x, worldPosition.y + y * TileUtility.TILE_SIZE, worldPosition.z);
+                            _rigidbodyPosition = new Vector3(worldPosition.x, worldPosition.y + y * TileUtility.TILE_SIZE, worldPosition.z);
                         }
                         else
                         {
@@ -144,9 +154,9 @@ namespace Klonk.Platforming
                 }
             }
 
-            if (transform.position.y + _velocity.y < 0)
+            if (_rigidbodyPosition.y + _velocity.y < 0)
             {
-                _velocity.y = -transform.position.y;
+                _velocity.y = -_rigidbodyPosition.y;
             }
         }
 

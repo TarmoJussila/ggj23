@@ -149,6 +149,17 @@ namespace Klonk.TileEntity
             }
         }
 
+        public bool TryAddTileToPosition(TileEntity tile, Vector2Int position)
+        {
+            if (TryGetTileEntityAtPosition(position, out _))
+            {
+                return false;
+            }
+
+            _tileEntities[position.x, position.y] = tile;
+            return true;
+        }
+
         public bool TryGetTileEntityAtPosition(Vector2Int position, out TileEntity tile) =>
             TryGetTileEntityAtPosition(position.x, position.y, out tile);
 

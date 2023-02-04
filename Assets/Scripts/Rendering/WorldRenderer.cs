@@ -47,13 +47,8 @@ namespace Klonk.Rendering
         {
             //var coords = Vector2Int.zero;
 
-            Vector3 targetPosition = player.position + Vector3.down * Height / 2 + Vector3.left * Width / 2;
-            transform.position = Vector3.Lerp(transform.position, targetPosition, Time.fixedDeltaTime * _moveSpeed);
             Vector3 position = transform.position;
             Vector2 uvOffset = Vector2.zero;
-
-            _normalCamera.transform.position = new Vector3(position.x + Width / 2f, position.y + Height / 2f, _normalCamera.transform.position.z);
-            _normalCamera.orthographicSize = Mathf.Max(Width / 2f, Height / 2f);
 
             for (int textureX = 0; textureX < Width; textureX++)
             {
@@ -90,6 +85,11 @@ namespace Klonk.Rendering
         private void Update()
         {
             CheckAspect();
+            Vector3 targetPosition = player.position + Vector3.down * Height / 2 + Vector3.left * Width / 2;
+            transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * _moveSpeed);
+
+            _normalCamera.transform.position = new Vector3(transform.position.x + Width / 2f, transform.position.y + Height / 2f, _normalCamera.transform.position.z);
+            _normalCamera.orthographicSize = Mathf.Max(Width / 2f, Height / 2f);
         }
 
         private void CheckAspect(bool force = false)

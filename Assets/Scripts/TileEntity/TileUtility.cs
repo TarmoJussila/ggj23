@@ -22,13 +22,19 @@ namespace Klonk.TileEntity
             {
                 for (int y = centerY - radius; y < centerY + radius; y++)
                 {
+                    if ((Mathf.Pow(x - centerX, 2) + Mathf.Pow(y - centerY, 2)) >= Mathf.Pow(radius, 2))
+                    {
+                        continue;
+                    }
+
                     if (TileEntityHandler.Instance.TryGetTileEntityAtPosition(x, y, out var tile))
                     {
-                        tile.ReduceHealth(100);    
+                        tile.ReduceHealth(100);
                     }
                 }
             }
         }
+
         public static void LiquifyInArea(Vector2Int center, int radius)
         {
             int centerX = center.x;
@@ -38,6 +44,11 @@ namespace Klonk.TileEntity
             {
                 for (int y = centerY - radius; y < centerY + radius; y++)
                 {
+                    if ((Mathf.Pow(x - centerX, 2) + Mathf.Pow(y - centerY, 2)) >= Mathf.Pow(radius, 2))
+                    {
+                        continue;
+                    }
+                    
                     if (TileEntityHandler.Instance.TryGetTileEntityAtPosition(x, y, out var tile))
                     {
                         tile.SetLiquid(LiquidType.Water);    

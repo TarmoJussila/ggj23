@@ -174,8 +174,8 @@ namespace Klonk.TileEntity
                 Vector3 camPos = WorldRenderer.Instance.Camera.transform.position;
                 Vector3Int camPosInt = new(Mathf.RoundToInt(camPos.x), Mathf.RoundToInt(camPos.y));
 
-                int width = WorldRenderer.Instance.Width;
-                int height = WorldRenderer.Instance.Height;
+                int width = WorldRenderer.Instance.Width + 4; //maek thing go out screen
+                int height = WorldRenderer.Instance.Height + 4;
                 
                 for (int x = camPosInt.x; x < camPosInt.x + width; x++)
                 {

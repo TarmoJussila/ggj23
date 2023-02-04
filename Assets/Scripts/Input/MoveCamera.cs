@@ -13,13 +13,13 @@ namespace Klonk.Input
         public Key Right;
         public Key Down;
     }
-    
+
     public class MoveCamera : MonoBehaviour
     {
-        
         [SerializeField] private float _speed;
 
-        [SerializeField] private List<InputKeys> _controls = new() {
+        [SerializeField] private List<InputKeys> _controls = new()
+        {
             new InputKeys()
             {
                 Left = Key.A,

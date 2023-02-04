@@ -21,12 +21,9 @@ namespace Klonk.UI.TestMenu
         public void RegisterCallbacks()
         {
             UQueryBuilder<Label> tabs = GetAllTabs();
-            tabs.ForEach(tab =>
-            {
-                tab.RegisterCallback<ClickEvent>(TabOnClick);
-            });
+            tabs.ForEach(tab => { tab.RegisterCallback<ClickEvent>(TabOnClick); });
         }
-    
+
         private void TabOnClick(ClickEvent evt)
         {
             Label clickedTab = evt.currentTarget as Label;
@@ -38,34 +35,34 @@ namespace Klonk.UI.TestMenu
                 SelectTab(clickedTab);
             }
         }
-    
+
         private static bool TabIsCurrentlySelected(Label tab)
         {
             return tab.ClassListContains(CurrentlySelectedTabClassName);
         }
-    
+
         private UQueryBuilder<Label> GetAllTabs()
         {
             return _root.Query<Label>(className: TabClassName);
         }
-    
+
         private void SelectTab(Label tab)
         {
             tab.AddToClassList(CurrentlySelectedTabClassName);
             VisualElement content = FindContent(tab);
             content.RemoveFromClassList(UnselectedContentClassName);
         }
-    
+
         private void UnselectTab(Label tab)
         {
             tab.RemoveFromClassList(CurrentlySelectedTabClassName);
             VisualElement content = FindContent(tab);
             content.AddToClassList(UnselectedContentClassName);
         }
-    
+
         private static string GenerateContentName(Label tab) =>
             tab.name.Replace(TabNameSuffix, ContentNameSuffix);
-    
+
         private VisualElement FindContent(Label tab)
         {
             return _root.Q(GenerateContentName(tab));

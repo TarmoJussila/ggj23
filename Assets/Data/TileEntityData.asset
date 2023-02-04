@@ -15,7 +15,10 @@ MonoBehaviour:
   tileDatas:
   - SolidType: 1
     LiquidType: 0
-    Color: {r: 0, g: 0, b: 0, a: 1}
+    ColorPalette:
+    - {r: 0.34901962, g: 0.3372549, b: 0.32156864, a: 1}
+    - {r: 0.5176471, g: 0.49411768, b: 0.5294118, a: 1}
+    - {r: 0.41176474, g: 0.4156863, b: 0.4156863, a: 1}
     Gravity: 0
     Health: 10
     TextureIndex: 0
@@ -23,7 +26,9 @@ MonoBehaviour:
     UvMax: {x: 0, y: 0}
   - SolidType: 2
     LiquidType: 0
-    Color: {r: 0.8962264, g: 0.525203, b: 0, a: 1}
+    ColorPalette:
+    - {r: 0.7735849, g: 0.73417586, b: 0.54369885, a: 1}
+    - {r: 0.8490566, g: 0.83923554, b: 0.6928622, a: 1}
     Gravity: 0
     Health: 3
     TextureIndex: 0
@@ -31,7 +36,9 @@ MonoBehaviour:
     UvMax: {x: 0, y: 0}
   - SolidType: 0
     LiquidType: 1
-    Color: {r: 0, g: 0.4953575, b: 1, a: 0.5019608}
+    ColorPalette:
+    - {r: 0.37254903, g: 0.80392164, b: 0.8941177, a: 1}
+    - {r: 0.38823533, g: 0.60784316, b: 1, a: 1}
     Gravity: -1
     Health: 1
     TextureIndex: 0
@@ -39,7 +46,9 @@ MonoBehaviour:
     UvMax: {x: 0, y: 0}
   - SolidType: 0
     LiquidType: 2
-    Color: {r: 0, g: 1, b: 0.054832935, a: 0.8627451}
+    ColorPalette:
+    - {r: 0.42396975, g: 1, b: 0, a: 1}
+    - {r: 0.10084306, g: 0.7830189, b: 0, a: 1}
     Gravity: -2
     Health: 100
     TextureIndex: 0

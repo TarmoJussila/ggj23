@@ -201,8 +201,7 @@ namespace Klonk.TileEntity
                     {
                         if (TryGetTileEntityAtPosition(x, y, out TileEntity tileEntity))
                         {
-                            var tileData = _entityData.GetTileDataForType(tileEntity.SolidType, tileEntity.LiquidType);
-                            Gizmos.color = tileData.Color;
+                            Gizmos.color = tileEntity.TileColor;
                             Gizmos.DrawCube(new Vector2(x, y), Vector2.one);
                         }
                     }

@@ -5,7 +5,8 @@ Shader "Klonk/World"
         _GroundSheet ("Ground Sheet", 2D) = "white" {}
         _WorldTex ("WorldData", 2D) = "white" {}
         _PixelsPerEntity ("Pixels per entity", int) = 6
-        _CameraPos ("Camera center world position", Vector) = (0.0, 0.0,0,0)
+        _CameraPos ("Camera center world position", Vector) = (0.0, 0.0, 0.0, 0.0)
+        _WorldResolution ("World Resolution", Vector) = (0.0, 0.0, 0.0, 0.0)
     }
     SubShader
     {
@@ -51,17 +52,33 @@ Shader "Klonk/World"
             SamplerState sampler_WorldTex_Point_Clamp;
             float4 _WorldTex_ST;
 
+            float4 _WorldResolution;
+
+            float4 _CameraPos;
+
             fixed4 frag(v2f i) : SV_Target
             {
                 fixed4 offset = _WorldTex.Sample(
                     sampler_WorldTex_Point_Clamp, i.uv);
-                //fixed4 offset = tex2D(_WorldTex, i.uv);
 
-                //return fixed4(offset.rg, 0, 1);
-                fixed4 col = _GroundSheet.Sample(
-                    sampler_GroundSheet_Point_Clamp, offset.rg);
-                //fixed4 col = tex2D(_GroundSheet, offset.rg);
-                return col;
+                return offset;
+
+                /*fixed2 pixelTilePosition = _CameraPos.xy + (i.uv *
+                    _WorldResolution.xy);
+                fixed2 pixelDecimal = fixed2(fmod(pixelTilePosition.x, 1),
+                                             fmod(pixelTilePosition.y, 1));
+                fixed2 finalOffset = offset + pixelDecimal / 4;*/
+
+                //fixed2 uv = i.uv;
+                //uv.x = lerp();
+                //uv.y = 1 - (1 - uv.y);
+                //fixed4 coll = _GroundSheet.Sample(
+                    //sampler_GroundSheet_Point_Clamp, uv);
+                //return coll;
+
+                /*fixed4 col = _GroundSheet.Sample(
+                    sampler_GroundSheet_Point_Clamp, finalOffset);
+                return col;*/
             }
             ENDCG
         }

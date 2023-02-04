@@ -9,7 +9,7 @@ namespace Klonk.TileEntity.Data
     {
         public SolidType SolidType;
         public LiquidType LiquidType;
-        public Color Color;
+        public Color[] ColorPalette;
         public float Gravity;
         public int Health;
 

@@ -14,7 +14,7 @@ namespace Klonk.Rendering
         public int Height => _height;
 
         [SerializeField] private Material _material;
-        [SerializeField] private int _textureResDivider = 10;
+        [SerializeField] public int TextureResDivider { get; private set; } = 10;
         [SerializeField] private Color _skyColor;
         [SerializeField] private Camera _normalCamera;
 
@@ -85,8 +85,8 @@ namespace Klonk.Rendering
             {
                 _lastScreenWidth = Screen.width;
                 _lastScreenHeight = Screen.height;
-                _width = Screen.width / _textureResDivider;
-                _height = Screen.height / _textureResDivider;
+                _width = Screen.width / TextureResDivider;
+                _height = Screen.height / TextureResDivider;
 
                 ResetTexture();
             }
@@ -106,7 +106,7 @@ namespace Klonk.Rendering
 
         private void ChangeZoom(int direction)
         {
-            _textureResDivider += direction;
+            TextureResDivider += direction;
             CheckAspect(true);
         }
 

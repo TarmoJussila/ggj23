@@ -1,3 +1,4 @@
+using System;
 using Klonk.Rendering;
 using Klonk.TileEntity.Data;
 using UnityEngine;
@@ -190,6 +191,20 @@ namespace Klonk.TileEntity
                         }
                     }
                 }
+            }
+        }
+
+        private void Update()
+        {
+            if (UnityEngine.Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                Vector3 point = (UnityEngine.Input.mousePosition / WorldRenderer.Instance.TextureResDivider + WorldRenderer.Instance.Camera.transform.position);
+                TileUtility.DestroyInArea(new Vector2Int(Mathf.RoundToInt(point.x), Mathf.RoundToInt(point.y)), 10);
+            }
+            if (UnityEngine.Input.GetKeyDown(KeyCode.Mouse1))
+            {
+                Vector3 point = (UnityEngine.Input.mousePosition / WorldRenderer.Instance.TextureResDivider + WorldRenderer.Instance.Camera.transform.position);
+                TileUtility.LiquifyInArea(new Vector2Int(Mathf.RoundToInt(point.x), Mathf.RoundToInt(point.y)), 10);
             }
         }
 

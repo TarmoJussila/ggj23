@@ -74,14 +74,20 @@ namespace Klonk.TileEntity
             return Position;
         }
 
-        public int ReduceHealth()
+        public int ReduceHealth(int amount = 1)
         {
-            return Health--;
+            return Health -= amount;
         }
 
         private int GetRandomDirection()
         {
             return Random.Range(0, 2) == 0 ? -1 : 1;
+        }
+
+        public void SetLiquid(LiquidType type)
+        {
+            LiquidType = type;
+            SolidType = SolidType.None;
         }
     }
 }

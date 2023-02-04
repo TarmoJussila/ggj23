@@ -35,7 +35,7 @@ namespace Klonk
 
         private void Update()
         {
-            if (UnityEngine.Input.GetKey(KeyCode.LeftControl))
+            if (UnityEngine.Input.GetKey(KeyCode.LeftShift))
             {
                 UseWeapon();
             }

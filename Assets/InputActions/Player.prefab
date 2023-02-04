@@ -35,7 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7651431852371391217
 SpriteRenderer:
@@ -147,7 +147,19 @@ MonoBehaviour:
     m_ActionId: 61964a8e-80bc-4311-99a5-c46066e663e9
     m_ActionName: Action Map/Jump[/Keyboard/space]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7651431852371391219}
+        m_TargetAssemblyTypeName: Klonk.Platforming.PlayerMovement, Assembly-CSharp
+        m_MethodName: OnVerticalInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: d8638918-9255-45b0-a69d-10b361ad74b2
     m_ActionName: Action Map/Vertical[/Keyboard/downArrow,/Keyboard/upArrow]
   m_NeverAutoSwitchControlSchemes: 0
@@ -168,9 +180,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 20
-  _jumpTickCount: 5
-  _jumpStartVelocity: 5
+  _jumpTickCount: 2
+  _jumpStartVelocity: 4
   _jumpEndVelocity: 2
+  _lookForward: {fileID: 21300000, guid: 5ec787de91c2f47ed852547ea7bdc7c8, type: 3}
+  _lookUp: {fileID: 21300000, guid: 29698448a7ff04ae8a0094525aabd862, type: 3}
+  _lookDown: {fileID: 21300000, guid: e3fda4ea522ae47d98b724423936b7a9, type: 3}
 --- !u!114 &7651431852371391228
 MonoBehaviour:
   m_ObjectHideFlags: 0

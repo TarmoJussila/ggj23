@@ -24,6 +24,7 @@ namespace Klonk.TileEntity
         public int LastUpdateFrame { get; private set; } = -1;
 
         private Color _tileColor;
+        private int _lastSpawnSourceCount;
         
         public TileEntity(Vector2Int position, LiquidType liquidType, SolidType solidType, bool isSpawnSource = false)
         {
@@ -41,6 +42,19 @@ namespace Klonk.TileEntity
         {
             if (IsLiquid || TileData.IsSpawnSource)
             {
+                if (TileData.IsSpawnSource)
+                {
+                    if (_lastSpawnSourceCount >= TileData.SpawnSpeed)
+                    {
+                        _lastSpawnSourceCount = 0;
+                    }
+                    else
+                    {
+                        _lastSpawnSourceCount++;
+                        return Position;
+                    }
+                }
+
                 if (!TileEntityHandler.Instance.TryGetTileEntityAtPosition(new Vector2Int(Mathf.Clamp(Position.x, default, TileEntityHandler.Instance.GenerationData.GenerationWidth - 1), Mathf.Max(Position.y - 1, default)), out TileEntity otherTile1))
                 {
                     var position = new Vector2Int(Mathf.Clamp(Position.x, default, TileEntityHandler.Instance.GenerationData.GenerationWidth - 1), Mathf.Max(Position.y - 1, default));
@@ -64,7 +78,7 @@ namespace Klonk.TileEntity
                 TileEntity otherTile = otherTile1 ?? otherTile2;
                 if (otherTile != null)
                 {
-                    if (LiquidType == LiquidType.Acid && otherTile.LiquidType != LiquidType.Acid)
+                    if (LiquidType == LiquidType.Acid && otherTile.LiquidType != LiquidType.Acid && !otherTile.TileData.IsAcidResistant)
                     {
                         if (Potency > 0)
                         {
@@ -73,10 +87,6 @@ namespace Klonk.TileEntity
                         }
                     }
                 }
-            }
-            if (IsSolid)
-            {
-
             }
             LastUpdateFrame = updateFrame;
             return Position;

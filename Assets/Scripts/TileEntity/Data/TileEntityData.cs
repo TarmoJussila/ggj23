@@ -13,6 +13,7 @@ namespace Klonk.TileEntity.Data
         public Color[] ColorPalette;
         public float Gravity;
         public int Health = 1;
+        public bool IsAcidResistant;
         public int Potency = 1;
 
         [Header("Spawn Source Data")]
@@ -21,11 +22,6 @@ namespace Klonk.TileEntity.Data
         public int SpawnSpeed;
         public int SpawnLifespan;
         public bool IsEndlessLifespan;
-
-        [Header("Texture Data")]
-        public int TextureIndex;
-        public Vector2 UvMin;
-        public Vector2 UvMax;
     }
 
     [CreateAssetMenu(fileName = nameof(TileEntityData), menuName = nameof(TileEntityData))]

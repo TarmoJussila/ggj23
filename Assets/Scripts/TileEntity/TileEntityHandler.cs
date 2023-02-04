@@ -26,6 +26,7 @@ namespace Klonk.TileEntity
         private Dictionary<Vector2Int, TileEntity> _tileEntities;
 
         [SerializeField] private TileEntityGenerationData _generationData;
+        [SerializeField] private TileEntityData _entityData;
         [SerializeField] private bool _drawGizmos = false;
 
         private void Awake()
@@ -46,7 +47,7 @@ namespace Klonk.TileEntity
                         position = new Vector2Int(Random.Range(Mathf.Clamp(position.x - 1, default, _generationData.GenerationWidth), Mathf.Clamp(position.x + 2, default, _generationData.GenerationWidth)), Random.Range(Mathf.Clamp(position.y - 1, default, _generationData.GenerationHeight), Mathf.Clamp(position.y + 2, default, _generationData.GenerationHeight)));
                     } while (TryGetTileEntityAtPosition(position) != null);
 
-                    var tileEntity = new TileEntity(position, false, true, 0f);
+                    var tileEntity = new TileEntity(position, LiquidType.None, SolidType.Rock);
                     _tileEntities.Add(position, tileEntity);
                 }
             }
@@ -58,7 +59,7 @@ namespace Klonk.TileEntity
                     position = new Vector2Int(Random.Range(0, generationData.GenerationWidth), Random.Range(0, generationData.GenerationHeight));
                 } while (TryGetTileEntityAtPosition(position) != null);
 
-                var tileEntity = new TileEntity(position, true, false, -1f);
+                var tileEntity = new TileEntity(position, LiquidType.Water, SolidType.None);
                 _tileEntities.Add(position, tileEntity);
             }
         }
@@ -94,7 +95,8 @@ namespace Klonk.TileEntity
             {
                 foreach (var tileEntity in _tileEntities)
                 {
-                    Gizmos.color = tileEntity.Value.IsSolid ? Color.black : Color.yellow;
+                    var tileData = _entityData.GetTileDataForType(tileEntity.Value.SolidType, tileEntity.Value.LiquidType);
+                    Gizmos.color = tileData.Color;
                     Gizmos.DrawCube((Vector2)tileEntity.Key, Vector2.one);
                 }
             }

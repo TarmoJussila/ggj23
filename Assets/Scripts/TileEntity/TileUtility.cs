@@ -13,6 +13,12 @@ namespace Klonk.TileEntity
             return new Vector2Int((int)coordinates.x, (int)coordinates.y);
         }
 
+        public static Vector3 TileToWorldCoordinates(Vector2Int tileCoordinates)
+        {
+            Vector2Int transformed = tileCoordinates * (int)TILE_SIZE;
+            return new Vector3(transformed.x, transformed.y, default);
+        }
+
         public static void DestroyInArea(Vector2Int center, int radius)
         {
             int centerX = center.x;

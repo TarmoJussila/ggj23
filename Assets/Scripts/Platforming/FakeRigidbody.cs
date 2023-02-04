@@ -32,7 +32,7 @@ namespace Klonk.Platforming
         private void ClampVelocity()
         {
             _velocity.y -= GRAVITY;
-            
+            IsGrounded = false;
             Bounds bounds = _boxCollider.bounds;
             Vector3 worldPosition = transform.position;
             Vector3 worldPositionAfterVelocity = worldPosition + new Vector3(_velocity.x, _velocity.y, default);
@@ -74,6 +74,7 @@ namespace Klonk.Platforming
                 {
                     Vector2Int position = bottomLeftTileCoordinates + new Vector2Int(x + 1, y - 1);
                     position.y = Mathf.Max(default, position.y);
+                    Debug.DrawRay(TileUtility.TileToWorldCoordinates(position), Vector3.down * 10);
                     if (TileEntityHandler.Instance.TryGetTileEntityAtPosition(position, out _))
                     {
                         _velocity = new Vector2(_velocity.x, y * TileUtility.TILE_SIZE);
@@ -90,6 +91,7 @@ namespace Klonk.Platforming
                 {
                     Vector2Int position = topRightTileCoordinates + new Vector2Int(x + 1, y + 1);
                     position.y = Mathf.Max(default, position.y);
+                    Debug.DrawRay(TileUtility.TileToWorldCoordinates(position), Vector3.up * 10);
                     if (TileEntityHandler.Instance.TryGetTileEntityAtPosition(position, out _))
                     {
                         _velocity = new Vector2(_velocity.x, Mathf.Min(_velocity.y, y * TileUtility.TILE_SIZE));
@@ -103,7 +105,8 @@ namespace Klonk.Platforming
             {
                 for (int x = 0; x > xTileVelocity - 1; x--)
                 {
-                    Vector2Int position = bottomLeftTileCoordinates + new Vector2Int(x - 1, y - 1);
+                    Vector2Int position = bottomLeftTileCoordinates + new Vector2Int(x - 1, y);
+                    Debug.DrawRay(TileUtility.TileToWorldCoordinates(position), Vector3.left * 10);
                     if (TileEntityHandler.Instance.TryGetTileEntityAtPosition(position, out _))
                     {
                         _velocity = new Vector2(Mathf.Max(x * TileUtility.TILE_SIZE, _velocity.x), _velocity.y);
@@ -117,7 +120,8 @@ namespace Klonk.Platforming
             {
                 for (int x = 0; x < xTileVelocity; x++)
                 {
-                    Vector2Int position = bottomRightTileCoordinates + new Vector2Int(x + 1, y - 1);
+                    Vector2Int position = bottomRightTileCoordinates + new Vector2Int(x + 1, y);
+                    Debug.DrawRay(TileUtility.TileToWorldCoordinates(position), Vector3.right * 10);
                     if (TileEntityHandler.Instance.TryGetTileEntityAtPosition(position, out _))
                     {
                         _velocity = new Vector2(Mathf.Min(x * TileUtility.TILE_SIZE, _velocity.x), _velocity.y);

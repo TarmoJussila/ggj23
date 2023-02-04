@@ -35,7 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7651431852371391217
 SpriteRenderer:
@@ -168,8 +168,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 20
-  _jumpTickCount: 10
-  _jumpVelocity: 1.5
+  _jumpTickCount: 5
+  _jumpStartVelocity: 5
+  _jumpEndVelocity: 2
 --- !u!114 &7651431852371391228
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,8 +1,22 @@
+#topBar {
+    flex-basis: 10%;
+    flex-direction: row;
+}
+
+#gameOverLay {
+    flex-basis: 90%;
+}
+
+#debugText {
+    flex-basis: 90%;
+}
+
 #mainMenuButton {
-    align-self: flex-end;
 }
 
 #exitConfirmDialog {
+    margin-top: 10%;
+    width: 30%;
     align-self: center;
 }
 

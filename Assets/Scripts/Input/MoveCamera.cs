@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Klonk.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,29 +13,42 @@ namespace Klonk.Input
         public Key Up;
         public Key Right;
         public Key Down;
+        public Key ZoomIn;
+        public Key ZoomOut;
     }
-    
+
     public class MoveCamera : MonoBehaviour
     {
-        
         [SerializeField] private float _speed;
 
-        [SerializeField] private List<InputKeys> _controls = new() {
+        [SerializeField] private List<InputKeys> _controls = new()
+        {
             new InputKeys()
             {
                 Left = Key.A,
                 Up = Key.W,
                 Right = Key.D,
-                Down = Key.S
+                Down = Key.S,
+                ZoomIn = Key.E,
+                ZoomOut = Key.Q
             },
             new InputKeys()
             {
                 Left = Key.LeftArrow,
                 Up = Key.UpArrow,
                 Right = Key.RightArrow,
-                Down = Key.DownArrow
+                Down = Key.DownArrow,
+                ZoomIn = Key.Period,
+                ZoomOut = Key.Comma
             }
         };
+
+        private WorldRenderer _worldRenderer;
+
+        private void Start()
+        {
+            _worldRenderer = GetComponent<WorldRenderer>();
+        }
 
         private void Update()
         {
@@ -53,6 +67,16 @@ namespace Klonk.Input
                 x += keyboard[inputKeys.Right].isPressed ? 1 : 0;
                 y += keyboard[inputKeys.Up].isPressed ? 1 : 0;
                 y -= keyboard[inputKeys.Down].isPressed ? 1 : 0;
+
+                if (keyboard[inputKeys.ZoomIn].wasPressedThisFrame)
+                {
+                    _worldRenderer.ZoomIn();
+                }
+
+                if (keyboard[inputKeys.ZoomOut].wasPressedThisFrame)
+                {
+                    _worldRenderer.ZoomOut();
+                }
             }
 
             if (x != 0 || y != 0)

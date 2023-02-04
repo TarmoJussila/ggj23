@@ -1,9 +1,14 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/HUD/HUD.uss?fileID=7433441132597879392&amp;guid=55fe03484b8ca48ce992d248c0806069&amp;type=3#HUD" />
-    <ui:Button text="Exit" display-tooltip-when-elided="true" name="mainMenuButton" />
-    <ui:VisualElement name="exitConfirmDialog" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
-        <ui:Label tabindex="-1" text="Exit back to main menu?" display-tooltip-when-elided="true" name="dialogText" />
-        <ui:Button text="Yes" display-tooltip-when-elided="true" name="YesButton" class="dialogButton" />
-        <ui:Button text="No" display-tooltip-when-elided="true" name="NoButton" class="dialogButton" />
+    <ui:VisualElement name="topBar">
+        <ui:Label tabindex="-1" text="FPS" display-tooltip-when-elided="true" name="debugText" />
+        <ui:Button text="Exit" display-tooltip-when-elided="true" name="mainMenuButton" />
+    </ui:VisualElement>
+    <ui:VisualElement name="gameOverlay">
+        <ui:VisualElement name="exitConfirmDialog">
+            <ui:Label tabindex="-1" text="Exit back to main menu?" display-tooltip-when-elided="true" name="dialogText" />
+            <ui:Button text="Yes" display-tooltip-when-elided="true" name="YesButton" class="dialogButton" />
+            <ui:Button text="No" display-tooltip-when-elided="true" name="NoButton" class="dialogButton" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

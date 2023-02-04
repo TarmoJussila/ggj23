@@ -39,9 +39,9 @@ namespace Klonk.TileEntity
         private void Awake()
         {
             _tileEntities = new TileEntity[_generationData.GenerationWidth, _generationData.GenerationHeight];
-            GenerateTileEntities(_generationData);
             _worldWidth = _tileEntities.GetLength(0);
             _worldHeight = _tileEntities.GetLength(1);
+            GenerateTileEntities(_generationData);
         }
 
         private void GenerateTileEntities(TileEntityGenerationData generationData)
@@ -108,6 +108,22 @@ namespace Klonk.TileEntity
                 }
             }
 
+            for (int i = 0; i < generationData.WaterSpawnSourceAmount; i++)
+            {
+                Vector2Int position;
+                bool foundEmptyTile;
+                bool foundTileAbove;
+                do
+                {
+                    position = new Vector2Int(Random.Range(0, generationData.GenerationWidth), Random.Range(0, generationData.GenerationHeight));
+                    foundEmptyTile = !TryGetTileEntityAtPosition(position, out _);
+                    foundTileAbove = TryGetTileEntityAtPosition(position + new Vector2Int(0, 1), out _);
+                } while (!(foundEmptyTile && foundTileAbove));
+
+                var tileEntity = new TileEntity(position, LiquidType.Water, SolidType.None, true);
+                _tileEntities[position.x, position.y] = tileEntity;
+            }
+
             for (int i = 0; i < generationData.WaterGenerationAmount; i++)
             {
                 Vector2Int position;
@@ -129,18 +145,6 @@ namespace Klonk.TileEntity
                 } while (TryGetTileEntityAtPosition(position, out _));
 
                 var tileEntity = new TileEntity(position, LiquidType.Acid, SolidType.None);
-                _tileEntities[position.x, position.y] = tileEntity;
-            }
-
-            for (int i = 0; i < generationData.WaterSpawnSourceAmount; i++)
-            {
-                Vector2Int position;
-                do
-                {
-                    position = new Vector2Int(Random.Range(0, generationData.GenerationWidth), Random.Range(0, generationData.GenerationHeight));
-                } while (TryGetTileEntityAtPosition(position, out _) && !TryGetTileEntityAtPosition(position - new Vector2Int(0, 1), out TileEntity existingTileEntity) && existingTileEntity.IsSolid);
-
-                var tileEntity = new TileEntity(position, LiquidType.Water, SolidType.None, true);
                 _tileEntities[position.x, position.y] = tileEntity;
             }
         }

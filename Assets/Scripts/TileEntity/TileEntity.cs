@@ -44,6 +44,16 @@ namespace Klonk.TileEntity
 
         public Vector2Int UpdateEntity(int updateFrame)
         {
+
+            if (ExplosionType != ExplosionType.None)
+            {
+                ReduceHealth();
+                if (Health <= 0)
+                {
+                    TileUtility.ExplosionInArea(Position, 10, ExplosionType);
+                }
+            }
+            
             if (IsLiquid || TileData.IsSpawnSource || IsExplosion)
             {
                 if (TileData.IsSpawnSource)
@@ -90,15 +100,6 @@ namespace Klonk.TileEntity
                             Potency--;
                         }
                     }
-                }
-            }
-
-            if (ExplosionType != ExplosionType.None)
-            {
-                ReduceHealth();
-                if (Health <= 0)
-                {
-                    TileUtility.ExplosionInArea(Position, 10, ExplosionType);
                 }
             }
 

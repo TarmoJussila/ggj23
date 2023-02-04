@@ -142,7 +142,7 @@ PrefabInstance:
       objectReference: {fileID: 842933593}
     - target: {fileID: -3212844946174125043, guid: 9cd710fad2c7a5549afdcba5773a354b, type: 3}
       propertyPath: _moveSpeed
-      value: 0.5
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: -3212844946174125043, guid: 9cd710fad2c7a5549afdcba5773a354b, type: 3}
       propertyPath: _skyColor.b

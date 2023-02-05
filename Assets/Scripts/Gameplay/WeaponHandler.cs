@@ -93,7 +93,8 @@ namespace Klonk
                 tileToSpawn.LiquidType,
                 tileToSpawn.SolidType,
                 tileToSpawn.ExplosionType,
-                tileToSpawn.IsSpawnSource
+                tileToSpawn.IsSpawnSource,
+                direction
             );
 
             TileEntityHandler.Instance.TryAddTileToPosition(tileEntity, pos);

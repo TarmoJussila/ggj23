@@ -16,6 +16,8 @@ namespace Klonk
         private OverlapChecker _overlapChecker;
         private MovementBase _movement;
         private SpriteRenderer _renderer;
+
+        private Coroutine _freezeCoroutine;
         
         private void Start()
         {
@@ -50,6 +52,15 @@ namespace Klonk
             return CheckHealth();
         }
 
+        public void Freeze()
+        {
+            if (_freezeCoroutine != null)
+            {
+                StopCoroutine(_freezeCoroutine);
+            }
+            _freezeCoroutine = StartCoroutine(FreezeEnumerator());
+        }
+
         private bool CheckHealth()
         {
             bool alive = _health > 0;
@@ -76,6 +87,13 @@ namespace Klonk
             yield return new WaitForSeconds(0.5f);
 
             _renderer.enabled = false;
+        }
+
+        private IEnumerator FreezeEnumerator()
+        {
+            _movement.enabled = false;
+            yield return new WaitForSeconds(5.0f);
+            _movement.enabled = true;
         }
     }
 }

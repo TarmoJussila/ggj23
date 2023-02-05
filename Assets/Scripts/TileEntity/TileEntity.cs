@@ -21,16 +21,14 @@ namespace Klonk.TileEntity
         public int Health { get; private set; }
         public int Potency { get; private set; }
         public Color TileColor { get { return _tileColor; } }
-
         public TileData TileData { get; private set; }
-
         public int LastUpdateFrame { get; private set; } = -1;
 
         private Color _tileColor;
         private int _lastSpawnSourceCount;
         private int _velocityApplyCount;
 
-        private readonly int velocityApplyCountMax = 20;
+        private readonly int _velocityApplyCountMax = 20;
         
         public TileEntity(Vector2Int position, LiquidType liquidType, SolidType solidType, ExplosionType explosionType, bool isSpawnSource = false, int velocity = 0)
         {
@@ -80,7 +78,7 @@ namespace Klonk.TileEntity
                     forceDirection = Velocity;
                     if (forceDirection != 0)
                     {
-                        if (_velocityApplyCount > velocityApplyCountMax)
+                        if (_velocityApplyCount > _velocityApplyCountMax)
                         {
                             _velocityApplyCount = 0;
                             Velocity = 0;

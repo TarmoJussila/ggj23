@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Klonk.AI;
 using Klonk.Platforming;
 using Klonk.TileEntity;
 using Unity.Mathematics;
@@ -11,6 +12,8 @@ namespace Klonk
 {
     public class CharacterHealth : MonoBehaviour
     {
+        public static event System.Action OnEnemyDead;
+        
         [SerializeField] private int _health = 1000;
         
         private OverlapChecker _overlapChecker;
@@ -67,6 +70,10 @@ namespace Klonk
 
             if (!alive)
             {
+                if (GetComponentInChildren<AIMovement>(true) != null)
+                {
+                    OnEnemyDead?.Invoke();
+                }
                 StartCoroutine(DeathEffect());
                 _movement.enabled = false;
             }

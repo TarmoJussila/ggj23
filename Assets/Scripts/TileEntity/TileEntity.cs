@@ -48,6 +48,8 @@ namespace Klonk.TileEntity
 
         public Vector2Int UpdateEntity(int updateFrame)
         {
+            LastUpdateFrame = updateFrame;
+
             if (ExplosionType != ExplosionType.None)
             {
                 ReduceHealth();
@@ -126,8 +128,6 @@ namespace Klonk.TileEntity
                     }
                 }
             }
-
-            LastUpdateFrame = updateFrame;
             return Position;
         }
 

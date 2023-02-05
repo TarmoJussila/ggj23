@@ -36,7 +36,7 @@ namespace Klonk.TileEntity
         private int _worldWidth;
         private int _worldHeight;
 
-        private readonly int _initialUpdateSimulationCount = 1000;
+        private readonly int _initialUpdateSimulationCount = 10;
 
         private void Awake()
         {

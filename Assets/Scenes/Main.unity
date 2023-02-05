@@ -136,6 +136,8 @@ GameObject:
   - component: {fileID: 396028388}
   - component: {fileID: 396028387}
   - component: {fileID: 396028386}
+  - component: {fileID: 396028392}
+  - component: {fileID: 396028391}
   m_Layer: 0
   m_Name: Kani
   m_TagString: Untagged
@@ -157,6 +159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 1
   _turnTime: 5
+  _chaotic: 0
 --- !u!114 &396028387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,6 +285,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &396028391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 396028385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82525675af14f7c4b9d562a171316321, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: 300
+--- !u!114 &396028392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 396028385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 884496ec1800ca84cb619f3350b8a229, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _solidOverlapDamageThreshold: 6
+  OverlapLiquids: 
+  OverlapSolids: 
 --- !u!4 &842933593 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7651431852371391216, guid: a565b28467bdb4a4795c84d1f61d6135, type: 3}
@@ -299,53 +330,9 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 842933593}
-    - target: {fileID: -3212844946174125043, guid: 9cd710fad2c7a5549afdcba5773a354b, type: 3}
-      propertyPath: _moveSpeed
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: -3212844946174125043, guid: 9cd710fad2c7a5549afdcba5773a354b, type: 3}
-      propertyPath: _skyColor.b
-      value: 0.9811321
-      objectReference: {fileID: 0}
-    - target: {fileID: -3212844946174125043, guid: 9cd710fad2c7a5549afdcba5773a354b, type: 3}
-      propertyPath: _skyColor.g
-      value: 0.7701314
-      objectReference: {fileID: 0}
-    - target: {fileID: -3212844946174125043, guid: 9cd710fad2c7a5549afdcba5773a354b, type: 3}
-      propertyPath: _skyColor.r
-      value: 0.37486652
-      objectReference: {fileID: 0}
-    - target: {fileID: -3212844946174125043, guid: 9cd710fad2c7a5549afdcba5773a354b, type: 3}
-      propertyPath: _caveColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -3212844946174125043, guid: 9cd710fad2c7a5549afdcba5773a354b, type: 3}
-      propertyPath: _caveColor.b
-      value: 0.19490923
-      objectReference: {fileID: 0}
-    - target: {fileID: -3212844946174125043, guid: 9cd710fad2c7a5549afdcba5773a354b, type: 3}
-      propertyPath: _caveColor.g
-      value: 0.3615685
-      objectReference: {fileID: 0}
-    - target: {fileID: -3212844946174125043, guid: 9cd710fad2c7a5549afdcba5773a354b, type: 3}
-      propertyPath: _caveColor.r
-      value: 0.5660378
-      objectReference: {fileID: 0}
-    - target: {fileID: -3212844946174125043, guid: 9cd710fad2c7a5549afdcba5773a354b, type: 3}
-      propertyPath: _normalCamera
-      value: 
-      objectReference: {fileID: 1531840030}
-    - target: {fileID: -3212844946174125043, guid: 9cd710fad2c7a5549afdcba5773a354b, type: 3}
-      propertyPath: _outOfBoundsColor.a
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2677292185288178663, guid: 9cd710fad2c7a5549afdcba5773a354b, type: 3}
       propertyPath: m_Name
       value: WorldCamera
-      objectReference: {fileID: 0}
-    - target: {fileID: 3031071751229109724, guid: 9cd710fad2c7a5549afdcba5773a354b, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4415013545400082013, guid: 9cd710fad2c7a5549afdcba5773a354b, type: 3}
       propertyPath: m_RootOrder
@@ -391,8 +378,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 0}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -458,11 +444,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a565b28467bdb4a4795c84d1f61d6135, type: 3}
---- !u!20 &1531840030 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 3522817133120700987, guid: 9cd710fad2c7a5549afdcba5773a354b, type: 3}
-  m_PrefabInstance: {fileID: 872429446}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1520038845603453812
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -518,10 +499,6 @@ PrefabInstance:
     - target: {fileID: 1211787301042100643, guid: 3c11b4229e7b246ac81663ce58ae5fc7, type: 3}
       propertyPath: m_Name
       value: TileEntityHandler
-      objectReference: {fileID: 0}
-    - target: {fileID: 4927017367861849503, guid: 3c11b4229e7b246ac81663ce58ae5fc7, type: 3}
-      propertyPath: _drawGizmos
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -645,8 +622,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainCamera
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8033232407948696205, guid: bd8b89502f9ec42f8b8626bfca7f71b9, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

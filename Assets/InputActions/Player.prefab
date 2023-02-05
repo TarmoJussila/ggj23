@@ -268,14 +268,24 @@ MonoBehaviour:
   _weapons:
   - TileDataIndex: 2
     RequireKeyDown: 0
+    Name: Water
+    Sprite: {fileID: 557711100, guid: 47ea97a0530c6014382949f60363419e, type: 3}
   - TileDataIndex: 3
     RequireKeyDown: 0
+    Name: Acid
+    Sprite: {fileID: 108570981, guid: 47ea97a0530c6014382949f60363419e, type: 3}
   - TileDataIndex: 6
     RequireKeyDown: 1
+    Name: Bomb
+    Sprite: {fileID: -1203571901, guid: 47ea97a0530c6014382949f60363419e, type: 3}
   - TileDataIndex: 7
     RequireKeyDown: 1
+    Name: Liquidator
+    Sprite: {fileID: 1781047504, guid: 47ea97a0530c6014382949f60363419e, type: 3}
   - TileDataIndex: 8
     RequireKeyDown: 1
+    Name: Freezer
+    Sprite: {fileID: 939918015, guid: 47ea97a0530c6014382949f60363419e, type: 3}
 --- !u!114 &842933601
 MonoBehaviour:
   m_ObjectHideFlags: 0

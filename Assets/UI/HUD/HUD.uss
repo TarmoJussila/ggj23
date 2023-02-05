@@ -8,7 +8,7 @@
 }
 
 #debugText {
-    flex-basis: 85%;
+    flex-basis: 70%;
 }
 
 #mainMenuButton {

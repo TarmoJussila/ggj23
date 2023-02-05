@@ -49,6 +49,7 @@ namespace Klonk.TileEntity
                             component.TakeDamage(500);
                             break;
                         }
+                        case ExplosionType.None: break;
                     }
                 }
             }
@@ -83,6 +84,7 @@ namespace Klonk.TileEntity
                             }
                             case ExplosionType.None:
                             {
+                                tile.ReduceHealth(10000);
                                 break;
                             }
                         }

@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 9212075106688106136}
   - component: {fileID: 2909057018845925052}
   m_Layer: 0
-  m_Name: Kani
+  m_Name: Creature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -161,7 +161,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 1
-  _turnTime: 3
+  _minTurnTime: 2
+  _maxTurnTime: 4
 --- !u!114 &9212075106688106135
 MonoBehaviour:
   m_ObjectHideFlags: 0

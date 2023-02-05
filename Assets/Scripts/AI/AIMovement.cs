@@ -1,6 +1,7 @@
 using System;
 using Klonk.Platforming;
 using UnityEngine;
+using Random = System.Random;
 
 namespace Klonk.AI
 {
@@ -9,15 +10,18 @@ namespace Klonk.AI
     {
         [Header("Settings")] 
         [SerializeField] private float _moveSpeed;
-        [SerializeField] private float _turnTime;
+        [SerializeField] private float _minTurnTime;
+        [SerializeField] private float _maxTurnTime;
         
         private FakeRigidbody _fakeRigidbody;
+        private float _turnTime;
         private float _currentTurnTime;
         private Vector3 _currentDirection = Vector3.right;
 
         private void Awake()
         {
             _fakeRigidbody = GetComponent<FakeRigidbody>();
+            _turnTime = UnityEngine.Random.Range(_minTurnTime, _maxTurnTime);
         }
 
         private void FixedUpdate()
@@ -28,6 +32,7 @@ namespace Klonk.AI
             if (_turnTime < _currentTurnTime)
             {
                 _currentDirection = -_currentDirection;
+                _turnTime = UnityEngine.Random.Range(_minTurnTime, _maxTurnTime);
                 _currentTurnTime = default;
             }
 

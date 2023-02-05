@@ -25,13 +25,11 @@ The game was created with **Unity 2022.2.5f1**.
 
 | Action        | Bind           | Controller  |
 | ------------- |:-------------:| -----:|
-| Move Forward     | W | Left Stick |
-| Move Backward     | S | Left Stick |
-| Move Left | A | Left Stick |
-| Move Right | D | Left Stick |
-| Look Around | Mouse | Right Stick |
-| Fly Up | Spacebar | Left Trigger |
-| Speed Boost | Shift | Right Trigger |
+| Move Left | A / Left Arrow | Left Stick |
+| Move Right | D / Right Arrow | Left Stick |
+| Jump | Space | A Button |
+| Use Weapon | Shift | X Button |
+| Change Weapon | 1-3 | Left Trigger |
 
 # Credits - Team Klonk
 

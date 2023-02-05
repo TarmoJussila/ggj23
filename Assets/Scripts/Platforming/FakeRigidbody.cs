@@ -13,6 +13,8 @@ namespace Klonk.Platforming
         public bool IsGrounded { get; private set; }
         public BoxCollider2D BoxCollider { get; private set; }
 
+        public Vector3 RigidBodyPosition { get { return _rigidbodyPosition; } }
+        
         private Vector2 _velocity;
         private Vector3 _rigidbodyPosition;
         private const float GRAVITY = 0.25f;

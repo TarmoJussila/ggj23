@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Klonk.AI
 {
     [RequireComponent(typeof(FakeRigidbody))]  
-    public class AIMovement : MonoBehaviour
+    public class AIMovement : MovementBase
     {
         [Header("Settings")] 
         [SerializeField] private float _moveSpeed;

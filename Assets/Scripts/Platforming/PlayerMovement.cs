@@ -3,8 +3,13 @@ using UnityEngine.InputSystem;
 
 namespace Klonk.Platforming
 {
+    public class MovementBase : MonoBehaviour
+    {
+        
+    }
+    
     [RequireComponent(typeof(FakeRigidbody))]
-    public class PlayerMovement : MonoBehaviour
+    public class PlayerMovement : MovementBase
     {
         public static PlayerMovement Instance;
         private const int AlternativeSpriteCount = 2;

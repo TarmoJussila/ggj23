@@ -16,11 +16,15 @@ namespace Klonk
     {
         public int TileDataIndex;
         public bool RequireKeyDown;
+        public string Name;
+        public Sprite Sprite;
     }
 
     public class WeaponHandler : MonoBehaviour
     {
         public static WeaponHandler Instance;
+
+        public static event System.Action<Weapon> OnWeaponChange;
 
         [SerializeField] private Weapon[] _weapons;
 
@@ -30,8 +34,7 @@ namespace Klonk
         private void Awake()
         {
             Instance = this;
-            _currentWeaponIndex = 0;
-            _currentWeapon = _weapons[_currentWeaponIndex];
+            SetWeapon(0);
         }
 
         private void Update()
@@ -42,29 +45,24 @@ namespace Klonk
                 UseWeapon();
             }
 
-            if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha1))
+            for (int i = 1; i <= 9; i++)
             {
-                ScrollWeapon(-1);
-            }
-            else if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                ScrollWeapon(1);
+                if (UnityEngine.Input.GetKeyDown(i.ToString()))
+                {
+                    SetWeapon(i - 1);
+                }
             }
         }
 
-        public void ScrollWeapon(int direction)
+        public void SetWeapon(int index)
         {
-            _currentWeaponIndex += direction;
-            if (_currentWeaponIndex < 0)
+            if (index < 0 || index >= _weapons.Length)
             {
-                _currentWeaponIndex = _weapons.Length - 1;
+                return;
             }
-            else if (_currentWeaponIndex > _weapons.Length - 1)
-            {
-                _currentWeaponIndex = 0;
-            }
-
+            _currentWeaponIndex = index;
             _currentWeapon = _weapons[_currentWeaponIndex];
+            OnWeaponChange?.Invoke(_currentWeapon);
         }
 
         private void UseWeapon()

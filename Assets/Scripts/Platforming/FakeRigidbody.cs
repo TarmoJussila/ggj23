@@ -12,7 +12,12 @@ namespace Klonk.Platforming
         public Vector2 Velocity => _velocity;
         public bool IsGrounded { get; private set; }
         public BoxCollider2D BoxCollider { get; private set; }
+        
+        public bool HitLeft { get; private set; }
+        public bool HitRight { get; private set; }
 
+        public Vector3 RigidBodyPosition { get { return _rigidbodyPosition; } }
+        
         private Vector2 _velocity;
         private Vector3 _rigidbodyPosition;
         private const float GRAVITY = 0.25f;
@@ -109,6 +114,8 @@ namespace Klonk.Platforming
                     }
                 }
             }
+
+            HitLeft = false;
             
             // Limit left velocity
             for (int y = yTileSize; y > 0; y--)
@@ -127,10 +134,14 @@ namespace Klonk.Platforming
                         {
                             _velocity = new Vector2(Mathf.Max(x * TileUtility.TILE_SIZE, _velocity.x), _velocity.y);
                         }
+                        
+                        HitLeft = true;
                         break;
                     }
                 }
             }
+
+            HitRight = false;
             
             // Limit right velocity
             for (int y = yTileSize; y > 0; y--)
@@ -141,6 +152,7 @@ namespace Klonk.Platforming
                     Debug.DrawRay(TileUtility.TileToWorldCoordinates(position), Vector3.right * 10);
                     if (TileEntityHandler.Instance.TryGetTileEntityAtPosition(position, out var tile) && !tile.IsLiquid)
                     {
+                        
                         if (y < yTileSize / 3)
                         {
                             _rigidbodyPosition = new Vector3(worldPosition.x, worldPosition.y + y * TileUtility.TILE_SIZE, worldPosition.z);
@@ -149,6 +161,8 @@ namespace Klonk.Platforming
                         {
                             _velocity = new Vector2(Mathf.Min(x * TileUtility.TILE_SIZE, _velocity.x), _velocity.y);
                         }
+                        
+                        HitRight = true;
                         break;
                     }
                 }

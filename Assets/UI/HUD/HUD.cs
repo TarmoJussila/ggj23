@@ -1,3 +1,4 @@
+using System;
 using System.Globalization;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,6 +12,8 @@ namespace Klonk.UI.HUD
         
         private VisualElement _dialogPanel;
         private Label _debugText;
+        private VisualElement _weaponIcon;
+        private Label _weaponName;
         private float _fps;
         private int _frameCount;
         private float _deltaTime;
@@ -20,15 +23,30 @@ namespace Klonk.UI.HUD
             UIDocument menu = GetComponent<UIDocument>();
             VisualElement root = menu.rootVisualElement;
 
+            WeaponHandler.OnWeaponChange += OnWeaponChange;
+
             _debugText = root.Q<Label>("debugText");
             _dialogPanel = root.Q<VisualElement>("exitConfirmDialog");
+            _weaponIcon = root.Q<VisualElement>("weaponIcon");
+            _weaponName = root.Q<Label>("weaponName");
             HideDialog();
 
             root.Q<Button>("mainMenuButton").RegisterCallback<ClickEvent>(_ => { ShowDialog(); });
 
-            root.Q<Button>("YesButton").RegisterCallback<ClickEvent>(_ => { SceneManager.LoadScene("MainMenu"); });
+            root.Q<Button>("YesButton").RegisterCallback<ClickEvent>(_ => { SceneManager.LoadScene("Menu"); });
 
             root.Q<Button>("NoButton").RegisterCallback<ClickEvent>(_ => { HideDialog(); });
+        }
+
+        private void OnDisable()
+        {
+            WeaponHandler.OnWeaponChange -= OnWeaponChange;
+        }
+
+        private void OnWeaponChange(Weapon weapon)
+        {
+            _weaponName.text = weapon.Name;
+            _weaponIcon.style.backgroundImage = new StyleBackground(weapon.Sprite);
         }
 
         private void Update()

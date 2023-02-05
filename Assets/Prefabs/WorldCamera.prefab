@@ -33,7 +33,7 @@ Transform:
   m_Children:
   - {fileID: 7109998798774725202}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &2025430192465170080
 Camera:
@@ -100,10 +100,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 100
   _material: {fileID: 2100000, guid: e95836fccc149e6419aefc959b4ed352, type: 2}
-  _skyColor: {r: 0.5740922, g: 0.724545, b: 0.9150943, a: 1}
-  _outOfBoundsColor: {r: 0, g: 0, b: 0, a: 0}
-  _caveColor: {r: 0, g: 0, b: 0, a: 0}
-  _normalCamera: {fileID: 0}
+  _skyColor: {r: 0.37486652, g: 0.7701314, b: 0.9811321, a: 1}
+  _outOfBoundsColor: {r: 0, g: 0, b: 0, a: 1}
+  _caveColor: {r: 0.5660378, g: 0.3615685, b: 0.19490923, a: 1}
+  _normalCamera: {fileID: 3522817133120700987}
   player: {fileID: 0}
 --- !u!114 &3031071751229109724
 MonoBehaviour:
@@ -112,7 +112,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2677292185288178663}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 052f0ea60396a4341a4905af5dfd911e, type: 3}
   m_Name: 

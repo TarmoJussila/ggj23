@@ -52,6 +52,8 @@ namespace Klonk.TileEntity
             {
                 UpdateSimulation(true);
             }
+            
+            SpawnHandler.Instance.SpawnCharacters();
         }
 
         private void GenerateTileEntities(TileEntityGenerationData generationData)

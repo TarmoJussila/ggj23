@@ -11,6 +11,15 @@ namespace Klonk.UI.Settings
             UIDocument menu = GetComponent<UIDocument>();
             VisualElement root = menu.rootVisualElement;
 
+            DropdownField resolutionDropdown = root.Q<DropdownField>("ResolutionsDropDown");
+            resolutionDropdown.choices.Clear();
+            Resolution[] resolutions = Screen.resolutions;
+
+            foreach (Resolution resolution in resolutions)
+            {
+                resolutionDropdown.choices.Add(resolution.width + "x" + resolution.height + " " + resolution.refreshRateRatio + "Hz");
+            }
+            
             root.Q<Button>("BackButton").RegisterCallback<ClickEvent>(_ =>
             {
                 SceneManager.LoadScene("Menu");

@@ -2,6 +2,7 @@
     <ui:VisualElement name="Row" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
         <ui:VisualElement name="Left" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); align-self: flex-start;">
             <ui:VisualElement name="CenterBox" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); align-self: center; justify-content: center; align-items: stretch;">
+                <ui:DropdownField label="Full screen resolution" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="ResolutionsDropDown" />
                 <ui:Button text="Full screen / windowed mode" display-tooltip-when-elided="true" name="FullScreenButton" />
                 <ui:Button text="Back" display-tooltip-when-elided="true" name="BackButton" />
             </ui:VisualElement>

@@ -32,7 +32,7 @@ namespace Klonk
                 int y = Random.Range(spawnMargin, TileEntityHandler.Instance.GenerationData.GenerationHeight - spawnMargin);
 
                 Vector2Int spawnPos = new Vector2Int(x, y);
-                TileUtility.ExplosionInArea(spawnPos, 15, ExplosionType.None);
+                TileUtility.ExplosionInArea(spawnPos, 25, ExplosionType.None);
 
                 Vector3 pos = new Vector3(spawnPos.x, spawnPos.y, 0);
                 

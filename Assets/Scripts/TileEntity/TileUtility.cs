@@ -27,6 +27,8 @@ namespace Klonk.TileEntity
             int centerY = center.y;
 
             Physics2D.OverlapCircleNonAlloc(center, radius, _overlapArray);
+            
+            ParticleHandler.Instance.PlayExplosion(new Vector3(center.x, center.y, 0), type);
 
             foreach (Collider2D col in _overlapArray)
             {

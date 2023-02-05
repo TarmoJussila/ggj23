@@ -16,6 +16,8 @@ MonoBehaviour:
   _sandGenerationAmount: 2500
   _rockPatchGenerationAmount: 500
   _rockGenerationAmount: 200
+  _rootPatchGenerationAmount: 100
+  _rootGenerationAmount: 300
   _waterSpawnSourceAmount: 100
   _acidSpawnSourceAmount: 30
   _generationWidth: 2000

@@ -15,6 +15,7 @@ namespace Klonk.UI.HUD
         private VisualElement _weaponIcon;
         private Label _weaponName;
         private Label _scoreLabel;
+        private Label _healthLabel;
         private float _fps;
         private int _frameCount;
         private int _score;
@@ -27,12 +28,14 @@ namespace Klonk.UI.HUD
 
             WeaponHandler.OnWeaponChange += OnWeaponChange;
             CharacterHealth.OnEnemyDead += OnEnemyDead;
+            CharacterHealth.PlayerHealthChanged += OnPlayerHealthChanged;
 
             _debugText = root.Q<Label>("debugText");
             _dialogPanel = root.Q<VisualElement>("exitConfirmDialog");
             _weaponIcon = root.Q<VisualElement>("weaponIcon");
             _weaponName = root.Q<Label>("weaponName");
             _scoreLabel = root.Q<Label>("scoreLabel");
+            _healthLabel = root.Q<Label>("healthLabel");
             HideDialog();
 
             root.Q<Button>("mainMenuButton").RegisterCallback<ClickEvent>(_ => { ShowDialog(); });
@@ -45,13 +48,19 @@ namespace Klonk.UI.HUD
         private void OnDisable()
         {
             WeaponHandler.OnWeaponChange -= OnWeaponChange;
-            CharacterHealth.OnEnemyDead += OnEnemyDead;
+            CharacterHealth.OnEnemyDead -= OnEnemyDead;
+            CharacterHealth.PlayerHealthChanged -= OnPlayerHealthChanged;
         }
 
         private void OnWeaponChange(Weapon weapon)
         {
             _weaponName.text = weapon.Name;
             _weaponIcon.style.backgroundImage = new StyleBackground(weapon.Sprite);
+        }
+
+        private void OnPlayerHealthChanged(int health)
+        {
+            _healthLabel.text = "Health: " + health;
         }
 
         private void OnEnemyDead()

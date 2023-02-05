@@ -92,8 +92,10 @@ namespace Klonk
         private IEnumerator FreezeEnumerator()
         {
             _movement.enabled = false;
+            _renderer.color = Color.blue;
             yield return new WaitForSeconds(5.0f);
             _movement.enabled = true;
+            _renderer.color = Color.white;
         }
     }
 }

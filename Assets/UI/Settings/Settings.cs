@@ -17,7 +17,7 @@ namespace Klonk.UI.Settings
 
             foreach (Resolution resolution in resolutions)
             {
-                resolutionDropdown.choices.Add(resolution.width + "x" + resolution.height + " " + resolution.refreshRateRatio + "Hz");
+                resolutionDropdown.choices.Add(resolution.width + "x" + resolution.height + " " + resolution.refreshRate + "Hz");
             }
             
             root.Q<Button>("BackButton").RegisterCallback<ClickEvent>(_ =>

@@ -14,8 +14,10 @@ namespace Klonk.UI.HUD
         private Label _debugText;
         private VisualElement _weaponIcon;
         private Label _weaponName;
+        private Label _scoreLabel;
         private float _fps;
         private int _frameCount;
+        private int _score;
         private float _deltaTime;
 
         private void OnEnable()
@@ -24,11 +26,13 @@ namespace Klonk.UI.HUD
             VisualElement root = menu.rootVisualElement;
 
             WeaponHandler.OnWeaponChange += OnWeaponChange;
+            CharacterHealth.OnEnemyDead += OnEnemyDead;
 
             _debugText = root.Q<Label>("debugText");
             _dialogPanel = root.Q<VisualElement>("exitConfirmDialog");
             _weaponIcon = root.Q<VisualElement>("weaponIcon");
             _weaponName = root.Q<Label>("weaponName");
+            _scoreLabel = root.Q<Label>("scoreLabel");
             HideDialog();
 
             root.Q<Button>("mainMenuButton").RegisterCallback<ClickEvent>(_ => { ShowDialog(); });
@@ -41,12 +45,19 @@ namespace Klonk.UI.HUD
         private void OnDisable()
         {
             WeaponHandler.OnWeaponChange -= OnWeaponChange;
+            CharacterHealth.OnEnemyDead += OnEnemyDead;
         }
 
         private void OnWeaponChange(Weapon weapon)
         {
             _weaponName.text = weapon.Name;
             _weaponIcon.style.backgroundImage = new StyleBackground(weapon.Sprite);
+        }
+
+        private void OnEnemyDead()
+        {
+            _score++;
+            _scoreLabel.text = "Score: " + _score;
         }
 
         private void Update()

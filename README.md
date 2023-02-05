@@ -41,6 +41,8 @@ Tuomo Oksanen - Programming
 
 Aleksi Toivonen - Programming
 
+Juho Turpeinen - Programming
+
 Kalle Collan - Graphics
 
 Janet Vaher - Brand Design

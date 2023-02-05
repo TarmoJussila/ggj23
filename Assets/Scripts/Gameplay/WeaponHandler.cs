@@ -88,7 +88,7 @@ namespace Klonk
 
             TileData tileToSpawn = TileEntityHandler.Instance.EntityData.GetTileDataByIndex(_currentWeapon.TileDataIndex);
 
-            var tileEntity = new Klonk.TileEntity.TileEntity(pos, tileToSpawn.LiquidType, tileToSpawn.SolidType, tileToSpawn.IsSpawnSource);
+            var tileEntity = new Klonk.TileEntity.TileEntity(pos, tileToSpawn.LiquidType, tileToSpawn.SolidType, tileToSpawn.IsSpawnSource, direction);
 
             TileEntityHandler.Instance.TryAddTileToPosition(tileEntity, pos);
         }

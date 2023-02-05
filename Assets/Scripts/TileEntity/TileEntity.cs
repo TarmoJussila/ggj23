@@ -14,7 +14,7 @@ namespace Klonk.TileEntity
         public bool IsSolid { get { return SolidType != SolidType.None; } }
         public bool IsLiquid { get { return LiquidType != LiquidType.None; } }
         public float Gravity { get; private set; }
-        public Vector2 Velocity { get; private set; }
+        public int Velocity { get; private set; }
         public int Health { get; private set; }
         public int Potency { get; private set; }
         public Color TileColor { get { return _tileColor; } }
@@ -25,8 +25,11 @@ namespace Klonk.TileEntity
 
         private Color _tileColor;
         private int _lastSpawnSourceCount;
+        private int _velocityApplyCount;
+
+        private readonly int velocityApplyCountMax = 20;
         
-        public TileEntity(Vector2Int position, LiquidType liquidType, SolidType solidType, bool isSpawnSource = false)
+        public TileEntity(Vector2Int position, LiquidType liquidType, SolidType solidType, bool isSpawnSource = false, int velocity = 0)
         {
             TileData = TileEntityHandler.Instance.EntityData.GetTileDataForType(solidType, liquidType, isSpawnSource);
             Position = position;
@@ -35,6 +38,7 @@ namespace Klonk.TileEntity
             Gravity = TileData.Gravity;
             Health = TileData.Health;
             Potency = TileData.Potency;
+            Velocity = velocity;
             _tileColor = TileData.ColorPalette[Random.Range(0, TileData.ColorPalette.Length)];
         }
 
@@ -55,6 +59,24 @@ namespace Klonk.TileEntity
                     }
                 }
 
+                int forceDirection = 0;
+                if (IsLiquid)
+                {
+                    forceDirection = Velocity;
+                    if (forceDirection != 0)
+                    {
+                        if (_velocityApplyCount > velocityApplyCountMax)
+                        {
+                            _velocityApplyCount = 0;
+                            Velocity = 0;
+                        }
+                        else
+                        {
+                            _velocityApplyCount++;
+                        }
+                    }
+                }
+
                 if (!TileEntityHandler.Instance.TryGetTileEntityAtPosition(new Vector2Int(Mathf.Clamp(Position.x, default, TileEntityHandler.Instance.GenerationData.GenerationWidth - 1), Mathf.Max(Position.y - 1, default)), out TileEntity otherTile1))
                 {
                     var position = new Vector2Int(Mathf.Clamp(Position.x, default, TileEntityHandler.Instance.GenerationData.GenerationWidth - 1), Mathf.Max(Position.y - 1, default));
@@ -62,9 +84,12 @@ namespace Klonk.TileEntity
                     {
                         Position = position;
                     }
-                    return position;
+                    if (forceDirection == 0)
+                    {
+                        return position;
+                    }
                 }
-                int direction = GetRandomDirection();
+                int direction = forceDirection == 0 ? GetRandomDirection() : forceDirection;
                 if (!TileEntityHandler.Instance.TryGetTileEntityAtPosition(new Vector2Int(Mathf.Clamp(Position.x + direction, default, TileEntityHandler.Instance.GenerationData.GenerationWidth - 1), Mathf.Max(Position.y, default)), out TileEntity otherTile2))
                 {
                     var position = new Vector2Int(Mathf.Clamp(Position.x + direction, default, TileEntityHandler.Instance.GenerationData.GenerationWidth - 1), Mathf.Max(Position.y, default));

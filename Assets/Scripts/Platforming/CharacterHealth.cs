@@ -13,12 +13,15 @@ namespace Klonk
     public class CharacterHealth : MonoBehaviour
     {
         public static event System.Action OnEnemyDead;
+        public static event System.Action<int> PlayerHealthChanged;
         
         [SerializeField] private int _health = 1000;
         
         private OverlapChecker _overlapChecker;
         private MovementBase _movement;
         private SpriteRenderer _renderer;
+
+        private bool _isPlayer;
 
         private Coroutine _freezeCoroutine;
         
@@ -27,6 +30,12 @@ namespace Klonk
             _overlapChecker = GetComponent<OverlapChecker>();
             _movement = GetComponent<MovementBase>();
             _renderer = GetComponent<SpriteRenderer>();
+            _isPlayer = GetComponentInChildren<AIMovement>(true) == null;
+
+            if (_isPlayer)
+            {
+                PlayerHealthChanged!.Invoke(_health);
+            }
         }
 
         private void FixedUpdate()
@@ -70,12 +79,17 @@ namespace Klonk
 
             if (!alive)
             {
-                if (GetComponentInChildren<AIMovement>(true) != null)
+                if (!_isPlayer)
                 {
                     OnEnemyDead?.Invoke();
                 }
                 StartCoroutine(DeathEffect());
                 _movement.enabled = false;
+            }
+
+            if (_isPlayer)
+            {
+                PlayerHealthChanged?.Invoke(_health);
             }
             
             return alive;

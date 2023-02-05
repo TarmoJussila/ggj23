@@ -14,7 +14,7 @@ namespace Klonk
         private Bounds _bounds;
         private Vector3 _topLeftOffset;
 
-        [SerializeField] private int _solidOverlapDamageThreshold = 6;
+        [SerializeField] private int _solidOverlapDamageThreshold = 10;
 
         [HideInInspector] public List<LiquidType> OverlapLiquids = new();
         [HideInInspector] public List<SolidType> OverlapSolids = new();

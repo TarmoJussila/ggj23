@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Klonk.TileEntity
@@ -21,12 +22,17 @@ namespace Klonk.TileEntity
             return new Vector3(transformed.x, transformed.y, default);
         }
 
+        public static void ExplosionInArea(Vector3 center, int radius, ExplosionType type) =>
+            ExplosionInArea(new Vector2Int(Mathf.FloorToInt(center.x), Mathf.FloorToInt(center.y)), radius, type);
+
         public static void ExplosionInArea(Vector2Int center, int radius, ExplosionType type)
         {
             int centerX = center.x;
             int centerY = center.y;
 
             Physics2D.OverlapCircleNonAlloc(center, radius, _overlapArray);
+            
+            ParticleHandler.Instance.PlayExplosion(new Vector3(center.x, center.y, 0), type);
 
             foreach (Collider2D col in _overlapArray)
             {
@@ -84,7 +90,7 @@ namespace Klonk.TileEntity
                             }
                             case ExplosionType.None:
                             {
-                                tile.ReduceHealth(10000);
+                                TileEntityHandler.Instance.RemoveAt(x,y);
                                 break;
                             }
                         }

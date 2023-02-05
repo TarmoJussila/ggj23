@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Klonk.Platforming;
 using Klonk.TileEntity;
 using Unity.Mathematics;
 using Unity.VisualScripting;
@@ -26,13 +27,16 @@ namespace Klonk
 
         public void SpawnCharacters()
         {
+            Vector3 playerpos = PlayerMovement.Instance.transform.position;
+            TileUtility.ExplosionInArea(playerpos, 25, ExplosionType.None);
+            
             for (int i = 0; i < _enemyCount; i++)
             {
                 int x = Random.Range(spawnMargin, TileEntityHandler.Instance.GenerationData.GenerationWidth - spawnMargin);
                 int y = Random.Range(spawnMargin, TileEntityHandler.Instance.GenerationData.GenerationHeight - spawnMargin);
 
                 Vector2Int spawnPos = new Vector2Int(x, y);
-                TileUtility.ExplosionInArea(spawnPos, 15, ExplosionType.None);
+                TileUtility.ExplosionInArea(spawnPos, 25, ExplosionType.None);
 
                 Vector3 pos = new Vector3(spawnPos.x, spawnPos.y, 0);
                 

@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Row" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
+        <ui:VisualElement name="Left" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); align-self: stretch;">
+            <ui:VisualElement name="CenterBox" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); align-self: center; justify-content: center;">
+                <ui:Button text="Back" display-tooltip-when-elided="true" name="BackButton" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="Right" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); align-self: stretch; justify-content: center;">
+            <ui:VisualElement name="BoxArt" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); align-self: stretch; background-image: url(&apos;project://database/Assets/Sprites/Klonk-box-back.png?fileID=2800000&amp;guid=2c122fd33e90e453c869a3add5c8777c&amp;type=3#Klonk-box-back&apos;); -unity-background-scale-mode: scale-to-fit;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

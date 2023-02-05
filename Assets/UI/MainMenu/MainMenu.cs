@@ -8,6 +8,7 @@ namespace Klonk.UI.MainMenu
     {
         private Button _playButton;
         private Button _exitButton;
+        private Button _settingsButton;
         
         private void OnEnable()
         {
@@ -27,6 +28,12 @@ namespace Klonk.UI.MainMenu
                 UnityEditor.EditorApplication.isPlaying = false;
                 #endif
                 Application.Quit();
+            });
+
+            _settingsButton = root.Q<Button>("SettingsButton");
+            _settingsButton.RegisterCallback<ClickEvent>(_ =>
+            {
+                SceneManager.LoadScene("Settings");
             });
         }
     }

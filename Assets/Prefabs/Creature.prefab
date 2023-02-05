@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 9212075106688106136}
   - component: {fileID: 2909057018845925052}
   m_Layer: 0
-  m_Name: Kani
+  m_Name: Creature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

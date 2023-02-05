@@ -43,11 +43,11 @@ namespace Klonk.Rendering
             ResetTexture();
         }
 
-        private void Update()
+        private void LateUpdate()
         {
             CheckAspect();
             Vector3 targetPosition = player.position + Vector3.down * Height / 2 + Vector3.left * Width / 2;
-            transform.position = Vector3.Lerp(transform.position, targetPosition, _moveSpeed);
+            transform.position = Vector3.Lerp(transform.position, targetPosition, _moveSpeed * Time.deltaTime);
 
             _normalCamera.transform.position = new Vector3(transform.position.x + Width / 2f, transform.position.y + Height / 2f, _normalCamera.transform.position.z);
             _normalCamera.orthographicSize = Height / 2f;

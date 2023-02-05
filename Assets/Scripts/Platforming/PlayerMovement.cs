@@ -163,7 +163,7 @@ namespace Klonk.Platforming
 
         public int GetHorizontalDirection()
         {
-            return _spriteRenderer.flipX ? -1 : 1;
+            return transform.localScale.x < 0 ? -1 : 1;
         }
     }
 }

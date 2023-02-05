@@ -34,6 +34,10 @@ namespace Klonk
         private void Awake()
         {
             Instance = this;
+        }
+
+        private void Start()
+        {
             SetWeapon(0);
         }
 

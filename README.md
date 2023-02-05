@@ -1,7 +1,7 @@
 
 # KLONK
 
-**Klonk** is a fast-paced, rogue-like pixel game that will test your skills and reflexes. Inspired by likes of Wings, Clonk and Noita, this game features random-generated levels and intense physics-based combat. Battle your way through depraved and vicious creatures to save the roots of precious trees that make the planet life-sustaining. Unconver the secrets of the vast caverns as you explore your way through them. **Klonk** - where every pixel is packed with excitement!
+**Klonk** is a fast-paced, rogue-like pixel game that will test your skills and reflexes. Inspired by likes of Wings, Clonk and Noita, this game features random-generated levels and intense physics-based combat. Battle your way through depraved and vicious creatures to save the roots of precious trees that make the planet life-sustaining. Uncover the secrets of the vast caverns as you explore your way through them. **Klonk** - where every pixel is packed with excitement!
 
 The game was created in 48 hours during the Global Game Jam / Finnish Game Jam 2023.
 

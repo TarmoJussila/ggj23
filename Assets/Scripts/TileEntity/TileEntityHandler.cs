@@ -58,6 +58,16 @@ namespace Klonk.TileEntity
 
         private void GenerateTileEntities(TileEntityGenerationData generationData)
         {
+            for (int x = 0; x < generationData.GenerationWidth; x++)
+            {
+                for (int y = 1; y < 5; y++)
+                {
+                    var position = new Vector2Int(x, generationData.GenerationHeight - y);
+                    var tileEntity = new TileEntity(position, LiquidType.None, SolidType.Sand, ExplosionType.None);
+                    _tileEntities[position.x, position.y] = tileEntity;
+                }
+            }
+
             for (int i = 0; i < generationData.RockPatchGenerationAmount; i++)
             {
                 Vector2Int position = new Vector2Int

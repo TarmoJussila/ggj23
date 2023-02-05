@@ -29,7 +29,7 @@ The game was created with **Unity 2022.2.5f1**.
 | Move Right | D / Right Arrow | Left Stick |
 | Jump | Space | A Button |
 | Use Weapon | Shift | X Button |
-| Change Weapon | 1-3 | Left Trigger |
+| Change Weapon | 1-5 | Left Trigger |
 
 # Credits - Team Klonk
 

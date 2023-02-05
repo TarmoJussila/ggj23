@@ -90,7 +90,7 @@ namespace Klonk.TileEntity
                             }
                             case ExplosionType.None:
                             {
-                                tile.ReduceHealth(10000);
+                                TileEntityHandler.Instance.RemoveAt(x,y);
                                 break;
                             }
                         }

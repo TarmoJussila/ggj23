@@ -36,7 +36,7 @@ namespace Klonk.TileEntity
         private int _worldWidth;
         private int _worldHeight;
 
-        private readonly int _initialUpdateSimulationCount = 1000;
+        private readonly int _initialUpdateSimulationCount = 10;
 
         private void Awake()
         {
@@ -82,7 +82,7 @@ namespace Klonk.TileEntity
                         );
                     } while (TryGetTileEntityAtPosition(position, out _));
 
-                    var tileEntity = new TileEntity(position, LiquidType.None, SolidType.Rock);
+                    var tileEntity = new TileEntity(position, LiquidType.None, SolidType.Rock, ExplosionType.None);
                     _tileEntities[position.x, position.y] = tileEntity;
                 }
             }
@@ -113,7 +113,7 @@ namespace Klonk.TileEntity
                         );
                     } while (TryGetTileEntityAtPosition(position, out _));
 
-                    var tileEntity = new TileEntity(position, LiquidType.None, SolidType.Sand);
+                    var tileEntity = new TileEntity(position, LiquidType.None, SolidType.Sand, ExplosionType.None);
                     _tileEntities[position.x, position.y] = tileEntity;
                 }
             }
@@ -130,7 +130,7 @@ namespace Klonk.TileEntity
                     foundTileAbove = TryGetTileEntityAtPosition(position + new Vector2Int(0, 1), out _);
                 } while (!(foundEmptyTile && foundTileAbove));
 
-                var tileEntity = new TileEntity(position, LiquidType.Water, SolidType.None, true);
+                var tileEntity = new TileEntity(position, LiquidType.Water, SolidType.None, ExplosionType.None, true);
                 _tileEntities[position.x, position.y] = tileEntity;
             }
 
@@ -146,7 +146,7 @@ namespace Klonk.TileEntity
                     foundTileAbove = TryGetTileEntityAtPosition(position + new Vector2Int(0, 1), out _);
                 } while (!(foundEmptyTile && foundTileAbove));
 
-                var tileEntity = new TileEntity(position, LiquidType.Acid, SolidType.None, true);
+                var tileEntity = new TileEntity(position, LiquidType.Acid, SolidType.None, ExplosionType.None, true);
                 _tileEntities[position.x, position.y] = tileEntity;
             }
         }
@@ -227,7 +227,7 @@ namespace Klonk.TileEntity
                         {
                             if (!TryGetTileEntityAtPosition(position.x, position.y, out TileEntity _))
                             {
-                                var newTileEntity = new TileEntity(position, tileEntity.TileData.SpawnLiquidType, SolidType.None);
+                                var newTileEntity = new TileEntity(position, tileEntity.TileData.SpawnLiquidType, SolidType.None, ExplosionType.None);
                                 _tileEntities[position.x, position.y] = newTileEntity;
                             }
                         }
@@ -249,12 +249,12 @@ namespace Klonk.TileEntity
             if (UnityEngine.Input.GetKeyDown(KeyCode.Mouse0))
             {
                 Vector3 point = (UnityEngine.Input.mousePosition / WorldRenderer.Instance.TextureResDivider + WorldRenderer.Instance.Camera.transform.position);
-                TileUtility.DestroyInArea(new Vector2Int(Mathf.RoundToInt(point.x), Mathf.RoundToInt(point.y)), 10);
+                TileUtility.ExplosionInArea(new Vector2Int(Mathf.RoundToInt(point.x), Mathf.RoundToInt(point.y)), 10, ExplosionType.Destroy);
             }
             if (UnityEngine.Input.GetKeyDown(KeyCode.Mouse1))
             {
                 Vector3 point = (UnityEngine.Input.mousePosition / WorldRenderer.Instance.TextureResDivider + WorldRenderer.Instance.Camera.transform.position);
-                TileUtility.LiquifyInArea(new Vector2Int(Mathf.RoundToInt(point.x), Mathf.RoundToInt(point.y)), 10);
+                TileUtility.ExplosionInArea(new Vector2Int(Mathf.RoundToInt(point.x), Mathf.RoundToInt(point.y)), 10, ExplosionType.Destroy);
             }
         }
 

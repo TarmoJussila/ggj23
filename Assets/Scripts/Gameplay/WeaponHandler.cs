@@ -15,6 +15,7 @@ namespace Klonk
     public class Weapon
     {
         public int TileDataIndex;
+        public bool RequireKeyDown;
     }
 
     public class WeaponHandler : MonoBehaviour
@@ -35,7 +36,8 @@ namespace Klonk
 
         private void Update()
         {
-            if (UnityEngine.Input.GetKey(KeyCode.LeftShift))
+            if ((UnityEngine.Input.GetKey(KeyCode.LeftShift) && !_currentWeapon.RequireKeyDown)
+                || (UnityEngine.Input.GetKeyDown(KeyCode.LeftShift) && _currentWeapon.RequireKeyDown))
             {
                 UseWeapon();
             }
@@ -88,7 +90,14 @@ namespace Klonk
 
             TileData tileToSpawn = TileEntityHandler.Instance.EntityData.GetTileDataByIndex(_currentWeapon.TileDataIndex);
 
-            var tileEntity = new Klonk.TileEntity.TileEntity(pos, tileToSpawn.LiquidType, tileToSpawn.SolidType, tileToSpawn.IsSpawnSource, direction);
+            var tileEntity = new Klonk.TileEntity.TileEntity(
+                pos,
+                tileToSpawn.LiquidType,
+                tileToSpawn.SolidType,
+                tileToSpawn.ExplosionType,
+                tileToSpawn.IsSpawnSource,
+                direction
+            );
 
             TileEntityHandler.Instance.TryAddTileToPosition(tileEntity, pos);
         }

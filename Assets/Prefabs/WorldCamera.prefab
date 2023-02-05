@@ -98,9 +98,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc322d96917e13f408cbba51eaf8d3da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _moveSpeed: 100
   _material: {fileID: 2100000, guid: e95836fccc149e6419aefc959b4ed352, type: 2}
   _skyColor: {r: 0.5740922, g: 0.724545, b: 0.9150943, a: 1}
+  _outOfBoundsColor: {r: 0, g: 0, b: 0, a: 0}
+  _caveColor: {r: 0, g: 0, b: 0, a: 0}
   _normalCamera: {fileID: 0}
+  player: {fileID: 0}
 --- !u!114 &3031071751229109724
 MonoBehaviour:
   m_ObjectHideFlags: 0

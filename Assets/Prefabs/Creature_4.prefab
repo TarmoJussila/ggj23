@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 9212075106688106136}
   - component: {fileID: 2909057018845925052}
   m_Layer: 0
-  m_Name: Creature 2
+  m_Name: Creature_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -201,7 +201,7 @@ Animator:
   m_GameObject: {fileID: 9212075106688106142}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0473a77e60ec0144ea2f7ecf0b4958cd, type: 2}
+  m_Controller: {fileID: 9100000, guid: 5112d833475e9a646ad0fa7025da2961, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

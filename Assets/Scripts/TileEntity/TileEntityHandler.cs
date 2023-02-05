@@ -130,6 +130,49 @@ namespace Klonk.TileEntity
                 }
             }
 
+            for (int i = 0; i < 10; i++)
+            {
+                Vector2Int position;
+                do
+                {
+                    position = new Vector2Int
+                    (
+                        Random.Range(0, generationData.GenerationWidth),
+                        Random.Range(0, generationData.GenerationHeight)
+                    );
+                }
+                while (!TryGetTileEntityAtPosition(position, out _)) ;
+
+                for (int j = 0; j < 100; j++)
+                {
+                    do
+                    {
+                        position = new Vector2Int
+                        (
+                            Random.Range
+                            (
+                                Mathf.Clamp(position.x - 1, default, _generationData.GenerationWidth),
+                                Mathf.Clamp(position.x + 2, default, _generationData.GenerationWidth)
+                            ),
+                            Random.Range
+                            (
+                                Mathf.Clamp(position.y - 1, default, _generationData.GenerationHeight),
+                                Mathf.Clamp(position.y + 2, default, _generationData.GenerationHeight)
+                            )
+                        );
+                    } while (!TryGetTileEntityAtPosition(position, out _));
+
+                    if (TryGetTileEntityAtPosition(position, out TileEntity existingTileEntity))
+                    {
+                        _tileEntities[position.x, position.y] = null;
+                        existingTileEntity = null;
+                    }
+
+                    var tileEntity = new TileEntity(position, LiquidType.None, SolidType.Rock, ExplosionType.None);
+                    _tileEntities[position.x, position.y] = tileEntity;
+                }
+            }
+
             for (int i = 0; i < generationData.WaterSpawnSourceAmount; i++)
             {
                 Vector2Int position;

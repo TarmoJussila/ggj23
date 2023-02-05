@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Klonk.TileEntity;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -14,8 +15,9 @@ namespace Klonk
         
         [SerializeField] private GameObject[] _enemyPrefabs;
         [SerializeField] private int _enemyCount = 200;
-        [SerializeField] private CharacterHealth[] enemies = new CharacterHealth[200];
         [SerializeField] private int spawnMargin = 50;
+        
+        private CharacterHealth[] enemies = new CharacterHealth[200];
 
         private void Awake()
         {
@@ -26,14 +28,15 @@ namespace Klonk
         {
             for (int i = 0; i < _enemyCount; i++)
             {
-                GameObject go = Instantiate(_enemyPrefabs[Random.Range(0, _enemyPrefabs.Length)]);
                 int x = Random.Range(spawnMargin, TileEntityHandler.Instance.GenerationData.GenerationWidth - spawnMargin);
                 int y = Random.Range(spawnMargin, TileEntityHandler.Instance.GenerationData.GenerationHeight - spawnMargin);
 
                 Vector2Int spawnPos = new Vector2Int(x, y);
                 TileUtility.ExplosionInArea(spawnPos, 15, ExplosionType.None);
 
-                go.transform.position.Set(spawnPos.x, spawnPos.y, 0);
+                Vector3 pos = new Vector3(spawnPos.x, spawnPos.y, 0);
+                
+                GameObject go = Instantiate(_enemyPrefabs[Random.Range(0, _enemyPrefabs.Length)], pos, quaternion.identity);
             }
         }
     }

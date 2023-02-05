@@ -23,8 +23,6 @@ The game was created with **Unity 2022.2.5f1**.
 
 # Controls
 
-# Controls
-
 | Action        | Bind           |
 | ------------- |:-------------:|
 | Move Left | A / Left Arrow |

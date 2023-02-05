@@ -179,6 +179,14 @@ namespace Klonk.TileEntity
             return tile != null;
         }
 
+        public void RemoveAt(int x, int y)
+        {
+            if (IsInBounds(x, y))
+            {
+                _tileEntities[x, y] = null;
+            }
+        }
+
         public bool IsInBounds(int x, int y)
         {
             return x >= 0 && x < _tileEntities.GetLength(0) && y >= 0 && y < _tileEntities.GetLength(1);

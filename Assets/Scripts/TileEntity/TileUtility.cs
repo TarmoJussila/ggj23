@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Klonk.TileEntity
@@ -20,6 +21,9 @@ namespace Klonk.TileEntity
             Vector2Int transformed = tileCoordinates * (int)TILE_SIZE;
             return new Vector3(transformed.x, transformed.y, default);
         }
+
+        public static void ExplosionInArea(Vector3 center, int radius, ExplosionType type) =>
+            ExplosionInArea(new Vector2Int(Mathf.FloorToInt(center.x), Mathf.FloorToInt(center.y)), radius, type);
 
         public static void ExplosionInArea(Vector2Int center, int radius, ExplosionType type)
         {

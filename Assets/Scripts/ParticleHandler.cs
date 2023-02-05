@@ -40,6 +40,10 @@ namespace Klonk
                     prefab = _liquifyParticle.gameObject;
                     break;
                 }
+                case ExplosionType.None:
+                {
+                    return;
+                }
                 default: break;
             }
 

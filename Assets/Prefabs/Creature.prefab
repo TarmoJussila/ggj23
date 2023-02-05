@@ -161,7 +161,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 1
-  _turnTime: 3
+  _minTurnTime: 2
+  _maxTurnTime: 4
 --- !u!114 &9212075106688106135
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 using Klonk.TileEntity;
-using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 
 namespace Klonk.Rendering
 {
@@ -12,19 +12,18 @@ namespace Klonk.Rendering
         public Camera Camera { get; private set; }
         public int Width => _width;
         public int Height => _height;
+        public int TextureResDivider { get; private set; } = 4;
 
         [SerializeField] private float _moveSpeed = 10; 
         [SerializeField] private Material _material;
-        [SerializeField] public int TextureResDivider { get; private set; } = 4;
         [SerializeField] private Color _skyColor;
         [SerializeField] private Color _outOfBoundsColor;
         [SerializeField] private Color _caveColor;
         [SerializeField] private Camera _normalCamera;
-        [SerializeField] private Transform player;
+        [FormerlySerializedAs("player")]
+        [SerializeField] private Transform _player;
 
         private Texture2D _texture;
-        private int _tilesPerUnit = 32;
-
         private int _lastScreenWidth, _lastScreenHeight;
         private int _width, _height;
         private readonly int _minDivider = 4;
@@ -46,12 +45,11 @@ namespace Klonk.Rendering
         private void LateUpdate()
         {
             CheckAspect();
-            Vector3 targetPosition = player.position + Vector3.down * Height / 2 + Vector3.left * Width / 2;
+            Vector3 targetPosition = _player.position + Vector3.down * Height / 2 + Vector3.left * Width / 2;
             transform.position = Vector3.Lerp(transform.position, targetPosition, _moveSpeed * Time.deltaTime);
 
             _normalCamera.transform.position = new Vector3(transform.position.x + Width / 2f, transform.position.y + Height / 2f, _normalCamera.transform.position.z);
             _normalCamera.orthographicSize = Height / 2f;
-            //var coords = Vector2Int.zero;
 
             Vector3 position = transform.position;
 
@@ -86,16 +84,6 @@ namespace Klonk.Rendering
             _material.SetTexture("_WorldTex", _texture);
             _material.SetVector("_CameraPos", position);
         }
-
-        /*private void Update()
-        {
-            CheckAspect();
-            Vector3 targetPosition = player.position + Vector3.down * Height / 2 + Vector3.left * Width / 2;
-            transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * _moveSpeed);
-
-            _normalCamera.transform.position = new Vector3(transform.position.x + Width / 2f, transform.position.y + Height / 2f, _normalCamera.transform.position.z);
-            _normalCamera.orthographicSize = Mathf.Max(Width / 2f, Height / 2f);
-        }*/
 
         private void CheckAspect(bool force = false)
         {

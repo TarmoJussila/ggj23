@@ -5,11 +5,13 @@
 
 The game was created in 48 hours during the Global Game Jam / Finnish Game Jam 2023.
 
+# Watch
+
+Gameplay video: [**Watch**](https://youtu.be/CRyBFAQDLrs)
+
 # Download
 
-Executable (Windows): [**Download**](https://globalgamejam.org/2023/games/klonk-4)
-
-Executable (macOS): [**Download**](https://globalgamejam.org/2023/games/klonk-4)
+Executable (Windows/macOS): [**Download**](https://ggj.s3.amazonaws.com/games/2023/02/153075/exec/d6rhA/Klonk-2.zip)
 
 # Build
 

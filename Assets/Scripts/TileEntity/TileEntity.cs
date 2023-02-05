@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Klonk.TileEntity
 {
-    public enum SolidType { None, Rock, Sand }
+    public enum SolidType { None, Rock, Sand, Root }
     public enum LiquidType { None, Water, Acid }
     public enum ExplosionType { None, Destroy, Liquify, Freeze }
     

@@ -1,4 +1,3 @@
-using System;
 using Klonk.Rendering;
 using Klonk.TileEntity.Data;
 using UnityEngine;
@@ -39,6 +38,7 @@ namespace Klonk.TileEntity
         private int _worldHeight;
 
         private readonly int _initialUpdateSimulationCount = 10;
+        private readonly int _generationAttemptMaxAmount = 100;
 
         private void Awake()
         {
@@ -132,7 +132,7 @@ namespace Klonk.TileEntity
                 }
             }
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < GenerationData.RootPatchGenerationAmount; i++)
             {
                 Vector2Int position;
                 do
@@ -143,26 +143,30 @@ namespace Klonk.TileEntity
                         Random.Range(0, generationData.GenerationHeight)
                     );
                 }
-                while (!TryGetTileEntityAtPosition(position, out _)) ;
+                while (!TryGetTileEntityAtPosition(position, out _));
 
-                for (int j = 0; j < 100; j++)
+                int direction = Random.Range(0, 2) == 0 ? -1 : 1;
+                for (int j = 0; j < generationData.RootGenerationAmount; j++)
                 {
+                    int generationAttemptCount = 0;
                     do
                     {
+                        generationAttemptCount++;
                         position = new Vector2Int
                         (
-                            Random.Range
-                            (
-                                Mathf.Clamp(position.x - 1, default, _generationData.GenerationWidth),
-                                Mathf.Clamp(position.x + 2, default, _generationData.GenerationWidth)
-                            ),
+                            Mathf.Clamp(position.x + (Random.Range(0, 2) * direction), default, generationData.GenerationWidth - 1),
                             Random.Range
                             (
                                 Mathf.Clamp(position.y - 1, default, _generationData.GenerationHeight),
                                 Mathf.Clamp(position.y + 2, default, _generationData.GenerationHeight)
                             )
                         );
-                    } while (!TryGetTileEntityAtPosition(position, out _));
+                    } while (!TryGetTileEntityAtPosition(position, out _) && generationAttemptCount < _generationAttemptMaxAmount);
+
+                    if (generationAttemptCount > _generationAttemptMaxAmount)
+                    {
+                        continue;
+                    }
 
                     if (TryGetTileEntityAtPosition(position, out TileEntity existingTileEntity))
                     {
@@ -170,7 +174,7 @@ namespace Klonk.TileEntity
                         existingTileEntity = null;
                     }
 
-                    var tileEntity = new TileEntity(position, LiquidType.None, SolidType.Rock, ExplosionType.None);
+                    var tileEntity = new TileEntity(position, LiquidType.None, SolidType.Root, ExplosionType.None);
                     _tileEntities[position.x, position.y] = tileEntity;
                 }
             }

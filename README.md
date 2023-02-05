@@ -23,26 +23,26 @@ The game was created with **Unity 2022.2.5f1**.
 
 # Controls
 
-| Action        | Bind           | Controller  |
-| ------------- |:-------------:| -----:|
-| Move Left | A / Left Arrow | Left Stick |
-| Move Right | D / Right Arrow | Left Stick |
-| Jump | Space | A Button |
-| Use Weapon | Shift | X Button |
-| Change Weapon | 1-5 | Left Trigger |
+| Action        | Bind           |
+| ------------- |:-------------:|
+| Move Left | A / Left Arrow |
+| Move Right | D / Right Arrow |
+| Jump | Space |
+| Use Weapon | Shift |
+| Change Weapon | 1-5 |
 
 # Credits - Team Klonk
 
 Tarmo Jussila - Programming
 
-Tuomo Oksanen - Programming
+Tuomo Oksanen - Programming & Graphics
 
 Aleksi Toivonen - Programming
 
 Juho Turpeinen - Programming
 
-Kalle Collan - Graphics
+Kalle Collan - Blursed Graphics
 
-Janet Vaher - Brand Design
+Janet Vaher - Graphics & Brand Design
 
 Ari-Pekka Savolainen - Music

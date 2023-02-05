@@ -146,3 +146,18 @@ MonoBehaviour:
     SpawnSpeed: 0
     SpawnLifespan: 0
     IsEndlessLifespan: 0
+  - SolidType: 3
+    LiquidType: 0
+    ExplosionType: 0
+    ColorPalette:
+    - {r: 0.3773585, g: 0.20657125, b: 0.094339624, a: 1}
+    - {r: 0.26415092, g: 0.16902302, b: 0.10341757, a: 1}
+    Gravity: 0
+    Health: 15
+    IsAcidResistant: 0
+    Potency: 1
+    IsSpawnSource: 0
+    SpawnLiquidType: 0
+    SpawnSpeed: 0
+    SpawnLifespan: 0
+    IsEndlessLifespan: 0

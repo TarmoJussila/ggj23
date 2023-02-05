@@ -15,6 +15,11 @@ namespace Klonk.UI.Settings
             {
                 SceneManager.LoadScene("Menu");
             });
+            
+            root.Q<Button>("FullScreenButton").RegisterCallback<ClickEvent>(_ =>
+            {
+                Screen.fullScreen = !Screen.fullScreen;
+            });
         }
     }
 }

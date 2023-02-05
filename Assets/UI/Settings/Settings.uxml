@@ -1,7 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:VisualElement name="Row" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
-        <ui:VisualElement name="Left" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); align-self: stretch;">
-            <ui:VisualElement name="CenterBox" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); align-self: center; justify-content: center;">
+        <ui:VisualElement name="Left" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); align-self: flex-start;">
+            <ui:VisualElement name="CenterBox" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); align-self: center; justify-content: center; align-items: stretch;">
+                <ui:Button text="Full screen / windowed mode" display-tooltip-when-elided="true" name="FullScreenButton" />
                 <ui:Button text="Back" display-tooltip-when-elided="true" name="BackButton" />
             </ui:VisualElement>
         </ui:VisualElement>

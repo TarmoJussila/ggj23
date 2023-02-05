@@ -114,15 +114,14 @@ namespace Klonk.Platforming
             float previous = _horizontalInput;
             _horizontalInput = context.ReadValue<float>();
 
-            if (Mathf.Approximately(0, _horizontalInput))
+            if (Mathf.Approximately(_horizontalInput, default))
             {
                 return;
             }
-
-            if (!Mathf.Approximately(previous, _horizontalInput))
-            {
-                _spriteRenderer.flipX = _horizontalInput < 0;
-            }
+            
+            Vector3 scale = transform.localScale;
+            scale.x = _horizontalInput * scale.x > 0 ? scale.x : -scale.x;
+            transform.localScale = scale;
         }
 
         private bool CheckAlternativeSprite(Sprite[] sprites)

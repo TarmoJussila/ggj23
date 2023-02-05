@@ -45,6 +45,11 @@ namespace Klonk.Platforming
             Rigidbody = GetComponent<FakeRigidbody>();
             _rigidbody = GetComponent<FakeRigidbody>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            
+            int x = TileEntity.TileEntityHandler.Instance.GenerationData.GenerationWidth / 2;
+            int y = TileEntity.TileEntityHandler.Instance.GenerationData.GenerationWidth / 2 + Mathf.FloorToInt(_spriteRenderer.size.y) - TileEntity.TileEntityHandler.GroundStart;
+
+            _rigidbody.SetPosition(new Vector3(x, y, 0));
         }
         
         private FakeRigidbody _rigidbody;

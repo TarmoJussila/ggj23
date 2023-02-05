@@ -174,6 +174,11 @@ namespace Klonk.Platforming
             }
         }
 
+        public void SetPosition(Vector3 pos)
+        {
+            _rigidbodyPosition = pos;
+        }
+
         public void SetVelocity(Vector2 velocity)
         {
             _velocity = velocity;

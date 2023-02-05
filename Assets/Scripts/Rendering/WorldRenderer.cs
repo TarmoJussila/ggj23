@@ -14,21 +14,22 @@ namespace Klonk.Rendering
         public int Height => _height;
         public int TextureResDivider { get; private set; } = 4;
 
-        [SerializeField] private float _moveSpeed = 10; 
+        [SerializeField] private float _moveSpeed = 10;
         [SerializeField] private Material _material;
         [SerializeField] private Color _skyColor;
         [SerializeField] private Color _outOfBoundsColor;
         [SerializeField] private Color _caveColor;
         [SerializeField] private Camera _normalCamera;
         [FormerlySerializedAs("player")]
-        [SerializeField] private Transform _player;
+        [SerializeField]
+        private Transform _player;
 
         private Texture2D _texture;
         private int _lastScreenWidth, _lastScreenHeight;
         private int _width, _height;
         private readonly int _minDivider = 4;
         private readonly int _maxDivider = 12;
-        
+
         private void Awake()
         {
             Instance = this;
@@ -48,7 +49,11 @@ namespace Klonk.Rendering
             Vector3 targetPosition = _player.position + Vector3.down * Height / 2 + Vector3.left * Width / 2;
             transform.position = Vector3.Lerp(transform.position, targetPosition, _moveSpeed * Time.deltaTime);
 
-            _normalCamera.transform.position = new Vector3(transform.position.x + Width / 2f, transform.position.y + Height / 2f, _normalCamera.transform.position.z);
+            _normalCamera.transform.position = new Vector3(
+                transform.position.x + Width / 2f,
+                transform.position.y + Height / 2f,
+                _normalCamera.transform.position.z
+            );
             _normalCamera.orthographicSize = Height / 2f;
 
             Vector3 position = transform.position;
@@ -68,7 +73,14 @@ namespace Klonk.Rendering
                     }
                     else if (!TileEntityHandler.Instance.TryGetTileEntityAtPosition(coordsX, coordsY, out TileEntity.TileEntity tile))
                     {
-                        c = _caveColor;
+                        if (coordsY > TileEntityHandler.Instance.GenerationData.GenerationHeight - TileEntityHandler.GroundStart)
+                        {
+                            c = _skyColor;
+                        }
+                        else
+                        {
+                            c = _caveColor;
+                        }
                     }
                     else
                     {

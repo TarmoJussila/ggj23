@@ -21,6 +21,8 @@ namespace Klonk.TileEntity
         }
         private static TileEntityHandler _instance;
 
+        public static int GroundStart = 10;
+
         public TileEntity[,] TileEntities => _tileEntities;
         public TileEntityGenerationData GenerationData => _generationData;
         public TileEntityData EntityData => _entityData;
@@ -60,9 +62,9 @@ namespace Klonk.TileEntity
         {
             for (int x = 0; x < generationData.GenerationWidth; x++)
             {
-                for (int y = 1; y < 5; y++)
+                for (int y = 0; y < 5; y++)
                 {
-                    var position = new Vector2Int(x, generationData.GenerationHeight - y);
+                    var position = new Vector2Int(x, generationData.GenerationHeight - GroundStart - y);
                     var tileEntity = new TileEntity(position, LiquidType.None, SolidType.Sand, ExplosionType.None);
                     _tileEntities[position.x, position.y] = tileEntity;
                 }
@@ -207,6 +209,14 @@ namespace Klonk.TileEntity
 
                 var tileEntity = new TileEntity(position, LiquidType.Acid, SolidType.None, ExplosionType.None, true);
                 _tileEntities[position.x, position.y] = tileEntity;
+            }
+            
+            for (int x = 0; x < generationData.GenerationWidth; x++)
+            {
+                for (int y = generationData.GenerationHeight-1; y > generationData.GenerationHeight - GroundStart; y--)
+                {
+                    RemoveAt(x,y);
+                }
             }
         }
 

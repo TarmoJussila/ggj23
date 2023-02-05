@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 
 namespace Klonk
@@ -15,8 +11,7 @@ namespace Klonk
             _originalPosition = transform.position;
         }
 
-        // Update is called once per frame
-        void Update()
+        private void Update()
         {
             Vector3 position = _originalPosition;
             position.y += Mathf.Sin(Time.time);

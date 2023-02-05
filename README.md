@@ -11,7 +11,7 @@ Gameplay video: [**Watch**](https://youtu.be/CRyBFAQDLrs)
 
 # Download
 
-Executable (Windows/macOS): [**Download**](https://ggj.s3.amazonaws.com/games/2023/02/153075/exec/d6rhA/Klonk-2.zip)
+Executable (Windows/macOS/Linux): [**Download**](https://ggj.s3.amazonaws.com/games/2023/02/153075/exec/d6rhA/Klonk-2.zip)
 
 # Build
 
